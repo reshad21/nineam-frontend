@@ -1,5 +1,5 @@
-import { Button, Row } from "antd";
-import { FieldValues } from "react-hook-form";
+import { Button, Col, Flex } from "antd";
+import { FieldValues, SubmitErrorHandler } from "react-hook-form";
 import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
 
@@ -8,20 +8,21 @@ const Loginpage = () => {
     email: "A-0001@gmail.com",
     password: "admin123",
   };
-  const onSubmit = (data: FieldValues) => {
+
+  const onSubmit: SubmitErrorHandler<FieldValues> = (data) => {
     console.log("logindata =>", data);
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <BrForm onSubmit={onSubmit} defaultValues={defaultValues}>
-        <label htmlFor="email">Email:</label>
-        <BrInput type="email" name="email" />
-        <label htmlFor="password">Password:</label>
-        <BrInput type="password" name="password" />
-        <Button htmlType="submit">Login</Button>
-      </BrForm>
-    </Row>
+    <Flex justify="center" align="center">
+      <Col span={6}>
+        <BrForm onSubmit={onSubmit} defaultValues={defaultValues}>
+          <BrInput type="email" name="email" label="Email:" />
+          <BrInput type="password" name="password" label="Password:" />
+          <Button htmlType="submit">Login</Button>
+        </BrForm>
+      </Col>
+    </Flex>
   );
 };
 

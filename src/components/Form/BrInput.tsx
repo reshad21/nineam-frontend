@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 
 type TInputProps = {
@@ -7,12 +7,16 @@ type TInputProps = {
   label?: string;
 };
 
-const BrInput = ({ type, name }: TInputProps) => {
+const BrInput = ({ type, name, label }: TInputProps) => {
   return (
     <div className="w-full mb-2">
       <Controller
         name={name}
-        render={({ field }) => <Input {...field} id={name} type={type} />}
+        render={({ field }) => (
+          <Form.Item label={label}>
+            <Input {...field} id={name} type={type} />
+          </Form.Item>
+        )}
       />
     </div>
   );
