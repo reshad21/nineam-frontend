@@ -1,15 +1,23 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "../Header/Navber";
 import Container from "../Ui/Container";
 import Footer from "../Ui/Footer";
-import Header from "../Ui/Header";
 
 const MainLauout = () => {
   return (
-    <Container>
-      <Header />
-      <Outlet />
+    <>
+      <Navbar />
+      <Container>
+        <Outlet />
+      </Container>
       <Footer />
-    </Container>
+    </>
+
+    // <Container>
+    //   <Navbar />
+    //   <Outlet />
+    //   <Footer />
+    // </Container>
   );
 };
 

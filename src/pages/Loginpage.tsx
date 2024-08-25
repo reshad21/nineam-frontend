@@ -1,32 +1,27 @@
-import { Button } from "antd";
-import { SubmitHandler, useForm } from "react-hook-form";
-
-type TLoginuser = {
-  email: string;
-  password: string;
-};
+import { Button, Row } from "antd";
+import { FieldValues } from "react-hook-form";
+import BrForm from "../components/Form/BrForm";
+import BrInput from "../components/Form/BrInput";
 
 const Loginpage = () => {
-  // Pass TLoginuser as the generic type parameter to useForm
-  const { register, handleSubmit } = useForm<TLoginuser>();
-
-  // Type the submit handler with SubmitHandler<TLoginuser>
-  const submit: SubmitHandler<TLoginuser> = (data) => {
+  const defaultValues = {
+    email: "A-0001@gmail.com",
+    password: "admin123",
+  };
+  const onSubmit = (data: FieldValues) => {
     console.log("logindata =>", data);
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
-      <div className="w-full mb-2">
+    <Row justify="center" align="middle" style={{ height: "100vh" }}>
+      <BrForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <label htmlFor="email">Email:</label>
-        <input type="text" {...register("email")} />
-      </div>
-      <div className="w-full mb-2">
+        <BrInput type="email" name="email" />
         <label htmlFor="password">Password:</label>
-        <input type="text" {...register("password")} />
-      </div>
-      <Button htmlType="submit">Login</Button>
-    </form>
+        <BrInput type="password" name="password" />
+        <Button htmlType="submit">Login</Button>
+      </BrForm>
+    </Row>
   );
 };
 
