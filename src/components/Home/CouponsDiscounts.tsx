@@ -24,9 +24,9 @@ const promotions = [
 
 const CouponsDiscounts = () => {
   return (
-    <section className="py-12 bg-gradient-to-r from-purple-500 to-blue-500">
+    <section className="">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-white mb-8 text-center">
+        <h2 className="text-4xl font-bold mb-8 text-center">
           Exclusive Coupons & Discounts
         </h2>
 

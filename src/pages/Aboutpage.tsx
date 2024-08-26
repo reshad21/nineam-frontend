@@ -1,8 +1,16 @@
+import ContactInformation from "../components/About/ContactInformation";
+import HistoryMilestones from "../components/About/HistoryMilestones";
+import MissionStatement from "../components/About/MissionStatement";
+import TeamSection from "../components/About/TeamSection";
+
 const Aboutpage = () => {
   return (
-    <div>
-      <h1>About page component</h1>
-    </div>
+    <>
+      <MissionStatement />
+      <TeamSection />
+      <HistoryMilestones />
+      <ContactInformation />
+    </>
   );
 };
 
