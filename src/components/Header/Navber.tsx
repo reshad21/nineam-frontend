@@ -71,16 +71,16 @@ const Navbar = () => {
         {/* Desktop Login/Registration */}
         <div className="hidden md:flex space-x-4">
           <Link
+            to="/signup"
+            className="px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
+          >
+            Signup
+          </Link>
+          <Link
             to="/login"
             className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition-all duration-200"
           >
             Login
-          </Link>
-          <Link
-            to="/register"
-            className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-all duration-200"
-          >
-            Register
           </Link>
         </div>
 
@@ -129,20 +129,20 @@ const Navbar = () => {
             </li>
             <li>
               <Link
+                to="/signup"
+                className="block px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Signup
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/login"
                 className="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Login
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/register"
-                className="block px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Register
               </Link>
             </li>
           </ul>
