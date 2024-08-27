@@ -3,35 +3,35 @@ import { baseApi } from "../../api/baseApi";
 const productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        // getAllProducts: builder.query({
-        //     query: (category) => {
-        //         const params = new URLSearchParams();
-        //         if (category) {
-        //             params.append('category', category);
-        //         }
-        //         return {
-        //             url: `/products`,
-        //             method: 'GET',
-        //             params: params
-        //         }
-        //     },
-        //     providesTags: ['sports']
-        // }),
-
         getAllProducts: builder.query({
-            query: (category) => ({
-                url: `/bikes${category ? `?category=${category}` : ''}`,
-                method: 'GET',
-            }),
-            providesTags: ['sports'],
+            query: (category) => {
+                const params = new URLSearchParams();
+                if (category) {
+                    params.append('category', category);
+                }
+                return {
+                    url: `/bikes`,
+                    method: 'GET',
+                    params: params
+                }
+            },
+            providesTags: ['bikes']
         }),
+
+        // getAllProducts: builder.query({
+        //     query: (category) => ({
+        //         url: `/bikes${category ? `?category=${category}` : ''}`,
+        //         method: 'GET',
+        //     }),
+        //     providesTags: ['bikes'],
+        // }),
 
         getProductById: builder.query({
             query: (id) => ({
                 url: `/product/${id}`,
                 method: 'GET',
             }),
-            providesTags: (id) => [{ type: 'sports', id }]
+            providesTags: (id) => [{ type: 'bikes', id }]
         }),
 
         getAllFilterProducts: builder.query({
@@ -65,7 +65,7 @@ const productApi = baseApi.injectEndpoints({
                     body: data,
                 }
             },
-            invalidatesTags: ['sports']
+            invalidatesTags: ['bikes']
         }),
 
         deleteProduct: builder.mutation({
@@ -76,7 +76,7 @@ const productApi = baseApi.injectEndpoints({
                     method: 'DELETE',
                 }
             },
-            invalidatesTags: ['sports']
+            invalidatesTags: ['bikes']
         }),
 
         updateProduct: builder.mutation({
@@ -88,7 +88,7 @@ const productApi = baseApi.injectEndpoints({
                     body: data,
                 }
             },
-            invalidatesTags: ['sports']
+            invalidatesTags: ['bikes']
         }),
 
     }),
