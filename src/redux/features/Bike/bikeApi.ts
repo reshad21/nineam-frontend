@@ -20,7 +20,7 @@ const productApi = baseApi.injectEndpoints({
 
         getAllProducts: builder.query({
             query: (category) => ({
-                url: `/products${category ? `?category=${category}` : ''}`,
+                url: `/bikes${category ? `?category=${category}` : ''}`,
                 method: 'GET',
             }),
             providesTags: ['sports'],
