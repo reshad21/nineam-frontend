@@ -2,17 +2,29 @@ import { Button, Col, Row, Typography } from "antd";
 import { FieldValues, SubmitErrorHandler } from "react-hook-form";
 import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
+import { useLoginMutation } from "../redux/features/auth/authApi";
+import { setUser } from "../redux/features/auth/authSlice";
+import { useAppDispatch } from "../redux/hooks";
+import { verifyToken } from "../utils/verifyToken";
 
 const { Title } = Typography;
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
+  const [login, { isError }] = useLoginMutation();
+
+  console.log("error=>", isError);
+
   const defaultValues = {
-    email: "A-0001@gmail.com",
-    password: "admin123",
+    email: "john@example.com",
+    password: "password123",
   };
 
-  const onSubmit: SubmitErrorHandler<FieldValues> = (data) => {
-    console.log("logindata =>", data);
+  const onSubmit: SubmitErrorHandler<FieldValues> = async (data) => {
+    const res = await login(data).unwrap();
+    const user = verifyToken(res.data.accessToken);
+    console.log(user);
+    dispatch(setUser({ user: user, token: res.data.accessToken }));
   };
 
   return (
