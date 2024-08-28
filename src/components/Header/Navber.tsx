@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { logOut } from "../../redux/features/auth/authSlice";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Container from "../Ui/Container";
 
 const Navbar = () => {
+  const { user } = useAppSelector((state) => state.auth);
   // State to manage the mobile menu toggle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -87,24 +88,36 @@ const Navbar = () => {
 
           {/* Desktop Login/Registration */}
           <div className="hidden md:flex space-x-4">
-            <Link
-              to="/signup"
-              className="px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
-            >
-              Signup
-            </Link>
-            <Link
-              to="/login"
-              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition-all duration-200"
-            >
-              Login
-            </Link>
-            <Button
-              onClick={handleLogout}
-              className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200"
-            >
-              Logout
-            </Button>
+            {!user && (
+              <>
+                <Link
+                  to="/signup"
+                  className="px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
+                >
+                  Signup
+                </Link>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition-all duration-200"
+                >
+                  Login
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <>
+                <Button
+                  onClick={handleLogout}
+                  className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200"
+                >
+                  Logout
+                </Button>
+                <Button className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200">
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -150,24 +163,42 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/signup"
-                  className="block px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Signup
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/login"
-                  className="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Login
-                </Link>
-              </li>
+              {!user && (
+                <>
+                  <li>
+                    <Link
+                      to="/signup"
+                      className="block px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Signup
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/login"
+                      className="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                  </li>
+                </>
+              )}
+              {/* auth related button */}
+              {user && (
+                <>
+                  <Button
+                    onClick={handleLogout}
+                    className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200"
+                  >
+                    Logout
+                  </Button>
+                  <Button className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200">
+                    <Link to="/dashboard">Dashboard</Link>
+                  </Button>
+                </>
+              )}
             </ul>
           </div>
         </div>
