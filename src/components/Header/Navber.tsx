@@ -1,6 +1,9 @@
+import { Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { logOut } from "../../redux/features/auth/authSlice";
+import { useAppDispatch } from "../../redux/hooks";
 import Container from "../Ui/Container";
 
 const Navbar = () => {
@@ -10,6 +13,12 @@ const Navbar = () => {
   // Function to toggle the menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    console.log("logout successfully");
+    dispatch(logOut());
   };
 
   return (
@@ -90,6 +99,12 @@ const Navbar = () => {
             >
               Login
             </Link>
+            <Button
+              onClick={handleLogout}
+              className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200"
+            >
+              Logout
+            </Button>
           </div>
 
           {/* Mobile Menu */}

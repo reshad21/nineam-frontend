@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import ProtectedRoute from "../components/Layout/ProtectedRoute";
 import Aboutpage from "../pages/Aboutpage";
 import ContactUsPage from "../pages/Contactpage";
 import Homepage from "../pages/Homepage";
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Productpage />,
+        element: (
+          <ProtectedRoute>
+            <Productpage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/contact",
