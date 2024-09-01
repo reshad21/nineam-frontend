@@ -1,4 +1,3 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import {
   Button,
   Space,
@@ -6,6 +5,7 @@ import {
   type TableColumnsType,
   type TableProps,
 } from "antd";
+import { Link } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../../redux/features/Bike/bikeApi";
 
 interface Bike {
@@ -43,21 +43,6 @@ const ViewAllBikePage = () => {
         year,
       })
     ) || [];
-
-  const handleView = (record: DataType) => {
-    console.log("View", record);
-    // Implement view logic
-  };
-
-  const handleUpdate = (record: DataType) => {
-    console.log("Update", record);
-    // Implement update logic
-  };
-
-  const handleDelete = (record: DataType) => {
-    console.log("Delete", record);
-    // Implement delete logic
-  };
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -99,53 +84,25 @@ const ViewAllBikePage = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            style={{
-              backgroundColor: "#4CAF50",
-              color: "#fff",
-              borderRadius: 4,
-              padding: "4px 10px",
-            }}
-            icon={<EyeOutlined />}
-            onClick={() => handleView(record)}
-          >
-            View
-          </Button>
-          <Button
-            style={{
-              backgroundColor: "#1890ff",
-              color: "#fff",
-              borderRadius: 4,
-              padding: "4px 10px",
-            }}
-            icon={<EditOutlined />}
-            onClick={() => handleUpdate(record)}
-          >
-            Update
-          </Button>
-          <Button
-            style={{
-              backgroundColor: "#f5222d",
-              color: "#fff",
-              borderRadius: 4,
-              padding: "4px 10px",
-            }}
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record)}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
+      render: (item) => {
+        console.log(item);
+        return (
+          <Space size="middle">
+            <Link to={`/admin/bike-details/${item.key}`}>
+              <Button>View</Button>
+            </Link>
+            <Button>Update</Button>
+            <Button>Delete</Button>
+          </Space>
+        );
+      },
     },
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
+    _pagination,
     filters,
-    sorter,
+    _sorter,
     extra
   ) => {
     console.log("params", filters, extra);

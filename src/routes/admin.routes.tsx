@@ -1,5 +1,6 @@
-import CreateAdmin from "../pages/Dashboard/Admin/CreateAdmin";
+import BikeDetails from "../pages/Dashboard/Admin/BikeDetails";
 import CreateBikepage from "../pages/Dashboard/Admin/CreateBikePage";
+import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 import ViewAllBikePage from "../pages/Dashboard/Admin/ViewAllBikePage";
 
 export const adminPaths = [
@@ -9,13 +10,8 @@ export const adminPaths = [
   //   element: <AdminDashboard />,
   // },
   {
-    name: "User Management",
+    name: "Product Management",
     children: [
-      {
-        name: "Create Admin",
-        path: "create-admin",
-        element: <CreateAdmin />,
-      },
       {
         name: "Create Bikes",
         path: "create-bikes",
@@ -26,6 +22,11 @@ export const adminPaths = [
         path: "view-bikes",
         element: <ViewAllBikePage />,
       },
+      {
+        name: "Bike Detail",
+        path: "bike-details/:bikeId",
+        element: <BikeDetails />,
+      },
     ],
   },
   {
@@ -35,6 +36,16 @@ export const adminPaths = [
         name: "Returned",
         path: "returned-bike",
         element: "returned",
+      },
+    ],
+  },
+  {
+    name: "User Management",
+    children: [
+      {
+        name: "Create Admin",
+        path: "create-admin",
+        element: <CreateAdmin />,
       },
     ],
   },

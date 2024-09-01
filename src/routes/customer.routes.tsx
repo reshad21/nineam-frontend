@@ -1,4 +1,4 @@
-import CreateAdmin from "../pages/Dashboard/Admin/CreateAdmin";
+import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 
 export const customerPaths = [
   //   {
