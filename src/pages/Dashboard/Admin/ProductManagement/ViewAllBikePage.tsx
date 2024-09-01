@@ -6,7 +6,10 @@ import {
   type TableProps,
 } from "antd";
 import { Link } from "react-router-dom";
-import { useGetAllProductsQuery } from "../../../../redux/features/Bike/bikeApi";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "../../../../redux/features/Bike/bikeApi";
 
 interface Bike {
   _id: string;
@@ -30,6 +33,8 @@ interface DataType {
 
 const ViewAllBikePage = () => {
   const { data: bikes } = useGetAllProductsQuery(undefined);
+
+  const [deleteBike] = useDeleteProductMutation();
 
   const tabelData: DataType[] =
     bikes?.data.map(
@@ -85,14 +90,23 @@ const ViewAllBikePage = () => {
       title: "Actions",
       key: "actions",
       render: (item) => {
-        console.log(item);
+        const handleDelete = async () => {
+          try {
+            await deleteBike(item.key).unwrap();
+            console.log("Bike deleted successfully");
+          } catch (error) {
+            console.error("Failed to delete bike", error);
+          }
+        };
         return (
           <Space size="middle">
             <Link to={`/admin/update-bike/${item.key}`}>
               <Button>Update</Button>
             </Link>
             <Button>view</Button>
-            <Button>Delete</Button>
+            <Button onClick={handleDelete} danger>
+              Delete
+            </Button>
           </Space>
         );
       },

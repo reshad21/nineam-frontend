@@ -12,19 +12,35 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Row } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 import BrForm from "../../../../components/Form/BrForm";
 import BrInput from "../../../../components/Form/BrInput";
 import BrSelect from "../../../../components/Form/BrSelect";
 import BrTextArea from "../../../../components/Form/BrTextArea";
+import { TBikeDataProps } from "../../../../components/Ui/BikeCard";
+import { useAddProductsMutation } from "../../../../redux/features/Bike/bikeApi";
 import { bikeSchema } from "../../../../schemas/bikeSchema.schema";
+import { TResponse } from "../../../../types/global";
 
 const CreateBikepage = () => {
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // Convert pricePerHour and cc to numbers
-    data.pricePerHour = parseFloat(data.pricePerHour);
-    data.cc = parseFloat(data.cc);
+  const [createBike] = useAddProductsMutation();
 
-    console.log("create bike data==>", data);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Updating...");
+    try {
+      // Convert pricePerHour and cc to numbers
+      data.pricePerHour = parseFloat(data.pricePerHour);
+      data.cc = parseFloat(data.cc);
+      data.year = parseInt(data.year as string, 10);
+      const res = (await createBike(data)) as TResponse<TBikeDataProps>;
+      if (res.error) {
+        toast.error(res.error?.data?.message, { id: toastId });
+      } else {
+        toast.success("Bike created successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
   };
 
   // Convert year options to an array of objects with value and label properties

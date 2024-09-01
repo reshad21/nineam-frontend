@@ -70,7 +70,7 @@ const productApi = baseApi.injectEndpoints({
 
         deleteProduct: builder.mutation({
             query: (id) => {
-                console.log("Deleting todo with id:", id);
+                console.log("inside base api=>", id);
                 return {
                     url: `/bikes/${id}`,
                     method: 'DELETE',
