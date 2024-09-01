@@ -28,7 +28,7 @@ const productApi = baseApi.injectEndpoints({
 
         getProductById: builder.query({
             query: (id) => ({
-                url: `/product/${id}`,
+                url: `/bikes/${id}`,
                 method: 'GET',
             }),
             providesTags: (id) => [{ type: 'bikes', id }]
@@ -60,7 +60,7 @@ const productApi = baseApi.injectEndpoints({
             query: (data) => {
                 console.log("inside base api=>", data);
                 return {
-                    url: '/product',
+                    url: '/bikes',
                     method: 'POST',
                     body: data,
                 }
@@ -72,7 +72,7 @@ const productApi = baseApi.injectEndpoints({
             query: (id) => {
                 console.log("Deleting todo with id:", id);
                 return {
-                    url: `/product/${id}`,
+                    url: `/bikes/${id}`,
                     method: 'DELETE',
                 }
             },
@@ -83,8 +83,8 @@ const productApi = baseApi.injectEndpoints({
             query: ({ id, data }) => {
                 console.log("Updating product with id:", id, "and data:", data);
                 return {
-                    url: `/product/${id}`,
-                    method: 'PUT',
+                    url: `/bikes/${id}`,
+                    method: 'PATCH',
                     body: data,
                 }
             },

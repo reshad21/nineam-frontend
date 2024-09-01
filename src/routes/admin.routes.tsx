@@ -1,7 +1,7 @@
-import BikeDetails from "../pages/Dashboard/Admin/BikeDetails";
-import CreateBikepage from "../pages/Dashboard/Admin/CreateBikePage";
+import CreateBikepage from "../pages/Dashboard/Admin/ProductManagement/CreateBikePage";
+import UpdateBike from "../pages/Dashboard/Admin/ProductManagement/UpdateBike";
+import ViewAllBikePage from "../pages/Dashboard/Admin/ProductManagement/ViewAllBikePage";
 import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
-import ViewAllBikePage from "../pages/Dashboard/Admin/ViewAllBikePage";
 
 export const adminPaths = [
   // {
@@ -23,9 +23,9 @@ export const adminPaths = [
         element: <ViewAllBikePage />,
       },
       {
-        name: "Bike Detail",
-        path: "bike-details/:bikeId",
-        element: <BikeDetails />,
+        // name: "Bike Detail",
+        path: "update-bike/:bikeId",
+        element: <UpdateBike />,
       },
     ],
   },

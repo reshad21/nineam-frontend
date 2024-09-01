@@ -6,7 +6,7 @@ import {
   type TableProps,
 } from "antd";
 import { Link } from "react-router-dom";
-import { useGetAllProductsQuery } from "../../../redux/features/Bike/bikeApi";
+import { useGetAllProductsQuery } from "../../../../redux/features/Bike/bikeApi";
 
 interface Bike {
   _id: string;
@@ -88,10 +88,10 @@ const ViewAllBikePage = () => {
         console.log(item);
         return (
           <Space size="middle">
-            <Link to={`/admin/bike-details/${item.key}`}>
-              <Button>View</Button>
+            <Link to={`/admin/update-bike/${item.key}`}>
+              <Button>Update</Button>
             </Link>
-            <Button>Update</Button>
+            <Button>view</Button>
             <Button>Delete</Button>
           </Space>
         );
