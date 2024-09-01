@@ -11,7 +11,7 @@ const BrSelect = ({ label, name, options }: TBRSelectProps) => {
   return (
     <Controller
       name={name}
-      render={(field) => (
+      render={({ field }) => (
         <Form.Item label={label}>
           <Select {...field} style={{ width: "100%" }} options={options} />
         </Form.Item>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import BrForm from "../../../../components/Form/BrForm";
 import BrInput from "../../../../components/Form/BrInput";
+import { TBikeDataProps } from "../../../../components/Ui/BikeCard";
 import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
@@ -36,7 +37,7 @@ const UpdateBike = () => {
       const res = (await updateBikePrice({
         id: bikeId,
         data: payload,
-      })) as TResponse;
+      })) as TResponse<TBikeDataProps>;
 
       if (res.error) {
         toast.error(res.error?.data?.message, { id: toastId });
