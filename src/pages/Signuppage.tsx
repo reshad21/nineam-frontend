@@ -1,14 +1,32 @@
 import { Button, Col, Row, Typography } from "antd";
 import { FieldValues, SubmitErrorHandler } from "react-hook-form";
+import { toast } from "sonner";
 import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
 import BrTextArea from "../components/Form/BrTextArea";
+import { useRegistrationMutation } from "../redux/features/auth/authApi";
+import { TResponse } from "../types/global";
+import { TUser } from "../types/register.type";
 
 const { Title } = Typography;
 
 const SignUpPage = () => {
-  const onSubmit: SubmitErrorHandler<FieldValues> = (data) => {
-    console.log("signup data =>", data);
+  const [registration] = useRegistrationMutation();
+
+  const onSubmit: SubmitErrorHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("User is creating...");
+    try {
+      const role = "user";
+      const registerData = { ...data, role };
+      const res = (await registration(registerData)) as TResponse<TUser>;
+      if (res.error) {
+        toast.error(res.error?.data?.message, { id: toastId });
+      } else {
+        toast.success("User created successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
   };
 
   return (
@@ -17,7 +35,6 @@ const SignUpPage = () => {
       align="middle"
       style={{
         minHeight: "100vh",
-        // background: "linear-gradient(135deg, #ff4c30 0%, #ff9472 100%)",
         padding: "20px",
       }}
     >
