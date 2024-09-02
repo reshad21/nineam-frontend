@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
 import { customerPaths } from "../../routes/customer.routes";
+import { usersPaths } from "../../routes/user.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 
 const { Sider } = Layout;
 
 const userRole = {
   ADMIN: "admin",
+  USER: "user",
   CUSTOMER: "customer",
 };
 
@@ -21,6 +23,9 @@ const Sidebar = () => {
   switch (role!) {
     case userRole.ADMIN:
       sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
+      break;
+    case userRole.USER:
+      sidebarItems = sidebarItemsGenerator(usersPaths, userRole.ADMIN);
       break;
     case userRole.CUSTOMER:
       sidebarItems = sidebarItemsGenerator(customerPaths, userRole.CUSTOMER);

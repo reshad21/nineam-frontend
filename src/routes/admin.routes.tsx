@@ -24,7 +24,7 @@ export const adminPaths = [
         element: <ViewAllBikePage />,
       },
       {
-        // name: "Bike Detail",
+        // name: "Update Bike", //need to update this
         path: "update-bike/:bikeId",
         element: <UpdateBike />,
       },

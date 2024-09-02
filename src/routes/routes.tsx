@@ -5,6 +5,7 @@ import { routeGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import { customerPaths } from "./customer.routes";
 import { frontendPaths } from "./frontend.routes";
+import { usersPaths } from "./user.routes";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
     path: "/customer",
     element: <DashboardLayout />,
     children: routeGenerator(customerPaths),
+  },
+  {
+    path: "/user",
+    element: <DashboardLayout />,
+    children: routeGenerator(usersPaths),
   },
 ]);
 
