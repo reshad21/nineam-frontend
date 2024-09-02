@@ -20,7 +20,15 @@ const authApi = baseApi.injectEndpoints({
             },
         }),
 
+        getAllUsers: builder.query({
+            query: () => ({
+                url: `/users/all-users`,
+                method: 'GET',
+            }),
+            // providesTags: (id) => [{ type: 'bikes', id }]
+        }),
+
     })
 });
 
-export const { useLoginMutation, useRegistrationMutation } = authApi;
+export const { useLoginMutation, useRegistrationMutation, useGetAllUsersQuery } = authApi;

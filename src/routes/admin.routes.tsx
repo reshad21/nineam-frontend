@@ -1,6 +1,7 @@
 import CreateBikepage from "../pages/Dashboard/Admin/ProductManagement/CreateBikePage";
 import UpdateBike from "../pages/Dashboard/Admin/ProductManagement/UpdateBike";
 import ViewAllBikePage from "../pages/Dashboard/Admin/ProductManagement/ViewAllBikePage";
+import AllUsers from "../pages/Dashboard/Admin/UserManagement/AllUsers";
 import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 
 export const adminPaths = [
@@ -46,6 +47,11 @@ export const adminPaths = [
         name: "Create Admin",
         path: "create-admin",
         element: <CreateAdmin />,
+      },
+      {
+        name: "All Users",
+        path: "all-users",
+        element: <AllUsers />,
       },
     ],
   },

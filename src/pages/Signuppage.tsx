@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Row, Typography } from "antd";
 import { FieldValues, SubmitErrorHandler } from "react-hook-form";
 import { toast } from "sonner";
@@ -5,6 +6,7 @@ import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
 import BrTextArea from "../components/Form/BrTextArea";
 import { useRegistrationMutation } from "../redux/features/auth/authApi";
+import { userSchema } from "../schemas/userRegistrationSchema";
 import { TResponse } from "../types/global";
 import { TUser } from "../types/register.type";
 
@@ -53,7 +55,7 @@ const SignUpPage = () => {
           >
             Sign Up
           </Title>
-          <BrForm onSubmit={onSubmit}>
+          <BrForm onSubmit={onSubmit} resolver={zodResolver(userSchema)}>
             <Row gutter={16}>
               <Col span={12}>
                 <BrInput type="text" name="name" label="Name:" />
