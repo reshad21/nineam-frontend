@@ -2,7 +2,7 @@ import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 
 export const usersPaths = [
   {
-    name: "Dashboard",
+    name: "Profile Management",
     path: "dashboard",
     element: <UserDashboard />,
   },

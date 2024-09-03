@@ -4,6 +4,7 @@ export type TUser = {
     role: string;
     phone: string;
     name: string;
+    address: string;
     iat: number;
     exp: number;
 }
