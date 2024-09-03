@@ -1,3 +1,4 @@
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import CreateBikepage from "../pages/Dashboard/Admin/ProductManagement/CreateBikePage";
 import UpdateBike from "../pages/Dashboard/Admin/ProductManagement/UpdateBike";
 import ViewAllBikePage from "../pages/Dashboard/Admin/ProductManagement/ViewAllBikePage";
@@ -5,11 +6,11 @@ import AllUsers from "../pages/Dashboard/Admin/UserManagement/AllUsers";
 import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 
 export const adminPaths = [
-  // {
-  //   name: "Dashboard",
-  //   path: "dashboard",
-  //   element: <AdminDashboard />,
-  // },
+  {
+    name: "Dashboard",
+    path: "dashboard",
+    element: <AdminDashboard />,
+  },
   {
     name: "Product Management",
     children: [

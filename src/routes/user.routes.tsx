@@ -1,3 +1,4 @@
+import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 
 export const usersPaths = [
@@ -6,14 +7,14 @@ export const usersPaths = [
     path: "dashboard",
     element: <UserDashboard />,
   },
-  //   {
-  //     name: "Bike",
-  //     children: [
-  //       {
-  //         name: "Rent Bike",
-  //         path: "rent-bike",
-  //         element: <CreateAdmin />,
-  //       },
-  //     ],
-  //   },
+  {
+    name: "Bike",
+    children: [
+      {
+        name: "Rent Bike",
+        path: "rent-bike",
+        element: <CreateAdmin />,
+      },
+    ],
+  },
 ];

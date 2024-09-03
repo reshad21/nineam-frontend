@@ -13,23 +13,23 @@ const router = createBrowserRouter([
     element: <App />,
     children: frontendPaths,
   },
-  {
-    path: "/dashboard",
-    element: <DashboardLayout />,
-  },
+  // {
+  //   path: "/dashboard",
+  //   element: <DashboardLayout />,
+  // },
 
   {
-    path: "/admin",
+    path: "/admin/dashboard",
     element: <DashboardLayout />,
     children: routeGenerator(adminPaths),
   },
   {
-    path: "/customer",
+    path: "/customer/dashboard",
     element: <DashboardLayout />,
     children: routeGenerator(customerPaths),
   },
   {
-    path: "/user",
+    path: "/user/dashboard",
     element: <DashboardLayout />,
     children: routeGenerator(usersPaths),
   },
