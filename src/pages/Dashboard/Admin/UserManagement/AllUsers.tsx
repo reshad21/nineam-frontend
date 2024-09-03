@@ -6,18 +6,10 @@ import {
   type TableProps,
 } from "antd";
 import { Link } from "react-router-dom";
-import { useDeleteProductMutation } from "../../../../redux/features/Bike/bikeApi";
-import { useGetAllUsersQuery } from "../../../../redux/features/auth/authApi";
-
-// interface Bike {
-//   _id: string;
-//   brand: string;
-//   cc: number;
-//   model: string;
-//   name: string;
-//   pricePerHour: number;
-//   year: number;
-// }
+import {
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
+} from "../../../../redux/features/auth/authApi";
 
 type User = {
   _id: string;
@@ -26,16 +18,6 @@ type User = {
   phone: string;
   role: "user" | "admin";
 };
-
-// interface DataType {
-//   key: string;
-//   name: string;
-//   cc: number;
-//   model: string;
-//   brand: string;
-//   pricePerHour: number;
-//   year: number;
-// }
 
 type DataType = {
   _id: string;
@@ -48,7 +30,7 @@ type DataType = {
 const AllUsers = () => {
   const { data: users } = useGetAllUsersQuery(undefined);
 
-  const [deleteBike] = useDeleteProductMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const tabelData: DataType[] =
     users?.data.map(({ _id, name, email, phone, role }: User) => ({
@@ -82,8 +64,8 @@ const AllUsers = () => {
       render: (item) => {
         const handleDelete = async () => {
           try {
-            await deleteBike(item.key).unwrap();
-            console.log("Bike deleted successfully");
+            await deleteUser(item.key).unwrap();
+            console.log("User deleted successfully");
           } catch (error) {
             console.error("Failed to delete bike", error);
           }

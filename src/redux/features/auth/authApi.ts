@@ -25,10 +25,21 @@ const authApi = baseApi.injectEndpoints({
                 url: `/users/all-users`,
                 method: 'GET',
             }),
-            // providesTags: (id) => [{ type: 'bikes', id }]
+            providesTags: ['user']
+        }),
+
+        deleteUser: builder.mutation({
+            query: (id) => {
+                console.log("inside base api=>", id);
+                return {
+                    url: `/users/${id}`,
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: ['user']
         }),
 
     })
 });
 
-export const { useLoginMutation, useRegistrationMutation, useGetAllUsersQuery } = authApi;
+export const { useLoginMutation, useRegistrationMutation, useGetAllUsersQuery, useDeleteUserMutation } = authApi;
