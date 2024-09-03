@@ -2,7 +2,6 @@ import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
-import { customerPaths } from "../../routes/customer.routes";
 import { usersPaths } from "../../routes/user.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 
@@ -16,8 +15,7 @@ const userRole = {
 
 const Sidebar = () => {
   const role = useAppSelector((state) => state.auth.user?.role);
-  // const role = "customer";
-
+  console.log(role);
   let sidebarItems;
 
   switch (role!) {
@@ -25,11 +23,9 @@ const Sidebar = () => {
       sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
       break;
     case userRole.USER:
-      sidebarItems = sidebarItemsGenerator(usersPaths, userRole.ADMIN);
+      sidebarItems = sidebarItemsGenerator(usersPaths, userRole.USER);
       break;
-    case userRole.CUSTOMER:
-      sidebarItems = sidebarItemsGenerator(customerPaths, userRole.CUSTOMER);
-      break;
+
     default:
       break;
   }
