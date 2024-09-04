@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [login] = useLoginMutation();
 
   const defaultValues = {
-    email: "john@example.com",
+    email: "john1@example.com",
     password: "password123",
   };
 
