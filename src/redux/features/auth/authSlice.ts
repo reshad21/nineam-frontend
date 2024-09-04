@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 export type TUser = {
+    [x: string]: any;
     email: string;
     role: string;
     phone: string;

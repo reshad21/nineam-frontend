@@ -51,8 +51,27 @@ const authApi = baseApi.injectEndpoints({
             invalidatesTags: ['user']
         }),
 
+        updateUserProfile: builder.mutation({
+            query: ({ id, data }) => {
+                console.log("Updating user profile with id:", id, "and data:", data);
+                return {
+                    url: `/users/me/${id}`,
+                    method: 'PATCH',
+                    body: data,
+                }
+            },
+            invalidatesTags: ['user']
+        }),
+
 
     })
 });
 
-export const { useLoginMutation, useRegistrationMutation, useGetAllUsersQuery, useDeleteUserMutation, useUpdateUserRoleMutation } = authApi;
+export const {
+    useLoginMutation,
+    useRegistrationMutation,
+    useGetAllUsersQuery,
+    useDeleteUserMutation,
+    useUpdateUserRoleMutation,
+    useUpdateUserProfileMutation
+} = authApi;

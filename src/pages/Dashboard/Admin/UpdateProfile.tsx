@@ -1,11 +1,18 @@
 import { Button, Col, Flex } from "antd";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 import BrForm from "../../../components/Form/BrForm";
 import BrInput from "../../../components/Form/BrInput";
+import { useUpdateUserProfileMutation } from "../../../redux/features/auth/authApi";
 import { useAppSelector } from "../../../redux/hooks";
+import { TResponse } from "../../../types/global";
+import { TUser } from "../../../types/register.type";
 
 const UpdateProfile = () => {
   const { user } = useAppSelector((state) => state.auth);
-  console.log(user);
+  // const dispatch = useAppDispatch();
+
+  const [updateProfile] = useUpdateUserProfileMutation();
 
   if (!user) return <div>Loading...</div>;
 
@@ -16,8 +23,26 @@ const UpdateProfile = () => {
     phone: user?.phone,
   };
 
-  const onSubmit = () => {
-    console.log("updating user information");
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Updating...");
+    try {
+      const res = (await updateProfile({
+        id: user.id,
+        data,
+      })) as TResponse<TUser>;
+
+      if (res.error) {
+        toast.error(res.error?.data?.message, { id: toastId });
+      } else {
+        // console.log("dispatch data ==>", res);
+        // const { data: usdata } = res;
+        // console.log("dispatch data ==>", usdata?.data);
+        // dispatch(setUser({ user: res.data, token }));
+        toast.success("User updated successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
   };
 
   return (
