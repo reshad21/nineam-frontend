@@ -1,3 +1,5 @@
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
 
 const AdminDashboard = () => {
@@ -34,9 +36,9 @@ const AdminDashboard = () => {
         </div>
 
         <div className="mt-6 text-right">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200">
-            Edit
-          </button>
+          <Link to={`/${user?.role}/update-profile`}>
+            <Button className="">Edit</Button>
+          </Link>
         </div>
       </div>
     </div>
