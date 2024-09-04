@@ -5,11 +5,12 @@ import {
   type TableColumnsType,
   type TableProps,
 } from "antd";
-import { Link } from "react-router-dom";
 import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
+  useUpdateUserRoleMutation,
 } from "../../../../redux/features/auth/authApi";
+import { useAppSelector } from "../../../../redux/hooks";
 
 type User = {
   _id: string;
@@ -28,9 +29,13 @@ type DataType = {
 };
 
 const AllUsers = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   const { data: users } = useGetAllUsersQuery(undefined);
 
   const [deleteUser] = useDeleteUserMutation();
+
+  const [updateRole] = useUpdateUserRoleMutation();
 
   const tabelData: DataType[] =
     users?.data.map(({ _id, name, email, phone, role }: User) => ({
@@ -70,12 +75,18 @@ const AllUsers = () => {
             console.error("Failed to delete bike", error);
           }
         };
+
+        const handleUpdate = () => {
+          const payload = {
+            id: item?.key,
+            data: user?.role,
+          };
+          updateRole(payload);
+        };
+
         return (
           <Space size="middle">
-            <Link to={`/admin/update-bike/${item.key}`}>
-              <Button>Update</Button>
-            </Link>
-            <Button>view</Button>
+            <Button onClick={handleUpdate}>Update</Button>
             <Button onClick={handleDelete} danger>
               Delete
             </Button>
