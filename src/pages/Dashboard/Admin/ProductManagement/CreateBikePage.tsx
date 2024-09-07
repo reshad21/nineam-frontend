@@ -26,7 +26,6 @@ const CreateBikepage = () => {
   const [createBike] = useAddProductsMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("all creating bike data==>", data);
     const toastId = toast.loading("Updating...");
     try {
       // Ensure type conversions here

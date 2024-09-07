@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Row, Typography } from "antd";
-import { FieldValues, SubmitErrorHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form"; // Change from SubmitErrorHandler to SubmitHandler
 import { toast } from "sonner";
 import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
@@ -15,7 +15,7 @@ const { Title } = Typography;
 const SignUpPage = () => {
   const [registration] = useRegistrationMutation();
 
-  const onSubmit: SubmitErrorHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("User is creating...");
     try {
       const role = "user";
