@@ -103,7 +103,9 @@ const ViewAllBikePage = () => {
             <Link to={`/admin/update-bike/${item.key}`}>
               <Button>Update</Button>
             </Link>
-            <Button>view</Button>
+            <Link to={`/admin/view-bike/${item.key}`}>
+              <Button>View</Button>
+            </Link>
             <Button onClick={handleDelete} danger>
               Delete
             </Button>

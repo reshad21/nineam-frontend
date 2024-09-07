@@ -2,6 +2,7 @@ import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import CreateBikepage from "../pages/Dashboard/Admin/ProductManagement/CreateBikePage";
 import UpdateBike from "../pages/Dashboard/Admin/ProductManagement/UpdateBike";
 import ViewAllBikePage from "../pages/Dashboard/Admin/ProductManagement/ViewAllBikePage";
+import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
 import UpdateProfile from "../pages/Dashboard/Admin/UpdateProfile";
 import AllUsers from "../pages/Dashboard/Admin/UserManagement/AllUsers";
 
@@ -33,6 +34,11 @@ export const adminPaths = [
         // name: "Update Bike", //need to update this
         path: "update-bike/:bikeId",
         element: <UpdateBike />,
+      },
+      {
+        // name: "Update Bike", //need to update this
+        path: "view-bike/:bikeId",
+        element: <ViewBike />,
       },
     ],
   },
