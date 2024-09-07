@@ -11,9 +11,10 @@ const BrSelect = ({ label, name, options }: TBRSelectProps) => {
   return (
     <Controller
       name={name}
-      render={({ field }) => (
+      render={({ field, fieldState: { error } }) => (
         <Form.Item label={label}>
           <Select {...field} style={{ width: "100%" }} options={options} />
+          {error && <small>{error.message}</small>}
         </Form.Item>
       )}
     />

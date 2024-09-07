@@ -26,12 +26,14 @@ const CreateBikepage = () => {
   const [createBike] = useAddProductsMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log("all creating bike data==>", data);
     const toastId = toast.loading("Updating...");
     try {
-      // Convert pricePerHour and cc to numbers
+      // Ensure type conversions here
       data.pricePerHour = parseFloat(data.pricePerHour);
       data.cc = parseFloat(data.cc);
       data.year = parseInt(data.year as string, 10);
+
       const res = (await createBike(data)) as TResponse<TBikeDataProps>;
       if (res.error) {
         toast.error(res.error?.data?.message, { id: toastId });

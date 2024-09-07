@@ -12,9 +12,10 @@ const BrTextArea = ({ name, label, rows = 4 }: TTextAreaProps) => {
     <div className="w-full mb-2">
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
             <Input.TextArea {...field} id={name} rows={rows} />
+            {error && <small>{error.message}</small>}
           </Form.Item>
         )}
       />

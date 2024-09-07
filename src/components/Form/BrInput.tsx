@@ -12,9 +12,10 @@ const BrInput = ({ type, name, label }: TInputProps) => {
     <div className="w-full mb-2">
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
             <Input {...field} id={name} type={type} />
+            {error && <small>{error.message}</small>}
           </Form.Item>
         )}
       />
