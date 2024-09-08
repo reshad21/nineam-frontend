@@ -82,11 +82,19 @@ const BikeListing = () => {
     },
   ];
 
+  // Handle input change
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <>
       <div className="search-box my-5">
-        {/* Pass setSearchTerm as a prop to SearchBox */}
-        <SearchBox onSearch={(value) => setSearchTerm(value)} />
+        {/* Pass both onSearch and onChange to SearchBox */}
+        <SearchBox
+          onSearch={(value) => setSearchTerm(value)}
+          onChange={handleInputChange}
+        />
       </div>
 
       {/* Handle loading and error states */}
