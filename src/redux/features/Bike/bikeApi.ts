@@ -4,10 +4,10 @@ const productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
         getAllProducts: builder.query({
-            query: (category) => {
+            query: (searchTerm) => {
                 const params = new URLSearchParams();
-                if (category) {
-                    params.append('category', category);
+                if (searchTerm) {
+                    params.append('searchTerm', searchTerm);
                 }
                 return {
                     url: `/bikes`,

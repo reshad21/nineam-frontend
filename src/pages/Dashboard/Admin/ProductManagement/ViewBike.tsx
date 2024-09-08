@@ -66,7 +66,7 @@ const ViewBike = () => {
         </div>
         <div className="flex flex-col gap-2">
           <button className="bg-green-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 w-full">
-            Rent Now
+            Book Now
           </button>
         </div>
       </div>

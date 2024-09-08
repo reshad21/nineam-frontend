@@ -1,3 +1,6 @@
+import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
+import UpdateProfile from "../pages/Dashboard/Admin/UpdateProfile";
+import BikeListing from "../pages/Dashboard/User/BikeManagement/BikeListing";
 import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 
 export const usersPaths = [
@@ -7,12 +10,42 @@ export const usersPaths = [
     element: <UserDashboard />,
   },
   {
-    name: "Bike",
+    name: "Update Profile",
+    path: "update-profile",
+    element: <UpdateProfile />,
+  },
+  {
+    name: "Bike Management",
     children: [
       {
-        name: "Rent Bike",
-        path: "rent-bike",
-        element: "Rent Bike",
+        name: "Bike Listing",
+        path: "bike-listing",
+        element: <BikeListing />,
+      },
+      // {
+      //   name: "Bike Detail",
+      //   path: "bike-detail",
+      //   element: "Bike Detail",
+      // },
+      {
+        // name: "Update Bike", //need to update this
+        path: "view-bike/:bikeId",
+        element: <ViewBike />,
+      },
+    ],
+  },
+  {
+    name: "Rental Management",
+    children: [
+      {
+        name: "Booking",
+        path: "bike-booking",
+        element: "Booking",
+      },
+      {
+        name: "My Rentals",
+        path: "my-rentals",
+        element: "My Rentals",
       },
     ],
   },

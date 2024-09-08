@@ -86,7 +86,7 @@ const AllUsers = () => {
 
         return (
           <Space size="middle">
-            <Button onClick={handleUpdate}>Update</Button>
+            <Button onClick={handleUpdate}>ROLE CHANGE</Button>
             <Button onClick={handleDelete} danger>
               Delete
             </Button>
