@@ -1,8 +1,8 @@
-import { Button, Space, Table, type TableColumnsType } from "antd";
+import { Button, Space, Table, TableProps, type TableColumnsType } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import SearchBox from "../../../../components/Ui/SearchBox";
 import { useGetAllProductsQuery } from "../../../../redux/features/Bike/bikeApi";
+import { TQueryParam } from "../../../../types/global";
 
 interface Bike {
   _id: string;
@@ -25,11 +25,16 @@ interface DataType {
 }
 
 const BikeListing = () => {
-  // State to store the search term
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
+  const { data: bikes, isLoading, error } = useGetAllProductsQuery(params);
+  console.log(params);
 
-  // Pass the searchTerm to the query
-  const { data: bikes, isLoading, error } = useGetAllProductsQuery(searchTerm);
+  console.log("different data==>", bikes);
+
+  // Handle loading and error states
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading bike data.</div>;
+  if (!bikes.data) return <div>No bike data available.</div>;
 
   // Transform the data for the table
   const tabelData: DataType[] =
@@ -50,7 +55,40 @@ const BikeListing = () => {
     {
       title: "Name",
       dataIndex: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      showSorterTooltip: { target: "full-header" },
+      filters: [
+        {
+          text: "Sport Bike",
+          value: "Sport Bike",
+        },
+        {
+          text: "Dirt Bike",
+          value: "Dirt Bike",
+        },
+        {
+          text: "Electric Scooter vespa",
+          value: "Electric Scooter vespa",
+        },
+      ],
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      showSorterTooltip: { target: "full-header" },
+      filters: [
+        {
+          text: "Yamaha",
+          value: "Yamaha",
+        },
+        {
+          text: "Honda",
+          value: "Honda",
+        },
+        {
+          text: "BMW",
+          value: "BMW",
+        },
+      ],
     },
     {
       title: "cc",
@@ -59,10 +97,6 @@ const BikeListing = () => {
     {
       title: "model",
       dataIndex: "model",
-    },
-    {
-      title: "brand",
-      dataIndex: "brand",
     },
     {
       title: "pricePerHour",
@@ -82,28 +116,33 @@ const BikeListing = () => {
     },
   ];
 
-  // Handle input change
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+  const onChange: TableProps<DataType>["onChange"] = (
+    _pagination,
+    filters,
+    _sorter,
+    extra
+  ) => {
+    if (extra.action === "filter") {
+      const queryParams: TQueryParam[] = [];
+
+      filters.name?.forEach((item) =>
+        queryParams.push({ name: "name", value: item })
+      );
+
+      filters.brand?.forEach((item) =>
+        queryParams.push({ name: "brand", value: item })
+      );
+
+      setParams(queryParams);
+    }
   };
 
   return (
     <>
-      <div className="search-box my-5">
-        {/* Pass both onSearch and onChange to SearchBox */}
-        <SearchBox
-          onSearch={(value) => setSearchTerm(value)}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      {/* Handle loading and error states */}
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.toString()}</p>}
-
       <Table
         columns={columns}
         dataSource={tabelData}
+        onChange={onChange}
         showSorterTooltip={{ target: "sorter-icon" }}
       />
     </>

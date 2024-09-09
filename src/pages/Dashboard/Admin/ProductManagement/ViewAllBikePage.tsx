@@ -37,7 +37,7 @@ const ViewAllBikePage = () => {
   const [deleteBike] = useDeleteProductMutation();
 
   const tabelData: DataType[] =
-    bikes?.data.map(
+    bikes?.data?.result.map(
       ({ _id, brand, cc, model, name, pricePerHour, year }: Bike) => ({
         key: _id,
         brand,

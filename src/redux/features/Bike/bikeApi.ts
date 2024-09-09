@@ -1,14 +1,19 @@
+import { TQueryParam } from "../../../types/global";
 import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
         getAllProducts: builder.query({
-            query: (searchTerm) => {
+            query: (args) => {
                 const params = new URLSearchParams();
-                if (searchTerm) {
-                    params.append('searchTerm', searchTerm);
+
+                if (args) {
+                    args.forEach((item: TQueryParam) => {
+                        params.append(item.name, item.value as string);
+                    });
                 }
+
                 return {
                     url: `/bikes`,
                     method: 'GET',
