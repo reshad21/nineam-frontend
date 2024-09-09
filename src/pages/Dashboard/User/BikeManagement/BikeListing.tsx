@@ -32,16 +32,6 @@ interface DataType {
 }
 
 const BikeListing = () => {
-  // const [params, setParams] = useState<TQueryParam[]>([]);
-  // const {
-  //   data: bikes,
-  //   isLoading,
-  //   isFetching,
-  //   error,
-  // } = useGetAllProductsQuery(params);
-
-  // console.log("different data==>", bikes);
-
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(2);
 
@@ -63,8 +53,6 @@ const BikeListing = () => {
   if (!bikes.data) return <div>No bike data available.</div>;
 
   const metaData = bikes?.meta;
-  console.log("meta data==>", metaData);
-  // {page: 2, limit: 3, total: 8, totalPage: 3}
 
   // Transform the data for the table
   const tabelData: DataType[] =

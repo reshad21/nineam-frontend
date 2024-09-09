@@ -110,7 +110,7 @@ const AllUsers = () => {
       columns={columns}
       dataSource={tabelData}
       onChange={onChange}
-      showSorterTooltip={{ target: "sorter-icon" }}
+      pagination={false}
     />
   );
 };

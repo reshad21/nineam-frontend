@@ -1,15 +1,18 @@
 import {
   Button,
+  Pagination,
   Space,
   Table,
+  TableProps,
   type TableColumnsType,
-  type TableProps,
 } from "antd";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
 } from "../../../../redux/features/Bike/bikeApi";
+import { TQueryParam } from "../../../../types/global";
 
 interface Bike {
   _id: string;
@@ -32,12 +35,33 @@ interface DataType {
 }
 
 const ViewAllBikePage = () => {
-  const { data: bikes } = useGetAllProductsQuery(undefined);
-
   const [deleteBike] = useDeleteProductMutation();
 
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [page, setPage] = useState(2);
+
+  const {
+    data: bikes,
+    isLoading,
+    isFetching,
+    error,
+  } = useGetAllProductsQuery([
+    { name: "limit", value: 6 },
+    { name: "page", value: page },
+    { name: "sort", value: "cc" },
+    ...params,
+  ]);
+
+  // Handle loading and error states
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading bike data.</div>;
+  if (!bikes.data) return <div>No bike data available.</div>;
+
+  const metaData = bikes?.meta;
+
+  // Transform the data for the table
   const tabelData: DataType[] =
-    bikes?.data?.result.map(
+    bikes?.data.map(
       ({ _id, brand, cc, model, name, pricePerHour, year }: Bike) => ({
         key: _id,
         brand,
@@ -49,6 +73,7 @@ const ViewAllBikePage = () => {
       })
     ) || [];
 
+  // Table columns configuration
   const columns: TableColumnsType<DataType> = [
     {
       title: "Name",
@@ -56,17 +81,37 @@ const ViewAllBikePage = () => {
       showSorterTooltip: { target: "full-header" },
       filters: [
         {
-          text: "Joe",
-          value: "Joe",
+          text: "Sport Bike",
+          value: "Sport Bike",
         },
         {
-          text: "Jim",
-          value: "Jim",
+          text: "Dirt Bike",
+          value: "Dirt Bike",
+        },
+        {
+          text: "Electric Scooter vespa",
+          value: "Electric Scooter vespa",
         },
       ],
-      onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ["descend"],
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      showSorterTooltip: { target: "full-header" },
+      filters: [
+        {
+          text: "Yamaha",
+          value: "Yamaha",
+        },
+        {
+          text: "Honda",
+          value: "Honda",
+        },
+        {
+          text: "BMW",
+          value: "BMW",
+        },
+      ],
     },
     {
       title: "cc",
@@ -77,13 +122,8 @@ const ViewAllBikePage = () => {
       dataIndex: "model",
     },
     {
-      title: "brand",
-      dataIndex: "brand",
-    },
-    {
       title: "pricePerHour",
       dataIndex: "pricePerHour",
-      defaultSortOrder: "descend",
       sorter: (a, b) => a.pricePerHour - b.pricePerHour,
     },
     {
@@ -112,6 +152,7 @@ const ViewAllBikePage = () => {
           </Space>
         );
       },
+      width: "1%",
     },
   ];
 
@@ -121,16 +162,37 @@ const ViewAllBikePage = () => {
     _sorter,
     extra
   ) => {
-    console.log("params", filters, extra);
+    if (extra.action === "filter") {
+      const queryParams: TQueryParam[] = [];
+
+      filters.name?.forEach((item) =>
+        queryParams.push({ name: "name", value: item })
+      );
+
+      filters.brand?.forEach((item) =>
+        queryParams.push({ name: "brand", value: item })
+      );
+
+      setParams(queryParams);
+    }
   };
 
   return (
-    <Table
-      columns={columns}
-      dataSource={tabelData}
-      onChange={onChange}
-      showSorterTooltip={{ target: "sorter-icon" }}
-    />
+    <>
+      <Table
+        columns={columns}
+        loading={isFetching}
+        dataSource={tabelData}
+        onChange={onChange}
+        pagination={false}
+      />
+      <Pagination
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+        current={page}
+      />
+    </>
   );
 };
 
