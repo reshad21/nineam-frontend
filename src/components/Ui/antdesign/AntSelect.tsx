@@ -1,22 +1,36 @@
-import { Select, Space } from "antd";
+import { Select, Space, Spin } from "antd";
+import { useGetAllProductsQuery } from "../../../redux/features/Bike/bikeApi"; // Assuming TBikeDataProps is your bike data type
+import { TBikeDataProps } from "../BikeCard";
 
 const AntSelect = ({
   handleChange,
 }: {
   handleChange: (value: string) => void;
 }) => {
+  const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
+
+  if (isLoading) return <Spin />;
+  if (isError) return <div>Error loading options.</div>;
+
+  // Safely handle undefined and ensure correct typing
+  const uniqueBrands = Array.from(
+    new Set(
+      bikes?.data
+        ?.filter((bike: TBikeDataProps) => bike.brand) // Filter to avoid undefined brands
+        .map((bike: TBikeDataProps) => bike.brand)
+    )
+  );
+
   return (
     <Space wrap>
       <Select
-        defaultValue="Yamaha" // Updated default value to match the options
+        defaultValue="Yamaha"
         style={{ width: 120 }}
         onChange={handleChange}
-        options={[
-          { value: "Yamaha", label: "Yamaha" },
-          { value: "Harley-Davidson", label: "Harley-Davidson" },
-          { value: "Kawasaki", label: "Kawasaki" },
-          { value: "BMW", label: "BMW" },
-        ]}
+        options={uniqueBrands.map((brand) => ({
+          value: brand,
+          label: brand,
+        }))}
       />
     </Space>
   );
