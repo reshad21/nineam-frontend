@@ -1,4 +1,11 @@
-import { Button, Space, Table, TableProps, type TableColumnsType } from "antd";
+import {
+  Button,
+  Pagination,
+  Space,
+  Table,
+  TableProps,
+  type TableColumnsType,
+} from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../../../redux/features/Bike/bikeApi";
@@ -25,16 +32,39 @@ interface DataType {
 }
 
 const BikeListing = () => {
-  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-  const { data: bikes, isLoading, error } = useGetAllProductsQuery(params);
-  console.log(params);
+  // const [params, setParams] = useState<TQueryParam[]>([]);
+  // const {
+  //   data: bikes,
+  //   isLoading,
+  //   isFetching,
+  //   error,
+  // } = useGetAllProductsQuery(params);
 
-  console.log("different data==>", bikes);
+  // console.log("different data==>", bikes);
+
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [page, setPage] = useState(2);
+
+  const {
+    data: bikes,
+    isLoading,
+    isFetching,
+    error,
+  } = useGetAllProductsQuery([
+    { name: "limit", value: 3 },
+    { name: "page", value: page },
+    { name: "sort", value: "cc" },
+    ...params,
+  ]);
 
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading bike data.</div>;
   if (!bikes.data) return <div>No bike data available.</div>;
+
+  const metaData = bikes?.meta;
+  console.log("meta data==>", metaData);
+  // {page: 2, limit: 3, total: 8, totalPage: 3}
 
   // Transform the data for the table
   const tabelData: DataType[] =
@@ -141,9 +171,16 @@ const BikeListing = () => {
     <>
       <Table
         columns={columns}
+        loading={isFetching}
         dataSource={tabelData}
         onChange={onChange}
-        showSorterTooltip={{ target: "sorter-icon" }}
+        pagination={false}
+      />
+      <Pagination
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+        current={page}
       />
     </>
   );
