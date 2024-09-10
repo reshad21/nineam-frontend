@@ -5,6 +5,7 @@ import { useGetAllProductsQuery } from "../redux/features/Bike/bikeApi";
 
 const Productpage = () => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
 
@@ -25,14 +26,35 @@ const Productpage = () => {
     });
   };
 
-  // Filter bikes based on selected filters
-  const filteredBikes = bikes?.data.filter((bike: TBikeDataProps) => {
-    return Object.keys(filters).every((key) => bike[key] === filters[key]);
-  });
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Filter bikes based on selected filters and search term
+  const filteredBikes = bikes?.data
+    .filter((bike: TBikeDataProps) => {
+      return Object.keys(filters).every((key) => {
+        const typedKey = key as keyof TBikeDataProps; // Type assertion
+        return bike[typedKey] === filters[key];
+      });
+    })
+    .filter((bike: TBikeDataProps) =>
+      bike.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   return (
     <>
-      <div className="my-5">
+      <div className="my-5 flex justify-between">
+        {/* Add a search input */}
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="mb-5 px-2 py-1 border border-gray-300 rounded"
+        />
+        {/* Pass both brand, name, and cc handlers */}
         <AntSelect handleFilterChange={handleFilterChange} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
