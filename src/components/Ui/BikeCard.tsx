@@ -58,7 +58,7 @@ const BikeCard = ({
           </div>
           <div className="flex justify-between text-gray-700">
             <span className="font-medium">Price Per Hour:</span>
-            <span className="ml-1 text-gray-800">${pricePerHour}</span>
+            <span className="ml-1 text-gray-800">{pricePerHour} BDT</span>
           </div>
         </div>
         <div className="flex flex-col gap-2">

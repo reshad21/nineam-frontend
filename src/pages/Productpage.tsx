@@ -31,6 +31,12 @@ const Productpage = () => {
     setSearchTerm(e.target.value);
   };
 
+  // Clear all filters and search term
+  const handleClearAll = () => {
+    setFilters({});
+    setSearchTerm("");
+  };
+
   // Filter bikes based on selected filters and search term
   const filteredBikes = bikes?.data
     .filter((bike: TBikeDataProps) => {
@@ -45,17 +51,24 @@ const Productpage = () => {
 
   return (
     <>
-      <div className="my-5 flex justify-between">
+      <div className="my-5 flex flex-col md:flex-row justify-between items-center">
         {/* Add a search input */}
         <input
           type="text"
           placeholder="Search by name..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="mb-5 px-2 py-1 border border-gray-300 rounded"
+          className="px-2 py-1 border border-gray-300 rounded"
         />
         {/* Pass both brand, name, and cc handlers */}
         <AntSelect handleFilterChange={handleFilterChange} />
+        {/* Clear All button */}
+        <button
+          onClick={handleClearAll}
+          className="ml-4 px-4 py-1 bg-gray-300 text-gray-800 rounded"
+        >
+          Clear All
+        </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
         {filteredBikes?.map((product: TBikeDataProps) => (

@@ -1,4 +1,3 @@
-import ProtectedRoute from "../components/Layout/ProtectedRoute";
 import Aboutpage from "../pages/Aboutpage";
 import ContactUsPage from "../pages/Contactpage";
 import Homepage from "../pages/Homepage";
@@ -17,12 +16,16 @@ export const frontendPaths = [
   },
   {
     path: "/products",
-    element: (
-      <ProtectedRoute>
-        <Productpage />
-      </ProtectedRoute>
-    ),
+    element: <Productpage />,
   },
+  // {
+  //   path: "/products",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <Productpage />
+  //     </ProtectedRoute>
+  //   ),
+  // },
   {
     path: "/contact",
     element: <ContactUsPage />,
