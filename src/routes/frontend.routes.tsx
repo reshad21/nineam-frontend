@@ -1,4 +1,5 @@
 import Aboutpage from "../pages/Aboutpage";
+import BikeDetailspage from "../pages/BikeDetailspage";
 import ContactUsPage from "../pages/Contactpage";
 import Homepage from "../pages/Homepage";
 import LoginPage from "../pages/Loginpage";
@@ -26,6 +27,10 @@ export const frontendPaths = [
   //     </ProtectedRoute>
   //   ),
   // },
+  {
+    path: "/singleBike/:bikeId",
+    element: <BikeDetailspage />,
+  },
   {
     path: "/contact",
     element: <ContactUsPage />,
