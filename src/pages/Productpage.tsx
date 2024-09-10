@@ -2,35 +2,41 @@ import { useState } from "react";
 import AntSelect from "../components/Ui/antdesign/AntSelect";
 import BikeCard, { TBikeDataProps } from "../components/Ui/BikeCard";
 import { useGetAllProductsQuery } from "../redux/features/Bike/bikeApi";
-import { TQueryParam } from "../types/global";
 
 const Productpage = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [filters, setFilters] = useState<{ [key: string]: string }>({});
 
-  const {
-    data: bikes,
-    isLoading,
-    isError,
-  } = useGetAllProductsQuery([...params]);
+  const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading bikes.</div>;
 
-  const handleChange = (value: string) => {
-    console.log(`Selected ${value}`);
+  // Handle filter change
+  const handleFilterChange = (value: string, type: "brand" | "name" | "cc") => {
+    setFilters((prevFilters) => {
+      const newFilters = { ...prevFilters, [type]: value };
 
-    // Update the params state with the selected brand
-    const updatedParams: TQueryParam[] = [{ name: "brand", value: value }];
-    setParams(updatedParams);
+      // Clear other filters when a new filter is applied
+      Object.keys(newFilters).forEach((key) => {
+        if (key !== type) delete newFilters[key];
+      });
+
+      return newFilters;
+    });
   };
+
+  // Filter bikes based on selected filters
+  const filteredBikes = bikes?.data.filter((bike: TBikeDataProps) => {
+    return Object.keys(filters).every((key) => bike[key] === filters[key]);
+  });
 
   return (
     <>
       <div className="my-5">
-        <AntSelect handleChange={handleChange} /> {/* Pass handleChange here */}
+        <AntSelect handleFilterChange={handleFilterChange} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
-        {bikes?.data.map((product: TBikeDataProps) => (
+        {filteredBikes?.map((product: TBikeDataProps) => (
           <BikeCard {...product} key={product._id} />
         ))}
       </div>
