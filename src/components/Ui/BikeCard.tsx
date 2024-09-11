@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // Update the type definition to match the Bike data structure
 export type TBikeDataProps = {
@@ -24,6 +24,7 @@ const BikeCard = ({
   brand,
   image,
 }: TBikeDataProps) => {
+  const params = useParams();
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 w-full max-w-sm mx-auto">
       <figure className="relative">
@@ -62,11 +63,13 @@ const BikeCard = ({
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <Link to={`/singleBike/${_id}`} className="w-full">
-            <button className="bg-blue-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 w-full">
-              View Details
-            </button>
-          </Link>
+          {!params.bikeId && (
+            <Link to={`/singleBike/${_id}`} className="w-full">
+              <button className="bg-blue-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 w-full">
+                View Details
+              </button>
+            </Link>
+          )}
           <button className="bg-green-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 w-full">
             Book Now
           </button>
