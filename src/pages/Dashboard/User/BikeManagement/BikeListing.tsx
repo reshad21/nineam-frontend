@@ -19,7 +19,7 @@ interface Bike {
   name: string;
   pricePerHour: number;
   year: number;
-  isAvailable: string;
+  isAvailable: boolean;
 }
 
 interface DataType {
@@ -30,7 +30,7 @@ interface DataType {
   brand: string;
   pricePerHour: number;
   year: number;
-  isAvailable: string;
+  isAvailable: boolean;
 }
 
 const BikeListing = () => {

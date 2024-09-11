@@ -1,3 +1,4 @@
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -15,6 +16,7 @@ export type TBikeDataProps = {
   model: string;
   brand: string;
   image: string;
+  isAvailable: boolean;
 };
 
 const BikeCard = ({
@@ -27,11 +29,33 @@ const BikeCard = ({
   model,
   brand,
   image,
+  isAvailable,
 }: TBikeDataProps) => {
   const params = useParams();
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 w-full max-w-sm mx-auto">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 w-full max-w-sm mx-auto relative">
+      {/* Availability Badge */}
+      <div
+        className={`absolute z-40 top-2 left-2 px-2 py-1 rounded-full text-white text-sm ${
+          isAvailable ? "bg-green-500" : "bg-red-500"
+        }`}
+      >
+        <span className="flex items-center">
+          {isAvailable ? (
+            <>
+              <CheckCircleOutlined className="mr-1" />
+              Available
+            </>
+          ) : (
+            <>
+              <CloseCircleOutlined className="mr-1" />
+              Not Available
+            </>
+          )}
+        </span>
+      </div>
+
       <figure className="relative">
         <img
           src={image} // Update with a dynamic image URL if needed
@@ -73,7 +97,7 @@ const BikeCard = ({
               <Button className="w-full bg-slate-200">View Details</Button>
             </Link>
           )}
-          <BikeModal bikeId={_id} />
+          <BikeModal bikeId={_id} isAvailable={isAvailable} />
         </div>
       </div>
     </div>
@@ -86,9 +110,10 @@ const defaultValues = {
 
 type BikeModalProps = {
   bikeId: string;
+  isAvailable: boolean; // Add this prop to handle availability
 };
 
-const BikeModal = ({ bikeId }: BikeModalProps) => {
+const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -109,7 +134,12 @@ const BikeModal = ({ bikeId }: BikeModalProps) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal} className="bg-slate-600">
+      <Button
+        type="primary"
+        onClick={showModal}
+        className="bg-slate-600"
+        disabled={!isAvailable} // Disable the button based on availability
+      >
         Book Now
       </Button>
       <Modal
@@ -123,8 +153,7 @@ const BikeModal = ({ bikeId }: BikeModalProps) => {
           onSubmit={handleSubmit}
           defaultValues={{ _id: bikeId, startTime: defaultValues.startTime }}
         >
-          <BrInput name="_id" type="text" label="Bike ID" disabled />{" "}
-          {/* Disabled field since it's static */}
+          <BrInput name="_id" type="text" label="Bike ID" disabled />
           <BrInput
             name="startTime"
             type="text"
