@@ -1,7 +1,10 @@
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import { useState } from "react";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { useCreateRentBikeMutation } from "../../redux/features/Rent/rentApi";
 import BrForm from "../Form/BrForm";
 import BrInput from "../Form/BrInput";
 
@@ -58,7 +61,7 @@ const BikeCard = ({
 
       <figure className="relative">
         <img
-          src={image} // Update with a dynamic image URL if needed
+          src={image}
           alt={`${name} Image`}
           className="w-full h-48 object-cover"
         />
@@ -110,26 +113,39 @@ const defaultValues = {
 
 type BikeModalProps = {
   bikeId: string;
-  isAvailable: boolean; // Add this prop to handle availability
+  isAvailable: boolean;
 };
 
 const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
+  const [createRent] = useCreateRentBikeMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = (data: any) => {
-    console.log("Booking information", data);
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Booking...");
+    try {
+      const payload = { bikeId, startTime: data.startTime };
+      const res = await createRent(payload).unwrap();
+      setIsModalOpen(false);
+
+      // Check if the response contains an error
+      if ("error" in res) {
+        toast.error(res?.error?.data?.message || "Error occurred", {
+          id: toastId,
+        });
+      } else {
+        toast.success("Bike rent successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
   };
 
   return (
@@ -138,22 +154,20 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
         type="primary"
         onClick={showModal}
         className="bg-slate-600"
-        disabled={!isAvailable} // Disable the button based on availability
+        disabled={!isAvailable}
       >
         Book Now
       </Button>
       <Modal
         title="Confirmation Booking Information"
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
-        footer={null} // To control the form submit and close button
+        footer={null}
       >
         <BrForm
           onSubmit={handleSubmit}
-          defaultValues={{ _id: bikeId, startTime: defaultValues.startTime }}
+          defaultValues={{ startTime: defaultValues.startTime }} // Only include startTime in the form
         >
-          <BrInput name="_id" type="text" label="Bike ID" disabled />
           <BrInput
             name="startTime"
             type="text"

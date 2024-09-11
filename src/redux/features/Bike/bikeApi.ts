@@ -39,27 +39,6 @@ const productApi = baseApi.injectEndpoints({
             providesTags: (id) => [{ type: 'bikes', id }]
         }),
 
-        getAllFilterProducts: builder.query({
-            query: ({ category, brand, rating, price, searchTerm, sort }) => {  // Added sort parameter
-                console.log("RTK QUERY =>", category, brand, rating, price, searchTerm, sort);
-                const params = new URLSearchParams();
-
-                if (category) params.append('category', category);
-                if (brand) params.append('brand', brand);
-                if (rating !== null && rating !== undefined) params.append('rating', rating.toString());
-                if (price !== null && price !== undefined) params.append('price', price.toString());
-                if (searchTerm) params.append('searchTerm', searchTerm);
-                if (sort) params.append('sort', sort);  // Append the sort parameter
-
-                const queryString = params.toString();
-                const url = queryString ? `/products?${queryString}` : '/products';
-
-                return {
-                    url: url,
-                    method: 'GET'
-                };
-            }
-        }),
 
         addProducts: builder.mutation({
             query: (data) => {
@@ -102,7 +81,6 @@ const productApi = baseApi.injectEndpoints({
 export const {
     useAddProductsMutation,
     useGetAllProductsQuery,
-    useGetAllFilterProductsQuery,
     useDeleteProductMutation,
     useUpdateProductMutation,
     useGetProductByIdQuery
