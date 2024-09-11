@@ -19,6 +19,7 @@ interface Bike {
   name: string;
   pricePerHour: number;
   year: number;
+  isAvailable: string;
 }
 
 interface DataType {
@@ -29,6 +30,7 @@ interface DataType {
   brand: string;
   pricePerHour: number;
   year: number;
+  isAvailable: string;
 }
 
 const BikeListing = () => {
@@ -57,7 +59,16 @@ const BikeListing = () => {
   // Transform the data for the table
   const tabelData: DataType[] =
     bikes?.data.map(
-      ({ _id, brand, cc, model, name, pricePerHour, year }: Bike) => ({
+      ({
+        _id,
+        brand,
+        cc,
+        model,
+        name,
+        pricePerHour,
+        year,
+        isAvailable,
+      }: Bike) => ({
         key: _id,
         brand,
         cc,
@@ -65,6 +76,7 @@ const BikeListing = () => {
         name,
         pricePerHour,
         year,
+        isAvailable,
       })
     ) || [];
 
@@ -129,6 +141,11 @@ const BikeListing = () => {
           <Link to={`/user/view-bike/${item.key}`}>
             <Button>View</Button>
           </Link>
+          {item.isAvailable ? (
+            <Button>Available</Button>
+          ) : (
+            <Button className="bg-red-400">Not Available</Button>
+          )}
         </Space>
       ),
     },
