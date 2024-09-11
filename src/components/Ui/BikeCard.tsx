@@ -1,4 +1,8 @@
+import { Button, Modal } from "antd";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import BrForm from "../Form/BrForm";
+import BrInput from "../Form/BrInput";
 
 // Update the type definition to match the Bike data structure
 export type TBikeDataProps = {
@@ -25,11 +29,12 @@ const BikeCard = ({
   image,
 }: TBikeDataProps) => {
   const params = useParams();
+
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 w-full max-w-sm mx-auto">
       <figure className="relative">
         <img
-          src={image} // You might want to update this with a dynamic image URL
+          src={image} // Update with a dynamic image URL if needed
           alt={`${name} Image`}
           className="w-full h-48 object-cover"
         />
@@ -70,12 +75,75 @@ const BikeCard = ({
               </button>
             </Link>
           )}
-          <button className="bg-green-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 w-full">
-            Book Now
-          </button>
+          <BikeModal bikeId={_id} />
         </div>
       </div>
     </div>
+  );
+};
+
+const defaultValues = {
+  startTime: "10:48",
+};
+
+type BikeModalProps = {
+  bikeId: string;
+};
+
+const BikeModal = ({ bikeId }: BikeModalProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = (data: any) => {
+    console.log("Booking information", data);
+  };
+
+  return (
+    <>
+      <Button type="primary" onClick={showModal}>
+        Book Now
+      </Button>
+      <Modal
+        title="Confirmation Booking Information"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null} // To control the form submit and close button
+      >
+        <BrForm
+          onSubmit={handleSubmit}
+          defaultValues={{ _id: bikeId, startTime: defaultValues.startTime }}
+        >
+          <BrInput name="_id" type="text" label="Bike ID" disabled />{" "}
+          {/* Disabled field since it's static */}
+          <BrInput
+            name="startTime"
+            type="text"
+            label="Starting Time"
+            readOnly
+          />
+          <div className="flex justify-end mt-4">
+            <Button onClick={handleCancel} className="mr-2">
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Confirm
+            </Button>
+          </div>
+        </BrForm>
+      </Modal>
+    </>
   );
 };
 
