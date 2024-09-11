@@ -1,6 +1,6 @@
 import Aboutpage from "../pages/Aboutpage";
-import BikeDetailspage from "../pages/BikeDetailspage";
 import ContactUsPage from "../pages/Contactpage";
+import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
 import Homepage from "../pages/Homepage";
 import LoginPage from "../pages/Loginpage";
 import Productpage from "../pages/Productpage";
@@ -29,7 +29,7 @@ export const frontendPaths = [
   // },
   {
     path: "/singleBike/:bikeId",
-    element: <BikeDetailspage />,
+    element: <ViewBike />,
   },
   {
     path: "/contact",

@@ -70,9 +70,7 @@ const BikeCard = ({
         <div className="flex flex-col gap-2">
           {!params.bikeId && (
             <Link to={`/singleBike/${_id}`} className="w-full">
-              <button className="bg-blue-500 text-white py-3 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 w-full">
-                View Details
-              </button>
+              <Button className="w-full bg-slate-200">View Details</Button>
             </Link>
           )}
           <BikeModal bikeId={_id} />
@@ -83,7 +81,7 @@ const BikeCard = ({
 };
 
 const defaultValues = {
-  startTime: "10:48",
+  startTime: new Date().toISOString(),
 };
 
 type BikeModalProps = {
@@ -111,7 +109,7 @@ const BikeModal = ({ bikeId }: BikeModalProps) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={showModal} className="bg-slate-600">
         Book Now
       </Button>
       <Modal
