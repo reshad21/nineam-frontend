@@ -3,6 +3,7 @@ import CreateBikepage from "../pages/Dashboard/Admin/ProductManagement/CreateBik
 import UpdateBike from "../pages/Dashboard/Admin/ProductManagement/UpdateBike";
 import ViewAllBikePage from "../pages/Dashboard/Admin/ProductManagement/ViewAllBikePage";
 import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
+import BikeStatus from "../pages/Dashboard/Admin/RentManagement/BikeStatus";
 import UpdateProfile from "../pages/Dashboard/Admin/UpdateProfile";
 import AllUsers from "../pages/Dashboard/Admin/UserManagement/AllUsers";
 
@@ -60,7 +61,7 @@ export const adminPaths = [
       {
         name: "Returned",
         path: "returned-bike",
-        element: "returned",
+        element: <BikeStatus />,
       },
     ],
   },

@@ -8,10 +8,11 @@ import {
 } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetAllProductsQuery } from "../../../../redux/features/Bike/bikeApi";
 import {
-  useDeleteProductMutation,
-  useGetAllProductsQuery,
-} from "../../../../redux/features/Bike/bikeApi";
+  useGetAllBookingQuery,
+  useReturnBikeMutation,
+} from "../../../../redux/features/Rent/rentApi";
 import { TQueryParam } from "../../../../types/global";
 
 interface Bike {
@@ -22,6 +23,7 @@ interface Bike {
   name: string;
   pricePerHour: number;
   year: number;
+  isReturned: boolean; // Changed from isAvailable to isReturned
 }
 
 interface DataType {
@@ -32,37 +34,52 @@ interface DataType {
   brand: string;
   pricePerHour: number;
   year: number;
+  isReturned: boolean; // Changed from isAvailable to isReturned
 }
 
-const ViewAllBikePage = () => {
-  const [deleteBike] = useDeleteProductMutation();
-
+const BikeStatus = () => {
+  const [takeReturnBike] = useReturnBikeMutation();
   const [params, setParams] = useState<TQueryParam[]>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); // Initial page set to 1
 
   const {
-    data: bikes,
+    data: bookings,
     isLoading,
     isFetching,
     error,
-  } = useGetAllProductsQuery([
-    { name: "limit", value: 5 },
+    refetch,
+  } = useGetAllBookingQuery([
+    { name: "limit", value: 6 },
     { name: "page", value: page },
     { name: "sort", value: "cc" },
     ...params,
   ]);
 
+  const { data: bikes } = useGetAllProductsQuery(undefined);
+
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading bike data.</div>;
-  if (!bikes.data) return <div>No bike data available.</div>;
+  if (!bookings?.data) return <div>No Booking data available.</div>;
 
-  const metaData = bikes?.meta;
+  console.log("booking bike information==>", bookings?.data);
+  console.log("booking page bike information==>", bikes?.data);
+
+  const metaData = bookings?.meta;
 
   // Transform the data for the table
-  const tabelData: DataType[] =
-    bikes?.data.map(
-      ({ _id, brand, cc, model, name, pricePerHour, year }: Bike) => ({
+  const tableData: DataType[] =
+    bookings?.data.map(
+      ({
+        _id,
+        brand,
+        cc,
+        model,
+        name,
+        pricePerHour,
+        year,
+        isReturned, // Use isReturned instead of isAvailable
+      }: Bike) => ({
         key: _id,
         brand,
         cc,
@@ -70,6 +87,7 @@ const ViewAllBikePage = () => {
         name,
         pricePerHour,
         year,
+        isReturned,
       })
     ) || [];
 
@@ -78,7 +96,6 @@ const ViewAllBikePage = () => {
     {
       title: "Name",
       dataIndex: "name",
-      showSorterTooltip: { target: "full-header" },
       filters: [
         {
           text: "Sport Bike",
@@ -89,15 +106,14 @@ const ViewAllBikePage = () => {
           value: "Dirt Bike",
         },
         {
-          text: "Electric Scooter vespa",
-          value: "Electric Scooter vespa",
+          text: "Electric Scooter Vespa",
+          value: "Electric Scooter Vespa",
         },
       ],
     },
     {
       title: "Brand",
       dataIndex: "brand",
-      showSorterTooltip: { target: "full-header" },
       filters: [
         {
           text: "Yamaha",
@@ -114,45 +130,54 @@ const ViewAllBikePage = () => {
       ],
     },
     {
-      title: "cc",
+      title: "CC",
       dataIndex: "cc",
     },
     {
-      title: "model",
+      title: "Model",
       dataIndex: "model",
     },
     {
-      title: "pricePerHour",
+      title: "Price Per Hour",
       dataIndex: "pricePerHour",
       sorter: (a, b) => a.pricePerHour - b.pricePerHour,
     },
     {
       title: "Actions",
       key: "actions",
-      render: (item) => {
-        const handleDelete = async () => {
+      render: (item: DataType) => {
+        // Move the function inside the render method
+        const handleUpdateReturnStatus = async (
+          bikeId: string,
+          isReturned: boolean
+        ) => {
           try {
-            await deleteBike(item.key).unwrap();
-            console.log("Bike deleted successfully");
+            console.log("bike status onsubmit==>", bikeId, isReturned);
+            const payload = { isReturned: !isReturned }; // Toggle the return status
+            await takeReturnBike({ bikeId, ...payload }).unwrap();
+            console.log("Bike return status updated successfully");
+            refetch(); // Refetch the data to reflect the change
           } catch (error) {
-            console.error("Failed to delete bike", error);
+            console.error("Failed to update bike return status", error);
           }
         };
+
         return (
           <Space size="middle">
-            <Link to={`/admin/update-bike/${item.key}`}>
-              <Button>Update</Button>
-            </Link>
-            <Link to={`/admin/view-bike/${item.key}`}>
+            <Link to={`/user/view-bike/${item.key}`}>
               <Button>View</Button>
             </Link>
-            <Button onClick={handleDelete} danger>
-              Delete
+            <Button
+              onClick={() =>
+                handleUpdateReturnStatus(item.key, item.isReturned)
+              }
+              className={item.isReturned ? "bg-green-400" : "bg-red-400"}
+            >
+              {item.isReturned ? "Returned" : "Not Returned"}
             </Button>
           </Space>
         );
       },
-      width: "1%",
     },
   ];
 
@@ -165,13 +190,17 @@ const ViewAllBikePage = () => {
     if (extra.action === "filter") {
       const queryParams: TQueryParam[] = [];
 
-      filters.name?.forEach((item) =>
-        queryParams.push({ name: "name", value: item })
-      );
+      if (filters.name) {
+        filters.name.forEach((item) =>
+          queryParams.push({ name: "name", value: item as string })
+        );
+      }
 
-      filters.brand?.forEach((item) =>
-        queryParams.push({ name: "brand", value: item })
-      );
+      if (filters.brand) {
+        filters.brand.forEach((item) =>
+          queryParams.push({ name: "brand", value: item as string })
+        );
+      }
 
       setParams(queryParams);
     }
@@ -182,7 +211,7 @@ const ViewAllBikePage = () => {
       <Table
         columns={columns}
         loading={isFetching}
-        dataSource={tabelData}
+        dataSource={tableData}
         onChange={onChange}
         pagination={false}
       />
@@ -196,4 +225,4 @@ const ViewAllBikePage = () => {
   );
 };
 
-export default ViewAllBikePage;
+export default BikeStatus;

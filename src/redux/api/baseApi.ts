@@ -59,6 +59,6 @@ export const baseApi = createApi({
     reducerPath: 'baseApi',
     // baseQuery: fetchBaseQuery({ baseUrl: 'https://sporting-goods-db.vercel.app' }),
     baseQuery: baseQueryWithRefreshToken,
-    tagTypes: ['bikes', 'user'],
+    tagTypes: ['bikes', 'user', 'booking'],
     endpoints: () => ({}),
 });
