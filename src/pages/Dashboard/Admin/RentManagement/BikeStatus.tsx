@@ -1,5 +1,5 @@
 import { Button, Space, Table, type TableColumnsType } from "antd";
-import { useGetAllProductsQuery } from "../../../../redux/features/Bike/bikeApi";
+import { toast } from "sonner";
 import {
   useGetAllBookingQuery,
   useReturnBikeMutation,
@@ -17,48 +17,42 @@ type TBikeId = {
 type Bike = {
   _id: string;
   bikeId: TBikeId;
-  isReturned: boolean; // Changed from isAvailable to isReturned
+  isReturned: boolean;
+  totalCost: number;
 };
 
 type DataType = {
   key: string;
   bikeId: TBikeId;
-  isReturned: boolean; // Changed from isAvailable to isReturned
+  isReturned: boolean;
+  totalCost: number;
 };
 
 const BikeStatus = () => {
-  const [takeReturnBike] = useReturnBikeMutation();
-
   const {
     data: bookings,
     isLoading,
     isFetching,
   } = useGetAllBookingQuery(undefined);
 
-  const { data: bikes } = useGetAllProductsQuery(undefined);
+  const [takeReturnBike, { data }] = useReturnBikeMutation();
 
-  // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
   if (!bookings?.data) return <div>No Booking data available.</div>;
 
-  console.log("booking bike information==>", bookings?.data[0].userId);
-  console.log("booking page bike information==>", bikes?.data[0]);
+  console.log("booking all infor==>", bookings?.data);
+  console.log("bike total cost", data);
 
   // Transform the data for the table
   const tableData: DataType[] =
-    bookings?.data.map(
-      ({
-        _id,
-        bikeId,
-        isReturned, // Use isReturned instead of isAvailable
-      }: Bike) => ({
-        key: _id,
-        name: bikeId.name,
-        brand: bikeId.brand,
-        pricePerHour: bikeId.pricePerHour,
-        isReturned,
-      })
-    ) || [];
+    bookings?.data.map(({ _id, bikeId, isReturned, totalCost }: Bike) => ({
+      key: _id,
+      name: bikeId.name,
+      brand: bikeId.brand,
+      pricePerHour: bikeId.pricePerHour,
+      isReturned,
+      totalCost,
+    })) || [];
 
   // Table columns configuration
   const columns: TableColumnsType<DataType> = [
@@ -78,19 +72,21 @@ const BikeStatus = () => {
       title: "Actions",
       key: "actions",
       render: (item: DataType) => {
-        console.log("object==>", item);
-        // Move the function inside the render method
         const handleUpdateReturnStatus = async (
           bookingId: string,
           isReturned: boolean
         ) => {
+          const toastId = toast.loading("Returing...");
           try {
-            console.log("bike status onsubmit==>", bookingId, isReturned);
-            const payload = { isReturned: !isReturned }; // Toggle the return status
-            await takeReturnBike({ bookingId, payload }).unwrap();
-            console.log("Bike return status updated successfully");
+            const payLoad = { id: bookingId, data: isReturned };
+            const res = await takeReturnBike(payLoad);
+            if ("error" in res) {
+              toast.error("Toast Error occurred", { id: toastId });
+            } else {
+              toast.success("Bike rent successfully", { id: toastId });
+            }
           } catch (error) {
-            console.error("Failed to update bike return status", error);
+            toast.error("Something went wrong!", { id: toastId });
           }
         };
 
@@ -106,6 +102,13 @@ const BikeStatus = () => {
             </Button>
           </Space>
         );
+      },
+    },
+    {
+      title: "TotalCost",
+      key: "totalcost",
+      render: (item: DataType) => {
+        return <span>Total Cost: {item.totalCost}</span>;
       },
     },
   ];

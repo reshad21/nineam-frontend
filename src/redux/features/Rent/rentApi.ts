@@ -47,17 +47,6 @@ const rentApi = baseApi.injectEndpoints({
             invalidatesTags: ['booking']
         }),
 
-        updateBooking: builder.mutation({
-            query: ({ bookingId, isReturned }) => {
-                console.log("Updating booking with id:", bookingId, "and isReturned:", isReturned);
-                return {
-                    url: `/rentals/${bookingId}`,
-                    method: 'PATCH',
-                    body: { isReturned },
-                }
-            },
-            invalidatesTags: ['booking']
-        }),
     }),
 });
 
@@ -65,5 +54,4 @@ export const {
     useGetAllBookingQuery,
     useCreateRentBikeMutation,
     useReturnBikeMutation,
-    useUpdateBookingMutation, // Export the new mutation hook
 } = rentApi;
