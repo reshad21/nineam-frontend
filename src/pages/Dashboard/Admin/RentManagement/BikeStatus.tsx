@@ -14,9 +14,15 @@ type TBikeId = {
   year: number;
 };
 
+type TUserId = {
+  name: string;
+  email: string;
+};
+
 type Bike = {
   _id: string;
   bikeId: TBikeId;
+  userId: TUserId;
   isReturned: boolean;
   totalCost: number;
 };
@@ -24,6 +30,7 @@ type Bike = {
 type DataType = {
   key: string;
   bikeId: TBikeId;
+  userId: TUserId;
   isReturned: boolean;
   totalCost: number;
 };
@@ -45,19 +52,31 @@ const BikeStatus = () => {
 
   // Transform the data for the table
   const tableData: DataType[] =
-    bookings?.data.map(({ _id, bikeId, isReturned, totalCost }: Bike) => ({
-      key: _id,
-      name: bikeId.name,
-      brand: bikeId.brand,
-      pricePerHour: bikeId.pricePerHour,
-      isReturned,
-      totalCost,
-    })) || [];
+    bookings?.data.map(
+      ({ _id, bikeId, isReturned, userId, totalCost }: Bike) => ({
+        key: _id,
+        name: bikeId.name,
+        brand: bikeId.brand,
+        pricePerHour: bikeId.pricePerHour,
+        isReturned,
+        totalCost,
+        customerName: userId.name,
+        email: userId.email,
+      })
+    ) || [];
 
   // Table columns configuration
   const columns: TableColumnsType<DataType> = [
     {
-      title: "Name",
+      title: "Customer Name",
+      dataIndex: "customerName",
+    },
+    {
+      title: "Customer email",
+      dataIndex: "email",
+    },
+    {
+      title: "Bike Name",
       dataIndex: "name",
     },
     {
@@ -96,7 +115,7 @@ const BikeStatus = () => {
               onClick={() =>
                 handleUpdateReturnStatus(item.key, item.isReturned)
               }
-              className={item.isReturned ? "bg-green-400" : "bg-red-400"}
+              className={item.isReturned ? "bg-slate-300" : "bg-red-300"}
             >
               {item.isReturned ? "Returned" : "Not Returned"}
             </Button>
