@@ -25,7 +25,6 @@ const MyRentList = () => {
   const { data: bikes } = useGetCustomerBookingQuery(undefined, {
     pollingInterval: 2000,
   });
-  console.log("user rent bike ==>", bikes?.data);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-6 bg-gray-100">
@@ -68,7 +67,7 @@ const MyRentList = () => {
             </ul>
             <div className="flex justify-between items-center">
               {bike.isReturned ? (
-                <Link to="/checkout">
+                <Link to={`/checkout?rentId=${bike._id}`}>
                   <Button
                     type="primary"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"

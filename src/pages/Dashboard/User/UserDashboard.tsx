@@ -4,7 +4,6 @@ import { useAppSelector } from "../../../redux/hooks";
 
 const UserDashboard = () => {
   const { user } = useAppSelector((state) => state.auth);
-  console.log("existing user information =>", user);
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-semibold text-gray-800">

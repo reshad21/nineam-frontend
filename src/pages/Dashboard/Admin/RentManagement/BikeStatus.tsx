@@ -42,13 +42,10 @@ const BikeStatus = () => {
     // isFetching,
   } = useGetAllBookingQuery(undefined, { pollingInterval: 2000 });
 
-  const [takeReturnBike, { data }] = useReturnBikeMutation();
+  const [takeReturnBike] = useReturnBikeMutation();
 
   if (isLoading) return <div>Loading...</div>;
   if (!bookings?.data) return <div>No Booking data available.</div>;
-
-  console.log("booking all infor==>", bookings?.data);
-  console.log("bike total cost", data);
 
   // Transform the data for the table
   const tableData: DataType[] =

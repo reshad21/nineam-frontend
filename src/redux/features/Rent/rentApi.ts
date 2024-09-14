@@ -67,6 +67,15 @@ const rentApi = baseApi.injectEndpoints({
             invalidatesTags: ['booking', 'bikes']
         }),
 
+
+        getRentReturnBike: builder.query({
+            query: (id) => ({
+                url: `/rentals/return/${id}`,
+                method: 'GET',
+            }),
+            providesTags: (id) => [{ type: 'booking', id }]
+        }),
+
     }),
 });
 
@@ -75,4 +84,5 @@ export const {
     useGetCustomerBookingQuery,
     useCreateRentBikeMutation,
     useReturnBikeMutation,
+    useGetRentReturnBikeQuery,
 } = rentApi;
