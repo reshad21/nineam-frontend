@@ -4,7 +4,7 @@ import { baseApi } from "../../api/baseApi";
 const rentApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        getAllBooking: builder.query({
+        getCustomerBooking: builder.query({
             query: (args) => {
                 const params = new URLSearchParams();
 
@@ -16,6 +16,26 @@ const rentApi = baseApi.injectEndpoints({
 
                 return {
                     url: `/rentals`,
+                    method: 'GET',
+                    params: params
+                }
+            },
+            providesTags: ['booking'],
+        }),
+
+
+        getAllBooking: builder.query({
+            query: (args) => {
+                const params = new URLSearchParams();
+
+                if (args) {
+                    args.forEach((item: TQueryParam) => {
+                        params.append(item.name, item.value as string);
+                    });
+                }
+
+                return {
+                    url: `/rentals/allRent`,
                     method: 'GET',
                     params: params
                 }
@@ -32,7 +52,7 @@ const rentApi = baseApi.injectEndpoints({
                     body: data,
                 }
             },
-            invalidatesTags: ['booking']
+            invalidatesTags: ['booking', 'bikes']
         }),
 
         returnBike: builder.mutation({
@@ -44,7 +64,7 @@ const rentApi = baseApi.injectEndpoints({
                     body: data,
                 }
             },
-            invalidatesTags: ['booking']
+            invalidatesTags: ['booking', 'bikes']
         }),
 
     }),
@@ -52,6 +72,7 @@ const rentApi = baseApi.injectEndpoints({
 
 export const {
     useGetAllBookingQuery,
+    useGetCustomerBookingQuery,
     useCreateRentBikeMutation,
     useReturnBikeMutation,
 } = rentApi;

@@ -7,7 +7,11 @@ const Productpage = () => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
+  const {
+    data: bikes,
+    isLoading,
+    isError,
+  } = useGetAllProductsQuery(undefined, { pollingInterval: 2000 });
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading bikes.</div>;

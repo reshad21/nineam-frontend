@@ -1,6 +1,7 @@
 import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
 import UpdateProfile from "../pages/Dashboard/Admin/UpdateProfile";
 import BikeListing from "../pages/Dashboard/User/BikeManagement/BikeListing";
+import MyRentList from "../pages/Dashboard/User/RentalManagement/MyRentList";
 import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 
 export const usersPaths = [
@@ -45,7 +46,7 @@ export const usersPaths = [
       {
         name: "My Rentals",
         path: "my-rentals",
-        element: "My Rentals",
+        element: <MyRentList />,
       },
     ],
   },

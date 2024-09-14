@@ -43,7 +43,7 @@ const BikeListing = () => {
     isFetching,
     error,
   } = useGetAllProductsQuery([
-    { name: "limit", value: 3 },
+    { name: "limit", value: 7 },
     { name: "page", value: page },
     { name: "sort", value: "cc" },
     ...params,

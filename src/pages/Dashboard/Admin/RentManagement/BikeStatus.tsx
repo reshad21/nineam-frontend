@@ -39,8 +39,8 @@ const BikeStatus = () => {
   const {
     data: bookings,
     isLoading,
-    isFetching,
-  } = useGetAllBookingQuery(undefined);
+    // isFetching,
+  } = useGetAllBookingQuery(undefined, { pollingInterval: 2000 });
 
   const [takeReturnBike, { data }] = useReturnBikeMutation();
 
@@ -136,7 +136,7 @@ const BikeStatus = () => {
     <>
       <Table
         columns={columns}
-        loading={isFetching}
+        // loading={isFetching}
         dataSource={tableData}
         pagination={false}
       />
