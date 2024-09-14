@@ -1,4 +1,5 @@
 import Aboutpage from "../pages/Aboutpage";
+import CheckoutPage from "../pages/CheckoutPage";
 import ContactUsPage from "../pages/Contactpage";
 import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
 import Homepage from "../pages/Homepage";
@@ -42,5 +43,9 @@ export const frontendPaths = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/checkout",
+    element: <CheckoutPage />,
   },
 ];
