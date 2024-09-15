@@ -59,11 +59,11 @@ const CheckoutPage = () => {
         productInfo: { brand, name },
         finalPrice,
       };
-      const res = await createOrder(payload);
-      if (res.error) {
-        toast.error("order is not happen", { id: toastId });
+      const res = await createOrder(payload).unwrap();
+      if (res.success) {
+        window.location.href = res?.data?.payment_url;
       } else {
-        toast.success("Order created successfully", { id: toastId });
+        toast.error("Payment not done", { id: toastId });
       }
     } catch (error) {
       toast.error("Something went wrong!", { id: toastId });
