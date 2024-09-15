@@ -1,5 +1,9 @@
-import { useForm } from "react-hook-form";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unsafe-optional-chaining */
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
+import { toast } from "sonner";
+import { useCreateOrderMutation } from "../redux/features/Order/orderApi";
 import { useGetRentReturnBikeQuery } from "../redux/features/Rent/rentApi";
 import { useAppSelector } from "../redux/hooks";
 
@@ -18,6 +22,7 @@ const CheckoutPage = () => {
   const rentId = query.get("rentId");
   const { data: rent, isLoading, error } = useGetRentReturnBikeQuery(rentId);
   const customer = useAppSelector((state) => state.auth);
+  const [createOrder] = useCreateOrderMutation();
 
   const { user } = customer;
   const {
@@ -40,16 +45,29 @@ const CheckoutPage = () => {
   if (error) return <div>Error loading bike data.</div>;
   if (!rent.data) return <div>No Rent data available.</div>;
 
-  const totalPrice = 2500; // Base total price
-  const promoCode = watch("promoCode"); // Watch for promo code changes
+  const totalPrice = rent?.data?.totalCost;
+  const promoCode = watch("promoCode");
   const discount = promoCode === "PROMO20" ? 0.2 * totalPrice : 0; // 20% discount if promo code is "PROMO20"
   const finalPrice = totalPrice - discount; // Final price after discount
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-    console.log("Discount Applied:", discount);
-    console.log("Final Price:", finalPrice);
-    // Handle form submission here
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Processing Order...");
+    try {
+      const { brand, name } = rent.data.bikeId;
+      const payload = {
+        userInfo: data,
+        productInfo: { brand, name },
+        finalPrice,
+      };
+      const res = await createOrder(payload);
+      if (res.error) {
+        toast.error("order is not happen", { id: toastId });
+      } else {
+        toast.success("Order created successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
   };
 
   return (
