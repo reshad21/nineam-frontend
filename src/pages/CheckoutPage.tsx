@@ -151,7 +151,7 @@ const CheckoutPage = () => {
             </div>
 
             {/* Payment Method */}
-            <div>
+            {/* <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 Payment Method
               </h3>
@@ -170,13 +170,11 @@ const CheckoutPage = () => {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    value="stripe"
+                    value="amerPay"
                     {...register("paymentMethod")}
                     className="form-radio text-blue-600"
                   />
-                  <span className="ml-2 text-gray-700">
-                    Credit/Debit Card (Stripe)
-                  </span>
+                  <span className="ml-2 text-gray-700">Credit/Debit Card</span>
                 </label>
               </div>
               {errors.paymentMethod && (
@@ -184,7 +182,7 @@ const CheckoutPage = () => {
                   {errors.paymentMethod.message}
                 </span>
               )}
-            </div>
+            </div> */}
 
             {/* Promo Code Field */}
             <div>
