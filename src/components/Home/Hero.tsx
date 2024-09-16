@@ -8,7 +8,7 @@ const Hero = () => {
         <div>
           <h6 className="my-2 font-semibold text-lg">Plan your trip now</h6>
           <h1 className="text-5xl font-semibold mb-6">
-            Save <span className="text-primary">big</span> with our <br /> car
+            Save <span className="text-primary">big</span> with our <br /> bike
             rental
           </h1>
           <p className="text-slate-400 mb-2">

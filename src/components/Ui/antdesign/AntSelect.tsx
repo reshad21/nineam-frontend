@@ -53,7 +53,11 @@ const AntSelect = ({
     <Space wrap>
       <Select
         value={selectedBrand}
-        style={{ width: 120 }}
+        style={{
+          width: 120,
+          border: "1px solid #e4e4e4",
+          color: "#333",
+        }}
         onChange={handleBrandChange}
         options={uniqueBrands.map((brand) => ({
           value: brand,

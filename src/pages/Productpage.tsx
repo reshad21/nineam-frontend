@@ -62,7 +62,7 @@ const Productpage = () => {
           placeholder="Search by name..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="px-2 py-1 border border-gray-300 rounded"
+          className="px-2 py-1 border-2 border-slate-400 rounded"
         />
         {/* Pass both brand, name, and cc handlers */}
         <AntSelect handleFilterChange={handleFilterChange} />
