@@ -43,9 +43,6 @@
     line-height: 200px;
     /* Adjust based on the height of the wheel */
     transform-origin: 100% 100%;
-    background: #f5f5f5;
-    border: 1px solid #cccccc;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;

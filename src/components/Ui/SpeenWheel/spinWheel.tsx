@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import "./SpinWheel.css";
 
 const options = [
-  { text: "10% Off", value: "10" },
-  { text: "20% Off", value: "20" },
-  { text: "30% Off", value: "30" },
-  { text: "40% Off", value: "40" },
+  { text: "10% Off", value: "10", color: "#FFDDC1" }, // Light pink
+  { text: "20% Off", value: "20", color: "#FFABAB" }, // Light red
+  { text: "30% Off", value: "30", color: "#FFC3A0" }, // Light peach
+  { text: "40% Off", value: "40", color: "#FF677D" }, // Pink
 ];
 
 const SpinWheel: React.FC = () => {
@@ -50,6 +50,7 @@ const SpinWheel: React.FC = () => {
               className="option"
               style={{
                 transform: `rotate(${(360 / options.length) * index}deg)`,
+                backgroundColor: option.color,
               }}
             >
               <div className="option-content">{option.text}</div>
