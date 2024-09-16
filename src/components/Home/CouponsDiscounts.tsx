@@ -1,3 +1,5 @@
+import SpinWheel from "../Ui/SpeenWheel/spinWheel";
+
 const promotions = [
   {
     code: "SAVE10",
@@ -69,6 +71,9 @@ const CouponsDiscounts = () => {
               <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
                 Get Started
               </button>
+            </div>
+            <div className="my-4">
+              <SpinWheel />
             </div>
           </div>
         </div>
