@@ -71,6 +71,18 @@ const ViewAllBikePage = () => {
       })
     ) || [];
 
+  // Helper function to extract unique values for a specific field (e.g., 'name')
+  const getUniqueValues = (data: Bike[], field: keyof Bike) => {
+    return [...new Set(data.map((item) => item[field]))].map((value) => ({
+      text: String(value), // Ant Design expects a 'text' and 'value' pair
+      value: String(value),
+    }));
+  };
+
+  // Generate dynamic filters based on 'name' and 'brand'
+  const nameFilters = getUniqueValues(bikes.data, "name");
+  const brandFilters = getUniqueValues(bikes.data, "brand");
+
   const confirmDelete = (id: string) => {
     Modal.confirm({
       title: "Are you sure you want to delete this bike?",
@@ -94,39 +106,13 @@ const ViewAllBikePage = () => {
       title: "Name",
       dataIndex: "name",
       showSorterTooltip: { target: "full-header" },
-      filters: [
-        {
-          text: "Sport Bike",
-          value: "Sport Bike",
-        },
-        {
-          text: "Dirt Bike",
-          value: "Dirt Bike",
-        },
-        {
-          text: "Electric Scooter vespa",
-          value: "Electric Scooter vespa",
-        },
-      ],
+      filters: nameFilters, // Dynamically generated filters
     },
     {
       title: "Brand",
       dataIndex: "brand",
       showSorterTooltip: { target: "full-header" },
-      filters: [
-        {
-          text: "Yamaha",
-          value: "Yamaha",
-        },
-        {
-          text: "Honda",
-          value: "Honda",
-        },
-        {
-          text: "BMW",
-          value: "BMW",
-        },
-      ],
+      filters: brandFilters, // Dynamically generated filters
     },
     {
       title: "cc",
