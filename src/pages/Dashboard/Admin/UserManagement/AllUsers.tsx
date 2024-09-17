@@ -5,11 +5,12 @@ import {
   type TableColumnsType,
   type TableProps,
 } from "antd";
+import {} from "../../../../redux/features/auth/authApi";
 import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
   useUpdateUserRoleMutation,
-} from "../../../../redux/features/auth/authApi";
+} from "../../../../redux/features/User/userApi";
 import { useAppSelector } from "../../../../redux/hooks";
 
 type User = {
