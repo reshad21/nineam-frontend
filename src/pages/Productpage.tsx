@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import { useState } from "react";
 import AntSelect from "../components/Ui/antdesign/AntSelect";
 import BikeCard, { TBikeDataProps } from "../components/Ui/BikeCard";
@@ -13,7 +14,12 @@ const Productpage = () => {
     isError,
   } = useGetAllProductsQuery(undefined, { pollingInterval: 2000 });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Spin />
+      </div>
+    );
   if (isError) return <div>Error loading bikes.</div>;
 
   // Handle filter change
@@ -62,14 +68,15 @@ const Productpage = () => {
           placeholder="Search by name..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="px-2 py-1 border-2 border-slate-400 rounded"
+          className="px-4 py-2 border-2 border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out"
         />
+
         {/* Pass both brand, name, and cc handlers */}
         <AntSelect handleFilterChange={handleFilterChange} />
         {/* Clear All button */}
         <button
           onClick={handleClearAll}
-          className="ml-4 px-4 py-1 bg-gray-300 text-gray-800 rounded"
+          className="ml-4 px-4 py-2 rounded-md bg-emerald-100 text-slate-600"
         >
           Clear All
         </button>
