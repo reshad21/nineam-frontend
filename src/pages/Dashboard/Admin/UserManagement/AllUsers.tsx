@@ -1,11 +1,11 @@
 import {
   Button,
+  Modal, // Import Modal
   Space,
   Table,
   type TableColumnsType,
   type TableProps,
 } from "antd";
-import {} from "../../../../redux/features/auth/authApi";
 import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
@@ -21,33 +21,24 @@ type User = {
   role: "user" | "admin";
 };
 
-type DataType = {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: "user" | "admin";
-};
-
 const AllUsers = () => {
   const { user } = useAppSelector((state) => state.auth);
-
-  const { data: users } = useGetAllUsersQuery(undefined);
+  const { data: users } = useGetAllUsersQuery(undefined); // users is now typed properly
 
   const [deleteUser] = useDeleteUserMutation();
-
   const [updateRole] = useUpdateUserRoleMutation();
 
-  const tabelData: DataType[] =
+  // Ensure tabelData is typed properly as DataType[]
+  const tabelData: User[] =
     users?.data.map(({ _id, name, email, phone, role }: User) => ({
-      key: _id,
+      _id,
       name,
       email,
       phone,
       role,
     })) || [];
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<User> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -70,34 +61,45 @@ const AllUsers = () => {
       render: (item) => {
         const handleDelete = async () => {
           try {
-            await deleteUser(item.key).unwrap();
+            await deleteUser(item._id).unwrap();
             console.log("User deleted successfully");
           } catch (error) {
-            console.error("Failed to delete bike", error);
+            console.error("Failed to delete user", error);
           }
         };
 
         const handleUpdate = () => {
           const payload = {
-            id: item?.key,
+            id: item._id,
             data: user?.role,
           };
           updateRole(payload);
         };
 
+        const showDeleteConfirm = () => {
+          Modal.confirm({
+            title: "Are you sure you want to delete this user?",
+            okText: "Yes",
+            okType: "danger",
+            cancelText: "No",
+            onOk: handleDelete,
+          });
+        };
+
         return (
           <Space size="middle">
             <Button onClick={handleUpdate}>ROLE CHANGE</Button>
-            <Button onClick={handleDelete} danger>
+            <Button onClick={showDeleteConfirm} danger>
               Delete
             </Button>
           </Space>
         );
       },
+      width: "1%",
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<User>["onChange"] = (
     _pagination,
     filters,
     _sorter,
