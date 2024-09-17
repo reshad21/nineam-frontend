@@ -1,5 +1,9 @@
+import { GiftOutlined } from "@ant-design/icons";
+import { Button, Typography, message } from "antd";
 import React, { useRef, useState } from "react";
 import "./SpinWheel.css";
+
+const { Title, Text } = Typography;
 
 const options = [
   { text: "10% Off", value: "10", color: "#FFDDC1" }, // Light pink
@@ -12,6 +16,7 @@ const SpinWheel: React.FC = () => {
   const [rotation, setRotation] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const wheelRef = useRef<HTMLDivElement>(null);
+  const promoCode = "PROMO20"; // Define your promo code here
 
   const handleSpin = () => {
     if (!wheelRef.current) return;
@@ -40,6 +45,19 @@ const SpinWheel: React.FC = () => {
     setRotation(totalRotation);
   };
 
+  const handleCopyPromoCode = () => {
+    navigator.clipboard
+      .writeText(promoCode)
+      .then(() => {
+        // Show success message when copying is done
+        message.success("Promo code copied to clipboard!");
+      })
+      .catch(() => {
+        // Show error message if copying fails
+        message.error("Failed to copy the promo code. Try again.");
+      });
+  };
+
   return (
     <div className="spin-wheel-container">
       <div className="wheel">
@@ -62,7 +80,29 @@ const SpinWheel: React.FC = () => {
         Spin
       </button>
       {selectedOption && (
-        <div className="result">Congratulations! You won: {selectedOption}</div>
+        <div className="result">
+          <div className="max-w-md mx-auto bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg shadow-lg p-6 text-center space-y-4">
+            <GiftOutlined className="text-5xl text-white" />
+            <Title level={2} className="text-white">
+              Congratulations!
+            </Title>
+            <Text className="text-white text-lg">
+              You won: <span className="font-bold">{selectedOption}</span>
+            </Text>
+            <div className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg inline-block shadow-md mt-4">
+              Your promo code is:{" "}
+              <span className="text-red-600">{promoCode}</span>
+            </div>
+            <Button
+              type="primary"
+              size="large"
+              className="mt-6 bg-white text-orange-500 font-semibold border-0 hover:bg-gray-100"
+              onClick={handleCopyPromoCode} // Copy promo code on click
+            >
+              Claim Your Reward
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );
