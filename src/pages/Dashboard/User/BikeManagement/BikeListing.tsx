@@ -35,7 +35,7 @@ interface DataType {
 
 const BikeListing = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
   const {
     data: bikes,
@@ -80,45 +80,31 @@ const BikeListing = () => {
       })
     ) || [];
 
+  // Helper function to extract unique values for dynamic filters
+  const getUniqueValues = (data: Bike[], field: keyof Bike) => {
+    return [...new Set(data.map((item) => item[field]))].map((value) => ({
+      text: String(value),
+      value: String(value),
+    }));
+  };
+
+  // Generate dynamic filters based on 'name' and 'brand'
+  const nameFilters = getUniqueValues(bikes.data, "name");
+  const brandFilters = getUniqueValues(bikes.data, "brand");
+
   // Table columns configuration
   const columns: TableColumnsType<DataType> = [
     {
       title: "Name",
       dataIndex: "name",
       showSorterTooltip: { target: "full-header" },
-      filters: [
-        {
-          text: "Sport Bike",
-          value: "Sport Bike",
-        },
-        {
-          text: "Dirt Bike",
-          value: "Dirt Bike",
-        },
-        {
-          text: "Electric Scooter vespa",
-          value: "Electric Scooter vespa",
-        },
-      ],
+      filters: nameFilters, // Dynamically generated filters
     },
     {
       title: "Brand",
       dataIndex: "brand",
       showSorterTooltip: { target: "full-header" },
-      filters: [
-        {
-          text: "Yamaha",
-          value: "Yamaha",
-        },
-        {
-          text: "Honda",
-          value: "Honda",
-        },
-        {
-          text: "BMW",
-          value: "BMW",
-        },
-      ],
+      filters: brandFilters, // Dynamically generated filters
     },
     {
       title: "cc",
@@ -148,6 +134,7 @@ const BikeListing = () => {
           )}
         </Space>
       ),
+      width: "1%",
     },
   ];
 
