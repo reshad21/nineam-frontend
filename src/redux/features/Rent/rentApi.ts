@@ -76,6 +76,16 @@ const rentApi = baseApi.injectEndpoints({
             providesTags: (id) => [{ type: 'booking', id }]
         }),
 
+        // only for booking page(user dashboard)
+        createBooking: builder.mutation({
+            query: (bookingData) => ({
+                url: "/rentals",
+                method: 'POST',
+                body: bookingData,
+            }),
+            invalidatesTags: ['booking', 'bikes'],
+        }),
+
     }),
 });
 
@@ -85,4 +95,5 @@ export const {
     useCreateRentBikeMutation,
     useReturnBikeMutation,
     useGetRentReturnBikeQuery,
+    useCreateBookingMutation
 } = rentApi;

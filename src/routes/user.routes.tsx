@@ -1,6 +1,7 @@
 import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
 import UpdateProfile from "../pages/Dashboard/UpdateProfile";
 import BikeListing from "../pages/Dashboard/User/BikeManagement/BikeListing";
+import BookingPage from "../pages/Dashboard/User/RentalManagement/BookingPage";
 import MyRentList from "../pages/Dashboard/User/RentalManagement/MyRentList";
 import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 
@@ -41,7 +42,7 @@ export const usersPaths = [
       {
         name: "Booking",
         path: "bike-booking",
-        element: "Booking",
+        element: <BookingPage />,
       },
       {
         name: "My Rentals",
