@@ -26,10 +26,16 @@ const MainLayout = () => {
     <Layout style={{ height: "100%" }}>
       <Sidebar />
       <Layout>
-        <Header>
+        <Header
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
           <Button
             onClick={handleLogout}
-            // style={{ backgroundColor: "#fefefe", color: "white" }}
+            style={{ backgroundColor: "#cfe2f3", color: "black" }}
           >
             Log out
           </Button>
