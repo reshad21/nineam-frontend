@@ -1,10 +1,11 @@
 import {
   Button,
+  Modal,
   Pagination,
   Space,
   Table,
+  TableColumnsType,
   TableProps,
-  type TableColumnsType,
 } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -36,7 +37,6 @@ interface DataType {
 
 const ViewAllBikePage = () => {
   const [deleteBike] = useDeleteProductMutation();
-
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
 
@@ -52,14 +52,12 @@ const ViewAllBikePage = () => {
     ...params,
   ]);
 
-  // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading bike data.</div>;
   if (!bikes.data) return <div>No bike data available.</div>;
 
   const metaData = bikes?.meta;
 
-  // Transform the data for the table
   const tabelData: DataType[] =
     bikes?.data.map(
       ({ _id, brand, cc, model, name, pricePerHour, year }: Bike) => ({
@@ -73,7 +71,24 @@ const ViewAllBikePage = () => {
       })
     ) || [];
 
-  // Table columns configuration
+  const confirmDelete = (id: string) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this bike?",
+      content: "This action cannot be undone.",
+      okText: "Yes, Delete",
+      okType: "danger",
+      cancelText: "No",
+      onOk: async () => {
+        try {
+          await deleteBike(id).unwrap();
+          console.log("Bike deleted successfully");
+        } catch (error) {
+          console.error("Failed to delete bike", error);
+        }
+      },
+    });
+  };
+
   const columns: TableColumnsType<DataType> = [
     {
       title: "Name",
@@ -129,29 +144,19 @@ const ViewAllBikePage = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (item) => {
-        const handleDelete = async () => {
-          try {
-            await deleteBike(item.key).unwrap();
-            console.log("Bike deleted successfully");
-          } catch (error) {
-            console.error("Failed to delete bike", error);
-          }
-        };
-        return (
-          <Space size="middle">
-            <Link to={`/admin/update-bike/${item.key}`}>
-              <Button>Update</Button>
-            </Link>
-            <Link to={`/admin/view-bike/${item.key}`}>
-              <Button>View</Button>
-            </Link>
-            <Button onClick={handleDelete} danger>
-              Delete
-            </Button>
-          </Space>
-        );
-      },
+      render: (item) => (
+        <Space size="middle">
+          <Link to={`/admin/update-bike/${item.key}`}>
+            <Button>Update</Button>
+          </Link>
+          <Link to={`/admin/view-bike/${item.key}`}>
+            <Button>View</Button>
+          </Link>
+          <Button onClick={() => confirmDelete(item.key)} danger>
+            Delete
+          </Button>
+        </Space>
+      ),
       width: "1%",
     },
   ];
@@ -164,15 +169,12 @@ const ViewAllBikePage = () => {
   ) => {
     if (extra.action === "filter") {
       const queryParams: TQueryParam[] = [];
-
       filters.name?.forEach((item) =>
         queryParams.push({ name: "name", value: item })
       );
-
       filters.brand?.forEach((item) =>
         queryParams.push({ name: "brand", value: item })
       );
-
       setParams(queryParams);
     }
   };
