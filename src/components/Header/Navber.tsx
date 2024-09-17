@@ -107,12 +107,6 @@ const Navbar = () => {
 
             {user && (
               <>
-                <Button
-                  onClick={handleLogout}
-                  className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200"
-                >
-                  Logout
-                </Button>
                 <Button className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200">
                   <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
                 </Button>
