@@ -2,16 +2,16 @@ import { Button, Col, Flex } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import BrForm from "../../../components/Form/BrForm";
-import BrInput from "../../../components/Form/BrInput";
-import {} from "../../../redux/features/auth/authApi";
+import BrForm from "../../components/Form/BrForm";
+import BrInput from "../../components/Form/BrInput";
+import {} from "../../redux/features/auth/authApi";
 import {
   useGetSingleUserQuery,
   useUpdateUserProfileMutation,
-} from "../../../redux/features/User/userApi";
-import { useAppSelector } from "../../../redux/hooks";
-import { TResponse } from "../../../types/global";
-import { TUser } from "../../../types/register.type";
+} from "../../redux/features/User/userApi";
+import { useAppSelector } from "../../redux/hooks";
+import { TResponse } from "../../types/global";
+import { TUser } from "../../types/register.type";
 
 const UpdateProfile = () => {
   const { user } = useAppSelector((state) => state.auth);
