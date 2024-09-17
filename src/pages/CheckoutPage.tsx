@@ -43,12 +43,21 @@ const CheckoutPage = () => {
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading bike data.</div>;
-  if (!rent.data) return <div>No Rent data available.</div>;
+  if (!rent?.data) return <div>No Rent data available.</div>;
 
-  const totalPrice = rent?.data?.totalCost;
-  const promoCode = watch("promoCode");
-  const discount = promoCode === "PROMO20" ? 0.2 * totalPrice : 0; // 20% discount if promo code is "PROMO20"
-  const finalPrice = totalPrice - discount; // Final price after discount
+  const totalPrice = rent?.data?.totalCost || 0;
+  const promoCode = watch("promoCode") ?? "";
+
+  // Handle different promo codes
+  const discountRates: { [key: string]: number } = {
+    PROMO10: 0.1,
+    PROMO20: 0.2,
+    PROMO30: 0.3,
+    PROMO40: 0.4,
+  };
+
+  const discount = discountRates[promoCode?.toUpperCase()] ?? 0;
+  const finalPrice = totalPrice - totalPrice * discount; // Final price after applying discount
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Processing Order...");
@@ -150,40 +159,6 @@ const CheckoutPage = () => {
               )}
             </div>
 
-            {/* Payment Method */}
-            {/* <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Payment Method
-              </h3>
-              <div className="flex flex-col gap-4">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    value="cod"
-                    {...register("paymentMethod", {
-                      required: "Payment method is required",
-                    })}
-                    className="form-radio text-blue-600"
-                  />
-                  <span className="ml-2 text-gray-700">Cash on Delivery</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    value="amerPay"
-                    {...register("paymentMethod")}
-                    className="form-radio text-blue-600"
-                  />
-                  <span className="ml-2 text-gray-700">Credit/Debit Card</span>
-                </label>
-              </div>
-              {errors.paymentMethod && (
-                <span className="text-red-500 text-sm">
-                  {errors.paymentMethod.message}
-                </span>
-              )}
-            </div> */}
-
             {/* Promo Code Field */}
             <div>
               <label className="block text-gray-700 font-medium mb-2">
@@ -257,7 +232,7 @@ const CheckoutPage = () => {
             <>
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Discount:</span>
-                <span>BDT {discount.toFixed(2)}</span>
+                <span>BDT {(totalPrice * discount).toFixed(2)}</span>
               </div>
               <div className="border-t border-gray-300 my-4"></div>
             </>
