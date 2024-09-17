@@ -5,7 +5,6 @@ import { useAppSelector } from "../../../redux/hooks";
 
 const AdminDashboard = () => {
   const { user } = useAppSelector((state) => state.auth);
-
   const { data: profile, isLoading, error } = useGetSingleUserQuery(user?.id);
 
   // Handle loading and error states
