@@ -46,6 +46,16 @@ const userApi = baseApi.injectEndpoints({
             invalidatesTags: ['user']
         }),
 
+        getSingleUser: builder.query({
+            query: (id) => {
+                console.log("get user api hit here==>", id);
+                return {
+                    url: `/users/single-user/${id}`,
+                    method: 'GET',
+                };
+            },
+            providesTags: ['user'],
+        }),
 
     })
 });
@@ -54,5 +64,6 @@ export const {
     useGetAllUsersQuery,
     useDeleteUserMutation,
     useUpdateUserRoleMutation,
-    useUpdateUserProfileMutation
+    useUpdateUserProfileMutation,
+    useGetSingleUserQuery
 } = userApi;
