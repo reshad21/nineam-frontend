@@ -1,4 +1,5 @@
-import { Button } from "antd";
+import { CheckCircleOutlined, DollarCircleOutlined } from "@ant-design/icons";
+import { Button, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { useGetCustomerBookingQuery } from "../../../../redux/features/Rent/rentApi";
 
@@ -19,6 +20,7 @@ type TBooking = {
   bikeId: TBike;
   totalCost: number;
   isReturned: boolean;
+  payBill: boolean; // Add payBill property here
 };
 
 const MyRentList = () => {
@@ -67,14 +69,28 @@ const MyRentList = () => {
             </ul>
             <div className="flex justify-between items-center">
               {bike.isReturned ? (
-                <Link to={`/checkout?rentId=${bike._id}`}>
-                  <Button
-                    type="primary"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Make Payment
-                  </Button>
-                </Link>
+                bike.payBill ? (
+                  <Tooltip title="Payment Completed">
+                    <Button
+                      type="primary"
+                      icon={<CheckCircleOutlined />}
+                      disabled
+                      className="w-full bg-gray-500 text-white font-semibold py-2 px-4 rounded"
+                    >
+                      Payment Done
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Link to={`/checkout?rentId=${bike._id}`}>
+                    <Button
+                      type="primary"
+                      icon={<DollarCircleOutlined />}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                    >
+                      Make Payment
+                    </Button>
+                  </Link>
+                )
               ) : (
                 <span className="text-green-600 font-semibold">
                   Bike in Use

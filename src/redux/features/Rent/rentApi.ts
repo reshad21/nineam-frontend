@@ -86,6 +86,18 @@ const rentApi = baseApi.injectEndpoints({
             invalidatesTags: ['booking', 'bikes'],
         }),
 
+        payBillStatus: builder.mutation({
+            query: ({ id, data }) => {
+                console.log("paybill status with id:", id, "and data:", data);
+                return {
+                    url: `/rentals/return/${id}`,
+                    method: 'PATCH',
+                    body: data,
+                }
+            },
+            invalidatesTags: ['bikes']
+        }),
+
     }),
 });
 
@@ -95,5 +107,6 @@ export const {
     useCreateRentBikeMutation,
     useReturnBikeMutation,
     useGetRentReturnBikeQuery,
-    useCreateBookingMutation
+    useCreateBookingMutation,
+    usePayBillStatusMutation,
 } = rentApi;
