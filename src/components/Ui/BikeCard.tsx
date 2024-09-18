@@ -138,9 +138,9 @@ const BikeCard = ({
               <Button
                 className={`w-full ${
                   theme === "dark"
-                    ? "bg-gray-600 text-gray-100 hover:bg-gray-700"
-                    : "bg-slate-200 text-gray-800 hover:bg-slate-300"
-                }`}
+                    ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
+                    : "bg-slate-200 text-gray-800 hover:bg-slate-300 border-gray-200"
+                } border rounded-lg transition duration-300`}
               >
                 View Details
               </Button>
@@ -203,26 +203,22 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
         className={`${
           isAvailable
             ? theme === "dark"
-              ? "bg-slate-600 text-gray-100 hover:bg-slate-700"
-              : "bg-slate-600 text-white hover:bg-slate-700"
+              ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
+              : "bg-blue-600 text-white hover:bg-blue-700 border-blue-600"
             : theme === "dark"
-            ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-            : "bg-gray-400 text-gray-500 cursor-not-allowed"
-        }`}
+            ? "bg-gray-500 text-gray-400 cursor-not-allowed border-gray-500"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed border-gray-300"
+        } border rounded-lg transition duration-300`}
         disabled={!isAvailable}
       >
         Book Now
       </Button>
+
       <Modal
         title="Confirmation Booking Information"
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
-        className={`${
-          theme === "dark"
-            ? "bg-gray-900 text-gray-100"
-            : "bg-white text-gray-800"
-        }`}
       >
         <BrForm
           onSubmit={handleSubmit}
