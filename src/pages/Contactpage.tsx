@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Form, Input, Row, Typography } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import {
   Controller,
   FieldValues,
@@ -6,11 +6,12 @@ import {
   useForm,
 } from "react-hook-form";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { useAppSelector } from "../redux/hooks";
 
-const { Title } = Typography;
 const { TextArea } = Input;
 
 const ContactUsPage = () => {
+  const theme = useAppSelector((state) => state.theme.mode);
   const { handleSubmit, control, reset } = useForm();
 
   const onSubmit: SubmitErrorHandler<FieldValues> = (data) => {
@@ -20,21 +21,28 @@ const ContactUsPage = () => {
   };
 
   return (
-    <div style={{ padding: "40px", backgroundColor: "#f4f4f4" }}>
+    <div
+      className={`py-16 px-4 ${
+        theme === "dark"
+          ? "bg-gray-900 text-gray-100"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
       {/* Header Section */}
-      <Row justify="center" style={{ marginBottom: "40px" }}>
+      <Row justify="center" className="mb-12">
         <Col xs={24} sm={20} md={16} lg={12}>
-          <Title
-            level={1}
-            style={{
-              textAlign: "center",
-              color: "#ff4c30",
-              fontWeight: "bold",
-            }}
+          <h1
+            className={`text-center ${
+              theme === "dark" ? "text-gray-200" : "text-gray-800"
+            } font-bold text-4xl`}
           >
             Get in Touch
-          </Title>
-          <p style={{ textAlign: "center", color: "#555", fontSize: "18px" }}>
+          </h1>
+          <p
+            className={`text-center ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            } text-lg`}
+          >
             We’d love to hear from you! Fill out the form below or reach us
             through social media.
           </p>
@@ -45,27 +53,31 @@ const ContactUsPage = () => {
       <Row justify="center" align="middle" gutter={40}>
         <Col xs={24} sm={20} md={16} lg={12} xl={10}>
           <div
-            style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "12px",
-              boxShadow: "0px 12px 30px rgba(0, 0, 0, 0.15)",
-              border: "1px solid #ddd",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            }}
+            className={`${
+              theme === "dark"
+                ? "bg-gray-800 border-gray-700"
+                : "bg-white border-gray-200"
+            } p-8 rounded-lg shadow-lg border transition-transform transform hover:scale-105`}
           >
-            <Title
-              level={3}
-              style={{
-                textAlign: "center",
-                marginBottom: "20px",
-                color: "#ff4c30",
-              }}
+            <h3
+              className={`text-center mb-6 ${
+                theme === "dark" ? "text-slate-200" : "text-primary"
+              } text-2xl font-semibold`}
             >
               Contact Form
-            </Title>
+            </h3>
             <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
-              <Form.Item label="Name">
+              <Form.Item
+                label={
+                  <span
+                    className={`${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Name
+                  </span>
+                }
+              >
                 <Controller
                   name="name"
                   control={control}
@@ -74,7 +86,17 @@ const ContactUsPage = () => {
                   )}
                 />
               </Form.Item>
-              <Form.Item label="Email">
+              <Form.Item
+                label={
+                  <span
+                    className={`${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Email
+                  </span>
+                }
+              >
                 <Controller
                   name="email"
                   control={control}
@@ -83,7 +105,17 @@ const ContactUsPage = () => {
                   )}
                 />
               </Form.Item>
-              <Form.Item label="Subject">
+              <Form.Item
+                label={
+                  <span
+                    className={`${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Subject
+                  </span>
+                }
+              >
                 <Controller
                   name="subject"
                   control={control}
@@ -92,7 +124,17 @@ const ContactUsPage = () => {
                   )}
                 />
               </Form.Item>
-              <Form.Item label="Message">
+              <Form.Item
+                label={
+                  <span
+                    className={`${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Message
+                  </span>
+                }
+              >
                 <Controller
                   name="message"
                   control={control}
@@ -106,7 +148,11 @@ const ContactUsPage = () => {
                   type="primary"
                   htmlType="submit"
                   block
-                  style={{ backgroundColor: "#ff4c30", borderColor: "#ff4c30" }}
+                  className={`${
+                    theme === "dark"
+                      ? "bg-primary border-primary"
+                      : "bg-primary border-primary"
+                  }`}
                 >
                   Send Message
                 </Button>
@@ -117,56 +163,91 @@ const ContactUsPage = () => {
       </Row>
 
       {/* Social Media and Contact Info */}
-      <Row justify="center" style={{ marginTop: "40px" }}>
+      <Row justify="center" className="mt-12">
         <Col xs={24} sm={20} md={16} lg={12} xl={10}>
-          <Divider>Follow Us</Divider>
-          <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <div className="flex justify-center space-x-4">
-              <a
-                href="https://facebook.com"
-                className="text-gray-600 hover:text-primary"
-              >
-                <FaFacebook size={30} />
-              </a>
-              <a
-                href="https://twitter.com"
-                className="text-gray-600 hover:text-primary"
-              >
-                <FaTwitter size={30} />
-              </a>
-              <a
-                href="https://instagram.com"
-                className="text-gray-600 hover:text-primary"
-              >
-                <FaInstagram size={30} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                className="text-gray-600 hover:text-primary"
-              >
-                <FaLinkedin size={30} />
-              </a>
-            </div>
+          <Divider
+            className={`${
+              theme === "dark" ? "border-gray-700" : "border-gray-300"
+            }`}
+          >
+            Follow Us
+          </Divider>
+          <div className="text-center mb-8 flex justify-center space-x-4">
+            <a
+              href="https://facebook.com"
+              className={`${
+                theme === "dark"
+                  ? "text-gray-400 hover:text-primary-light"
+                  : "text-gray-600 hover:text-primary-dark"
+              }`}
+            >
+              <FaFacebook size={30} />
+            </a>
+            <a
+              href="https://twitter.com"
+              className={`${
+                theme === "dark"
+                  ? "text-gray-400 hover:text-primary-light"
+                  : "text-gray-600 hover:text-primary-dark"
+              }`}
+            >
+              <FaTwitter size={30} />
+            </a>
+            <a
+              href="https://instagram.com"
+              className={`${
+                theme === "dark"
+                  ? "text-gray-400 hover:text-primary-light"
+                  : "text-gray-600 hover:text-primary-dark"
+              }`}
+            >
+              <FaInstagram size={30} />
+            </a>
+            <a
+              href="https://linkedin.com"
+              className={`${
+                theme === "dark"
+                  ? "text-gray-400 hover:text-primary-light"
+                  : "text-gray-600 hover:text-primary-dark"
+              }`}
+            >
+              <FaLinkedin size={30} />
+            </a>
           </div>
 
           <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
-            }}
+            className={`${
+              theme === "dark"
+                ? "bg-gray-800 border-gray-700"
+                : "bg-white border-gray-200"
+            } p-6 rounded-lg shadow-md`}
           >
-            <Title level={4} style={{ color: "#ff4c30" }}>
+            <h4
+              className={`${
+                theme === "dark" ? "text-primary" : "text-primary"
+              } text-xl font-semibold`}
+            >
               Contact Information
-            </Title>
-            <p>
+            </h4>
+            <p
+              className={`${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               <strong>Address:</strong> 123 Street Name, City, State 12345
             </p>
-            <p>
+            <p
+              className={`${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               <strong>Email:</strong> contact@yourcompany.com
             </p>
-            <p>
+            <p
+              className={`${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               <strong>Phone:</strong> (123) 456-7890
             </p>
           </div>
