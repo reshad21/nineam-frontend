@@ -5,6 +5,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useCreateRentBikeMutation } from "../../redux/features/Rent/rentApi";
+import { useAppSelector } from "../../redux/hooks"; // Adjust path as needed
 import BrForm from "../Form/BrForm";
 import BrInput from "../Form/BrInput";
 
@@ -35,9 +36,16 @@ const BikeCard = ({
   isAvailable,
 }: TBikeDataProps) => {
   const params = useParams();
+  const theme = useAppSelector((state) => state.theme.mode); // Get current theme
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 w-full max-w-sm mx-auto relative">
+    <div
+      className={`${
+        theme === "dark"
+          ? "bg-gray-800 text-gray-100 border-gray-600"
+          : "bg-white text-gray-800 border-gray-200"
+      } rounded-lg shadow-lg overflow-hidden border w-full max-w-sm mx-auto relative`}
+    >
       {/* Availability Badge */}
       <div
         className={`absolute z-40 top-2 left-2 px-2 py-1 rounded-full text-white text-sm ${
@@ -65,14 +73,18 @@ const BikeCard = ({
           alt={`${name} Image`}
           className="w-full h-48 object-cover"
         />
-        <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full shadow-lg">
-          <span className="text-xs font-semibold text-gray-800 bg-gray-100 px-2 py-1 rounded-full">
-            {year} Model
-          </span>
+        <div
+          className={`absolute top-2 right-2 ${
+            theme === "dark"
+              ? "bg-gray-900 text-gray-100"
+              : "bg-white text-gray-800"
+          } px-2 py-1 rounded-full shadow-lg`}
+        >
+          <span className="text-xs font-semibold">{year} Model</span>
         </div>
       </figure>
       <div className="p-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-2">{name}</h2>
+        <h2 className="text-2xl font-semibold mb-2">{name}</h2>
         <p className="text-slate-400 mb-4">
           {description || "No description available."}
         </p>
@@ -91,13 +103,21 @@ const BikeCard = ({
           </div>
           <div className="flex justify-between text-gray-700">
             <span className="font-medium">Price Per Hour:</span>
-            <span className="ml-1 text-gray-800">{pricePerHour} BDT</span>
+            <span className="ml-1">{pricePerHour} BDT</span>
           </div>
         </div>
         <div className="flex flex-col gap-2">
           {!params.bikeId && (
             <Link to={`/singleBike/${_id}`} className="w-full">
-              <Button className="w-full bg-slate-200">View Details</Button>
+              <Button
+                className={`w-full ${
+                  theme === "dark"
+                    ? "bg-gray-600 text-gray-100 hover:bg-gray-700"
+                    : "bg-slate-200 text-gray-800 hover:bg-slate-300"
+                }`}
+              >
+                View Details
+              </Button>
             </Link>
           )}
           <BikeModal bikeId={_id} isAvailable={isAvailable} />
@@ -119,6 +139,7 @@ type BikeModalProps = {
 const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
   const [createRent] = useCreateRentBikeMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const theme = useAppSelector((state) => state.theme.mode); // Get current theme
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -153,7 +174,15 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
       <Button
         type="primary"
         onClick={showModal}
-        className="bg-slate-600"
+        className={`${
+          isAvailable
+            ? theme === "dark"
+              ? "bg-slate-600 text-gray-100 hover:bg-slate-700"
+              : "bg-slate-600 text-white hover:bg-slate-700"
+            : theme === "dark"
+            ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+            : "bg-gray-400 text-gray-500 cursor-not-allowed"
+        }`}
         disabled={!isAvailable}
       >
         Book Now
@@ -175,7 +204,14 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
             readOnly
           />
           <div className="flex justify-end mt-4">
-            <Button onClick={handleCancel} className="mr-2">
+            <Button
+              onClick={handleCancel}
+              className={`${
+                theme === "dark"
+                  ? "bg-gray-600 text-gray-100"
+                  : "bg-gray-200 text-gray-800"
+              } mr-2`}
+            >
               Cancel
             </Button>
             <Button type="primary" htmlType="submit">
