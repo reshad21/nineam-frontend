@@ -1,9 +1,29 @@
+import { useAppSelector } from "../../redux/hooks";
+
 const MissionStatement = () => {
+  const theme = useAppSelector((state) => state.theme.mode);
+
   return (
-    <section className="py-16 px-6">
+    <section
+      className={`py-16 px-6 ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
       <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
-        <p className="max-w-2xl mx-auto text-lg leading-relaxed">
+        <h2
+          className={`text-4xl font-bold mb-6 ${
+            theme === "dark" ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Our Mission
+        </h2>
+        <p
+          className={`max-w-2xl mx-auto text-lg leading-relaxed ${
+            theme === "dark" ? "text-gray-300" : "text-gray-800"
+          }`}
+        >
           At [Your Company], our mission is to promote sustainable
           transportation by making biking accessible to everyone. We provide a
           seamless and enjoyable bike rental experience, focusing on quality
