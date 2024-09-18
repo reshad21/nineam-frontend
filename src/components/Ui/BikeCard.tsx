@@ -84,24 +84,50 @@ const BikeCard = ({
         </div>
       </figure>
       <div className="p-4">
-        <h2 className="text-2xl font-semibold mb-2">{name}</h2>
-        <p className="text-slate-400 mb-4">
+        <h2
+          className={`text-2xl font-semibold mb-2 ${
+            theme === "dark" ? "text-gray-100" : "text-gray-800"
+          }`}
+        >
+          {name}
+        </h2>
+        <p
+          className={`mb-4 ${
+            theme === "dark" ? "text-gray-400" : "text-slate-400"
+          }`}
+        >
           {description || "No description available."}
         </p>
         <div className="flex flex-col space-y-2 mb-4">
-          <div className="flex justify-between text-gray-700">
+          <div
+            className={`flex justify-between ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             <span className="font-medium">Model:</span>
             <span>{model}</span>
           </div>
-          <div className="flex justify-between text-gray-700">
+          <div
+            className={`flex justify-between ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             <span className="font-medium">Brand:</span>
             <span>{brand}</span>
           </div>
-          <div className="flex justify-between text-gray-700">
+          <div
+            className={`flex justify-between ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             <span className="font-medium">CC:</span>
             <span>{cc}</span>
           </div>
-          <div className="flex justify-between text-gray-700">
+          <div
+            className={`flex justify-between ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             <span className="font-medium">Price Per Hour:</span>
             <span className="ml-1">{pricePerHour} BDT</span>
           </div>
@@ -192,6 +218,11 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
+        className={`${
+          theme === "dark"
+            ? "bg-gray-900 text-gray-100"
+            : "bg-white text-gray-800"
+        }`}
       >
         <BrForm
           onSubmit={handleSubmit}
