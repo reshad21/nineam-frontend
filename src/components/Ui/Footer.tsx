@@ -1,8 +1,18 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { useAppSelector } from "../../redux/hooks"; // Import useAppSelector to get the theme
 import Container from "./Container";
+
 const Footer = () => {
+  const theme = useAppSelector((state) => state.theme.mode); // Get the theme from Redux
+
   return (
-    <footer className="bg-slate-100 text-slate-900 p-8 mt-10">
+    <footer
+      className={`p-8 mt-10 ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-slate-100 text-slate-900"
+      }`}
+    >
       <Container>
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Information */}
@@ -62,7 +72,9 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="mt-8 border-t border-gray-700 pt-4 text-center">
-          <p>&copy; {new Date().getFullYear()} bikebd. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
+          </p>
         </div>
       </Container>
     </footer>

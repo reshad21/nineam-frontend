@@ -1,3 +1,5 @@
+import { useAppSelector } from "../../redux/hooks";
+
 const benefits = [
   {
     title: "Best Prices",
@@ -20,16 +22,35 @@ const benefits = [
 ];
 
 const WhyChooseUs = () => {
+  const theme = useAppSelector((state) => state.theme.mode);
+
   return (
-    <section className="py-12 bg-white">
+    <section
+      className={`py-12 ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-8">Why Choose Us</h2>
+        <h2 className="text-3xl font-bold mb-8">Why Rent With Us</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => (
-            <div key={index} className="bg-gray-100 p-6 rounded-lg shadow-lg">
+            <div
+              key={index}
+              className={`p-6 rounded-lg shadow-lg ${
+                theme === "dark" ? "bg-gray-800 text-white" : "bg-white"
+              }`}
+            >
               <div className="text-4xl mb-4">{benefit.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-              <p className="text-gray-600">{benefit.description}</p>
+              <p
+                className={`${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                {benefit.description}
+              </p>
             </div>
           ))}
         </div>

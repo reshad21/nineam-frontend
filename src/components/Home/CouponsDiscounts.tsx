@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../redux/hooks";
 import SpinWheel from "../Ui/SpeenWheel/spinWheel";
 
 const promotions = [
@@ -5,28 +6,30 @@ const promotions = [
     code: "SAVE10",
     description: "Get 10% off on your first bike rental. Use code at checkout.",
     expiration: "Expires on 31st August 2024",
-    backgroundColor: "bg-yellow-200",
-    textColor: "text-yellow-900",
   },
   {
     code: "SUMMER20",
     description: "Enjoy a 20% discount on all rentals this summer.",
     expiration: "Expires on 15th September 2024",
-    backgroundColor: "bg-green-200",
-    textColor: "text-green-900",
   },
   {
     code: "WEEKENDRIDE",
     description: "Weekend special! Save 15% on rentals from Friday to Sunday.",
     expiration: "Expires on 30th September 2024",
-    backgroundColor: "bg-blue-200",
-    textColor: "text-blue-900",
   },
 ];
 
 const CouponsDiscounts = () => {
+  const theme = useAppSelector((state) => state.theme.mode);
+
   return (
-    <section className="">
+    <section
+      className={`py-10 ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-bold mb-8 text-center">
           Exclusive Coupons & Discounts
@@ -39,15 +42,15 @@ const CouponsDiscounts = () => {
             {promotions.map((promo, index) => (
               <div
                 key={index}
-                className={`p-6 rounded-lg shadow-lg ${promo.backgroundColor} ${promo.textColor}`}
+                className={`p-6 rounded-lg shadow-lg ${
+                  theme === "dark"
+                    ? "bg-gray-800 text-white"
+                    : "bg-white text-gray-900"
+                }`}
               >
                 <div className="flex items-center mb-4">
                   <span className="text-3xl mr-3">
-                    {promo.textColor === "text-yellow-900"
-                      ? "💛"
-                      : promo.textColor === "text-green-900"
-                      ? "🌿"
-                      : "🌊"}
+                    {index === 0 ? "💛" : index === 1 ? "🌿" : "🌊"}
                   </span>
                   <h3 className="text-2xl font-semibold">{promo.code}</h3>
                 </div>
@@ -58,17 +61,29 @@ const CouponsDiscounts = () => {
           </div>
 
           {/* Instructions Column */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h4 className="text-2xl font-semibold mb-4 text-blue-600">
+          <div
+            className={`p-6 rounded-lg shadow-lg ${
+              theme === "dark"
+                ? "bg-gray-800 text-white"
+                : "bg-white text-gray-900"
+            }`}
+          >
+            <h4 className="text-2xl font-semibold mb-4 text-primary">
               How to Apply a Coupon
             </h4>
-            <p className="text-gray-700">
+            <p
+              className={`${
+                theme === "dark"
+                  ? "bg-gray-800 text-white"
+                  : "bg-white text-gray-900"
+              }`}
+            >
               To use a coupon, simply enter the code during checkout in the
               "Coupon Code" field, then click "Apply". Your discount will be
               automatically applied to your total.
             </p>
             <div className="mt-6 text-center">
-              <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
+              <button className="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary transition duration-300">
                 Get Started
               </button>
             </div>

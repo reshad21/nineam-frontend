@@ -3,27 +3,33 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { logOut } from "../../redux/features/auth/authSlice";
+
+import { toggleTheme } from "../../redux/features/Theme/themeSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Container from "../Ui/Container";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.auth);
-  // State to manage the mobile menu toggle
+  const theme = useAppSelector((state) => state.theme.mode); // থিম স্টেট
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Function to toggle the menu
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   const dispatch = useAppDispatch();
+
   const handleLogout = () => {
     console.log("logout successfully");
     dispatch(logOut());
   };
 
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme());
+  };
+
   return (
-    <nav className="bg-white border-b-2 shadow-md sticky top-0 z-50">
+    <nav
+      className={`sticky top-0 z-50 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
       <Container>
         <div className="container mx-auto flex justify-between items-center py-4">
           {/* Logo on the left */}
@@ -37,57 +43,38 @@ const Navbar = () => {
           <div className="hidden md:flex flex-grow justify-center">
             <ul className="flex space-x-8 text-lg">
               <li>
-                <Link to="/" className="text-gray-700 hover:text-primary">
+                <Link to="/" className="hover:text-primary">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-700 hover:text-primary">
+                <Link to="/about" className="hover:text-primary">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/products"
-                  className="text-gray-700 hover:text-primary"
-                >
+                <Link to="/products" className="hover:text-primary">
                   Products
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact"
-                  className="text-gray-700 hover:text-primary"
-                >
+                <Link to="/contact" className="hover:text-primary">
                   Contact
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Mobile Hamburger Icon */}
-          <button
-            onClick={toggleMenu}
-            className="md:hidden text-gray-500 focus:outline-none"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+          {/* থিম টগল বাটন */}
+          <div className="hidden md:flex space-x-4 items-center">
+            <Button
+              onClick={handleToggleTheme}
+              className="bg-gray-200 text-gray-900 hover:bg-gray-300 transition-all duration-300"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
-          </button>
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </Button>
 
-          {/* Desktop Login/Registration */}
-          <div className="hidden md:flex space-x-4">
+            {/* Desktop Login/Registration */}
             {!user && (
               <>
                 <Link
@@ -124,7 +111,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/"
-                  className="block text-gray-700 hover:text-primary"
+                  className="block hover:text-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Home
@@ -133,7 +120,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/about"
-                  className="block text-gray-700 hover:text-primary"
+                  className="block hover:text-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   About Us
@@ -142,7 +129,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/products"
-                  className="block text-gray-700 hover:text-primary"
+                  className="block hover:text-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Products
@@ -151,7 +138,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="block text-gray-700 hover:text-primary"
+                  className="block hover:text-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
@@ -179,7 +166,6 @@ const Navbar = () => {
                   </li>
                 </>
               )}
-              {/* auth related button */}
               {user && (
                 <>
                   <Button
