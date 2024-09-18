@@ -1,4 +1,4 @@
-import { Button, Col, Row, Typography } from "antd";
+import { Button, Col, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -6,15 +6,14 @@ import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { setUser, TUser } from "../redux/features/auth/authSlice";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { verifyToken } from "../utils/verifyToken";
-
-const { Title } = Typography;
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [login] = useLoginMutation();
+  const theme = useAppSelector((state) => state.theme.mode); // Get the current theme
 
   const defaultValues = {
     email: "john1@example.com",
@@ -22,44 +21,39 @@ const LoginPage = () => {
   };
 
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading("Logging in");
+    const toastId = toast.loading("Logging in...");
     try {
       const res = await login(data).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
-      // navigate("/admin/dashboard");
       navigate(`/${user.role}/dashboard`);
-      toast.success("Logged in", { id: toastId, duration: 2000 });
+      toast.success("Logged in successfully", { id: toastId, duration: 2000 });
     } catch (error) {
-      toast.error("Something went wrong", { id: toastId });
+      toast.error(
+        "Login failed. Please check your credentials and try again.",
+        { id: toastId }
+      );
     }
   };
 
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        minHeight: "100vh",
-        // background: "linear-gradient(135deg, #ff4c30 0%, #ff9472 100%)",
-        padding: "20px",
-      }}
-    >
+    <Row justify="center" align="middle" className="min-h-screen">
       <Col xs={24} sm={18} md={12} lg={8} xl={6}>
         <div
-          style={{
-            backgroundColor: "white",
-            padding: "30px",
-            borderRadius: "10px",
-            boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-          }}
+          className={`p-8 rounded-lg shadow-lg ${
+            theme === "dark"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-gray-900"
+          }`}
         >
-          <Title
-            level={3}
-            style={{ textAlign: "center", marginBottom: "30px" }}
+          <p
+            // level={3}
+            className={`text-center mb-8 text-2xl font-semibold ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
           >
             Login
-          </Title>
+          </p>
           <BrForm onSubmit={onSubmit} defaultValues={defaultValues}>
             <BrInput type="email" name="email" label="Email:" />
             <BrInput type="password" name="password" label="Password:" />
@@ -67,12 +61,11 @@ const LoginPage = () => {
               type="primary"
               htmlType="submit"
               block
-              style={{
-                backgroundColor: "#ff4c30",
-                borderColor: "#ff4c30",
-                marginTop: "20px",
-                fontWeight: "bold",
-              }}
+              className={`${
+                theme === "dark"
+                  ? "bg-red-600 border-red-600"
+                  : "bg-red-500 border-red-500"
+              } mt-4 font-bold`}
             >
               Login
             </Button>
