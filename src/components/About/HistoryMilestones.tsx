@@ -38,7 +38,7 @@ const HistoryMilestones = () => {
 
   return (
     <section
-      className={`py-16 ${theme === "dark" ? "bg-gray-800" : "bg-gray-100"}`}
+      className={`py-16 ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}
     >
       <div className="container mx-auto px-6">
         <h2
@@ -58,7 +58,7 @@ const HistoryMilestones = () => {
             >
               <div
                 className={`md:w-1/2 text-center md:text-left mb-6 md:mb-0 ${
-                  theme === "dark" ? "text-white" : "text-gray-900"
+                  theme === "dark" ? "text-gray-300" : "text-gray-900"
                 }`}
               >
                 <h3
@@ -70,14 +70,14 @@ const HistoryMilestones = () => {
                 </h3>
                 <h4
                   className={`text-2xl font-semibold mb-3 ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-800"
+                    theme === "dark" ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
                   {milestone.title}
                 </h4>
                 <p
-                  className={`text-gray-700 ${
-                    theme === "dark" ? "text-gray-400" : ""
+                  className={`${
+                    theme === "dark" ? "text-gray-500" : "text-gray-700"
                   }`}
                 >
                   {milestone.description}
@@ -85,12 +85,12 @@ const HistoryMilestones = () => {
               </div>
               <div
                 className={`md:w-1/2 flex justify-center ${
-                  theme === "dark" ? "text-primary-dark" : "text-white"
+                  theme === "dark" ? "text-white" : "text-white"
                 }`}
               >
                 <div
                   className={`w-32 h-32 flex items-center justify-center rounded-full text-2xl font-bold ${
-                    theme === "dark" ? "bg-primary-dark" : "bg-primary"
+                    theme === "dark" ? "bg-primary" : "bg-primary"
                   }`}
                 >
                   {milestone.year}
