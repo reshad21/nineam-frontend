@@ -8,12 +8,29 @@ const AdminDashboard = () => {
   const { data: profile, isLoading, error } = useGetSingleUserQuery(user?.id);
 
   // Handle loading and error states
-  if (isLoading) return <Spin tip="Loading profile data..." />;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
   if (error)
-    return <Alert message="Error loading profile data" type="error" showIcon />;
+    return (
+      <Alert
+        message="Error loading profile data"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
   if (!profile?.data)
     return (
-      <Alert message="No profile data available" type="warning" showIcon />
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
     );
 
   return (

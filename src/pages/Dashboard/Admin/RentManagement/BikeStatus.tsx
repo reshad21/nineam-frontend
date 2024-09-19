@@ -1,4 +1,4 @@
-import { Button, Space, Table, type TableColumnsType } from "antd";
+import { Alert, Button, Space, Spin, Table, type TableColumnsType } from "antd";
 import { toast } from "sonner";
 import {
   useGetAllBookingQuery,
@@ -39,13 +39,37 @@ const BikeStatus = () => {
   const {
     data: bookings,
     isLoading,
+    error,
     // isFetching,
   } = useGetAllBookingQuery(undefined, { pollingInterval: 2000 });
 
   const [takeReturnBike] = useReturnBikeMutation();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!bookings?.data) return <div>No Booking data available.</div>;
+  // Handle loading and error states
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
+  if (error)
+    return (
+      <Alert
+        message="Error loading profile data"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
+  if (!bookings?.data)
+    return (
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
 
   // Transform the data for the table
   const tableData: DataType[] =
