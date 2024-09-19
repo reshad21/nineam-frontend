@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Row, Typography } from "antd";
-import { FieldValues, SubmitHandler } from "react-hook-form"; // Change from SubmitErrorHandler to SubmitHandler
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import BrForm from "../components/Form/BrForm";
@@ -8,7 +8,7 @@ import BrInput from "../components/Form/BrInput";
 import BrTextArea from "../components/Form/BrTextArea";
 import { useRegistrationMutation } from "../redux/features/auth/authApi";
 import { useAppSelector } from "../redux/hooks";
-import { userSchema } from "../schemas/userRegistrationSchema";
+import { registrationSchema } from "../schemas/registrationSchema";
 import { TResponse } from "../types/global";
 import { TUser } from "../types/register.type";
 
@@ -17,7 +17,7 @@ const { Title } = Typography;
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [registration] = useRegistrationMutation();
-  const theme = useAppSelector((state) => state.theme.mode); // Get the current theme
+  const theme = useAppSelector((state) => state.theme.mode);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("User is creating...");
@@ -40,10 +40,7 @@ const SignUpPage = () => {
     <Row
       justify="center"
       align="middle"
-      style={{
-        minHeight: "100vh",
-        padding: "20px",
-      }}
+      style={{ minHeight: "100vh", padding: "20px" }}
     >
       <Col xs={24} sm={18} md={14} lg={12} xl={10}>
         <div
@@ -59,7 +56,12 @@ const SignUpPage = () => {
           >
             Sign Up
           </Title>
-          <BrForm onSubmit={onSubmit} resolver={zodResolver(userSchema)}>
+          <BrForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(registrationSchema)}
+          >
+            {" "}
+            {/* Zod resolver used here */}
             <Row gutter={16}>
               <Col span={12}>
                 <BrInput type="text" name="name" label="Name:" />
