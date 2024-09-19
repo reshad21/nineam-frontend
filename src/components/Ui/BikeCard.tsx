@@ -223,7 +223,7 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
       >
         <BrForm
           onSubmit={handleSubmit}
-          defaultValues={{ startTime: defaultValues.startTime }} // Only include startTime in the form
+          defaultValues={{ startTime: defaultValues.startTime }}
         >
           <BrInput
             name="startTime"
