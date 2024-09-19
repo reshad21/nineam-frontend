@@ -23,7 +23,9 @@ type User = {
 
 const AllUsers = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { data: users } = useGetAllUsersQuery(undefined);
+  const { data: users } = useGetAllUsersQuery(undefined, {
+    pollingInterval: 3000,
+  });
 
   const [deleteUser] = useDeleteUserMutation();
   const [updateRole] = useUpdateUserRoleMutation();

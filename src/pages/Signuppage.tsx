@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Row, Typography } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form"; // Change from SubmitErrorHandler to SubmitHandler
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
@@ -14,6 +15,7 @@ import { TUser } from "../types/register.type";
 const { Title } = Typography;
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [registration] = useRegistrationMutation();
   const theme = useAppSelector((state) => state.theme.mode); // Get the current theme
 
@@ -27,6 +29,7 @@ const SignUpPage = () => {
         toast.error(res.error?.data?.message, { id: toastId });
       } else {
         toast.success("User created successfully", { id: toastId });
+        navigate("/login");
       }
     } catch (error) {
       toast.error("Something went wrong!", { id: toastId });

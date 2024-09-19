@@ -25,6 +25,7 @@ const CheckoutPage = () => {
   const rentId = query.get("rentId");
   const { data: rent, isLoading, error } = useGetRentReturnBikeQuery(rentId);
   const [updatePaybillStatus] = usePayBillStatusMutation();
+  const theme = useAppSelector((state) => state.theme.mode);
   const customer = useAppSelector((state) => state.auth);
   const [createOrder] = useCreateOrderMutation();
 
@@ -89,7 +90,13 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div className="bg-gray-100 flex items-center justify-center py-10 px-4">
+    <div
+      className={`flex items-center justify-center py-10 px-4 ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
       <div className="w-full max-w-7xl bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
         {/* Left Section: User Information */}
         <div className="flex-1 bg-white p-6">
