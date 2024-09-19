@@ -8,7 +8,12 @@ const UserDashboard = () => {
   const { data: profile, isLoading, error } = useGetSingleUserQuery(user?.id);
 
   // Handle loading and error states
-  if (isLoading) return <Spin tip="Loading profile data..." />;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
   if (error)
     return <Alert message="Error loading profile data" type="error" showIcon />;
   if (!profile?.data)

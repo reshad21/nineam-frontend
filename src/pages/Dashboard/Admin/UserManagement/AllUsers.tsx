@@ -23,7 +23,7 @@ type User = {
 
 const AllUsers = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { data: users } = useGetAllUsersQuery(undefined); // users is now typed properly
+  const { data: users } = useGetAllUsersQuery(undefined);
 
   const [deleteUser] = useDeleteUserMutation();
   const [updateRole] = useUpdateUserRoleMutation();

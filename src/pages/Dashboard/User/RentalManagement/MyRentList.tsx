@@ -1,5 +1,5 @@
 import { CheckCircleOutlined, DollarCircleOutlined } from "@ant-design/icons";
-import { Button, Tooltip } from "antd";
+import { Alert, Button, Spin, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { useGetCustomerBookingQuery } from "../../../../redux/features/Rent/rentApi";
 
@@ -24,9 +24,39 @@ type TBooking = {
 };
 
 const MyRentList = () => {
-  const { data: bikes } = useGetCustomerBookingQuery(undefined, {
+  const {
+    data: bikes,
+    isLoading,
+    error,
+  } = useGetCustomerBookingQuery(undefined, {
     pollingInterval: 2000,
   });
+
+  // Handle loading and error states
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
+  if (error)
+    return (
+      <Alert
+        message="Error loading profile data"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
+  if (!bikes.data)
+    return (
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-6 bg-gray-100">

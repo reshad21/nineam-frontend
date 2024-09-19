@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -8,6 +9,7 @@ import {
   message,
   Row,
   Select,
+  Spin,
   Typography,
 } from "antd";
 import moment from "moment";
@@ -57,9 +59,31 @@ const BookingPage = () => {
     setSelectedBike(bike);
   };
 
-  // Handle loading and error states for bike fetching
-  if (isLoading) return <div>Loading bikes...</div>;
-  if (error) return <div>Error fetching bikes.</div>;
+  // Handle loading and error states
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
+  if (error)
+    return (
+      <Alert
+        message="Error loading profile data"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
+  if (!bikes.data)
+    return (
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
 
   // Filter bikes that are available
   const availableBikes =
