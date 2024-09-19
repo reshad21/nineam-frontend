@@ -23,13 +23,6 @@ const productApi = baseApi.injectEndpoints({
             providesTags: ['bikes']
         }),
 
-        // getAllProducts: builder.query({
-        //     query: (category) => ({
-        //         url: `/bikes${category ? `?category=${category}` : ''}`,
-        //         method: 'GET',
-        //     }),
-        //     providesTags: ['bikes'],
-        // }),
 
         getProductById: builder.query({
             query: (id) => ({

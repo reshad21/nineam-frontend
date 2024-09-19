@@ -1,8 +1,10 @@
 import {
+  Alert,
   Button,
   Modal,
   Pagination,
   Space,
+  Spin,
   Table,
   TableColumnsType,
   TableProps,
@@ -52,9 +54,31 @@ const ViewAllBikePage = () => {
     ...params,
   ]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading bike data.</div>;
-  if (!bikes.data) return <div>No bike data available.</div>;
+  // Handle loading and error states
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
+  if (error)
+    return (
+      <Alert
+        message="Error loading profile data"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
+  if (!bikes.data)
+    return (
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
 
   const metaData = bikes?.meta;
 

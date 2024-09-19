@@ -27,7 +27,16 @@ const Productpage = () => {
         <Spin />
       </div>
     );
-  if (isError) return <div>Error loading bikes.</div>;
+  if (isError)
+    return (
+      <div
+        className={`h-screen flex items-center justify-center ${
+          theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+        }`}
+      >
+        Error loading bikes.
+      </div>
+    );
 
   const handleFilterChange = (value: string, type: "brand" | "name" | "cc") => {
     setFilters((prevFilters) => {
@@ -63,7 +72,7 @@ const Productpage = () => {
 
   return (
     <div
-      className={`${
+      className={`min-h-screen ${
         theme === "dark"
           ? "bg-gray-900 text-gray-100"
           : "bg-gray-100 text-gray-900"

@@ -1,3 +1,4 @@
+import { Alert, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import BikeCard from "../../../../components/Ui/BikeCard";
 import { useGetProductByIdQuery } from "../../../../redux/features/Bike/bikeApi";
@@ -20,9 +21,30 @@ const ViewBike = () => {
   const { data: bike, isLoading, error } = useGetProductByIdQuery(bikeId);
 
   // Handle loading and error states
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading bike data.</div>;
-  if (!bike.data) return <div>No bike data available.</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin tip="Loading profile data..." />
+      </div>
+    );
+  if (error)
+    return (
+      <Alert
+        message="Error loading profile data"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
+  if (!bike.data)
+    return (
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
 
   return <BikeCard {...bike.data} key={bike.data.id} />;
 };
