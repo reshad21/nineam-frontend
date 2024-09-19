@@ -76,7 +76,6 @@ const CheckoutPage = () => {
       const res = await createOrder(payload).unwrap();
       if (res.success) {
         window.location.href = res?.data?.payment_url;
-        console.log("try to see which url is going==>", window.location.href);
         updatePaybillStatus({
           id: rentId,
           data: { payBill: true },
@@ -97,19 +96,37 @@ const CheckoutPage = () => {
           : "bg-gray-100 text-gray-900"
       }`}
     >
-      <div className="w-full max-w-7xl bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
+      <div
+        className={`w-full max-w-7xl ${
+          theme === "dark" ? "bg-gray-800" : "bg-white"
+        } rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row`}
+      >
         {/* Left Section: User Information */}
-        <div className="flex-1 bg-white p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Checkout</h2>
+        <div
+          className={`flex-1 p-6 ${
+            theme === "dark"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-gray-900"
+          }`}
+        >
+          <h2 className="text-2xl font-bold mb-6">Checkout</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Full Name Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label
+                className={`block font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
                 Full Name
               </label>
               <input
                 {...register("fullName", { required: "Full Name is required" })}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-50"
+                className={`w-full border rounded-lg px-4 py-2 ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700 text-white"
+                    : "border-gray-300 bg-gray-50"
+                }`}
                 placeholder="John Doe"
                 readOnly
               />
@@ -122,12 +139,20 @@ const CheckoutPage = () => {
 
             {/* Address Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label
+                className={`block font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
                 Address
               </label>
               <input
                 {...register("address", { required: "Address is required" })}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-50"
+                className={`w-full border rounded-lg px-4 py-2 ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700 text-white"
+                    : "border-gray-300 bg-gray-50"
+                }`}
                 placeholder="123 Street, City, Country"
                 readOnly
               />
@@ -140,12 +165,20 @@ const CheckoutPage = () => {
 
             {/* Phone Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label
+                className={`block font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
                 Phone Number
               </label>
               <input
                 {...register("phone", { required: "Phone number is required" })}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-50"
+                className={`w-full border rounded-lg px-4 py-2 ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700 text-white"
+                    : "border-gray-300 bg-gray-50"
+                }`}
                 placeholder="+880 1234 567890"
                 readOnly
               />
@@ -158,13 +191,21 @@ const CheckoutPage = () => {
 
             {/* Email Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label
+                className={`block font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
                 Email
               </label>
               <input
                 {...register("email", { required: "Email is required" })}
                 type="email"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-50"
+                className={`w-full border rounded-lg px-4 py-2 ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700 text-white"
+                    : "border-gray-300 bg-gray-50"
+                }`}
                 placeholder="email@example.com"
                 readOnly
               />
@@ -177,12 +218,20 @@ const CheckoutPage = () => {
 
             {/* Promo Code Field */}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label
+                className={`block font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
                 Promo Code (Optional)
               </label>
               <input
                 {...register("promoCode")}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                className={`w-full border rounded-lg px-4 py-2 ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700 text-white"
+                    : "border-gray-300"
+                }`}
                 placeholder="Enter promo code"
               />
             </div>
@@ -190,7 +239,11 @@ const CheckoutPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-300"
+              className={`w-full py-3 rounded-lg font-semibold transition duration-300 ${
+                theme === "dark"
+                  ? "bg-blue-500 hover:bg-blue-600 text-white"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
             >
               Place Order
             </button>
@@ -198,64 +251,67 @@ const CheckoutPage = () => {
         </div>
 
         {/* Right Section: Order Summary */}
-        <div className="w-full md:w-1/3 bg-gray-50 p-6">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            Order Summary
-          </h3>
+        <div
+          className={`w-full md:w-1/3 p-6 ${
+            theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+          }`}
+        >
+          <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
 
           {/* Order Items */}
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex justify-between text-gray-700 mb-2">
-              <p className="font-medium">Bike Name:</p>
+          <div
+            className={`p-4 rounded-lg shadow-sm ${
+              theme === "dark" ? "bg-gray-800" : "bg-white"
+            }`}
+          >
+            <div className="flex justify-between mb-2">
+              <p
+                className={`font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                Bike Name:
+              </p>
               <p>{rent?.data?.bikeId.name}</p>
             </div>
-            <div className="flex justify-between text-gray-700 mb-2">
-              <p className="font-medium">Start Time:</p>
+            <div className="flex justify-between mb-2">
+              <p
+                className={`font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                Start Time:
+              </p>
               <p>{new Date(rent?.data?.startTime).toLocaleString()}</p>
             </div>
-            <div className="flex justify-between text-gray-700 mb-2">
-              <p className="font-medium">Return Time:</p>
+            <div className="flex justify-between mb-2">
+              <p
+                className={`font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                Return Time:
+              </p>
               <p>{new Date(rent?.data?.returnTime).toLocaleString()}</p>
             </div>
-            <div className="flex justify-between text-gray-700 mb-2">
-              <p className="font-medium">Total Time:</p>
-              <p>
-                {Math.ceil(
-                  (new Date(rent?.data?.returnTime).getTime() -
-                    new Date(rent?.data?.startTime).getTime()) /
-                    (1000 * 60 * 60)
-                )}{" "}
-                hours
-              </p>
+
+            {/* Price Calculation */}
+            <div className="flex justify-between font-medium text-lg">
+              <p>Total Price:</p>
+              <p>{totalPrice} BDT</p>
             </div>
-            <div className="flex justify-between text-gray-800 font-semibold">
-              <p>Total Cost:</p>
-              <p>BDT {rent?.data.totalCost.toFixed(2)}</p>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t border-gray-300 my-4"></div>
-
-          {/* Total Price */}
-          <div className="flex justify-between text-lg font-semibold text-gray-800 mb-2">
-            <span>Total:</span>
-            <span>BDT {totalPrice.toFixed(2)}</span>
-          </div>
-
-          {/* Discount and Final Price */}
-          {discount > 0 && (
-            <>
-              <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>Discount:</span>
-                <span>BDT {(totalPrice * discount).toFixed(2)}</span>
-              </div>
-              <div className="border-t border-gray-300 my-4"></div>
-            </>
-          )}
-          <div className="flex justify-between text-lg font-semibold text-gray-800">
-            <span>Final Price:</span>
-            <span>BDT {finalPrice.toFixed(2)}</span>
+            {discount > 0 && (
+              <>
+                <div className="flex justify-between font-medium text-lg">
+                  <p>Discount:</p>
+                  <p>{(discount * 100).toFixed(0)}%</p>
+                </div>
+                <div className="flex justify-between font-bold text-lg mt-2">
+                  <p>Final Price:</p>
+                  <p>{finalPrice} BDT</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
