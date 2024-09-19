@@ -76,13 +76,13 @@ const BikeStatus = () => {
     bookings?.data.map(
       ({ _id, bikeId, isReturned, userId, totalCost }: Bike) => ({
         key: _id,
-        name: bikeId.name,
-        brand: bikeId.brand,
-        pricePerHour: bikeId.pricePerHour,
+        name: bikeId?.name,
+        brand: bikeId?.brand,
+        pricePerHour: bikeId?.pricePerHour,
         isReturned,
         totalCost,
-        customerName: userId.name,
-        email: userId.email,
+        customerName: userId?.name,
+        email: userId?.email,
       })
     ) || [];
 

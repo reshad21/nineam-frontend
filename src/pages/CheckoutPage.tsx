@@ -4,10 +4,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { useCreateOrderMutation } from "../redux/features/Order/orderApi";
-import {
-  useGetRentReturnBikeQuery,
-  usePayBillStatusMutation,
-} from "../redux/features/Rent/rentApi";
+import { useGetRentReturnBikeQuery } from "../redux/features/Rent/rentApi";
 import { useAppSelector } from "../redux/hooks";
 
 type FormData = {
@@ -24,7 +21,7 @@ const CheckoutPage = () => {
   const query = new URLSearchParams(location.search);
   const rentId = query.get("rentId");
   const { data: rent, isLoading, error } = useGetRentReturnBikeQuery(rentId);
-  const [updatePaybillStatus] = usePayBillStatusMutation();
+  // const [updatePaybillStatus] = usePayBillStatusMutation();
   const theme = useAppSelector((state) => state.theme.mode);
   const customer = useAppSelector((state) => state.auth);
   const [createOrder] = useCreateOrderMutation();
@@ -72,14 +69,11 @@ const CheckoutPage = () => {
         userInfo: data,
         productInfo: { brand, name },
         finalPrice,
+        bookingID: rentId,
       };
       const res = await createOrder(payload).unwrap();
       if (res.success) {
         window.location.href = res?.data?.payment_url;
-        updatePaybillStatus({
-          id: rentId,
-          data: { payBill: true },
-        });
       } else {
         toast.error("Payment not done", { id: toastId });
       }
