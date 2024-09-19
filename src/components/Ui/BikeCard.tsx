@@ -146,7 +146,8 @@ const BikeCard = ({
               </Button>
             </Link>
           )}
-          <BikeModal bikeId={_id} isAvailable={isAvailable} />
+          {/* Conditionally render Book Now button based on availability */}
+          {isAvailable && <BikeModal bikeId={_id} isAvailable={isAvailable} />}
         </div>
       </div>
     </div>
@@ -204,7 +205,7 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
           isAvailable
             ? theme === "dark"
               ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
-              : "bg-blue-600 text-white hover:bg-blue-700 border-blue-600"
+              : "bg-slate-700 text-gray-200 hover:bg-blue-700 border-blue-600"
             : theme === "dark"
             ? "bg-gray-500 text-gray-400 cursor-not-allowed border-gray-500"
             : "bg-gray-300 text-gray-500 cursor-not-allowed border-gray-300"
