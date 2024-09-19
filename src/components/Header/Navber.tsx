@@ -1,12 +1,13 @@
-import { Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
+// import logo from "../../assets/logo.png";
+import logo from "../../assets/quickRide.png";
 import { logOut } from "../../redux/features/auth/authSlice";
 
-import { toggleTheme } from "../../redux/features/Theme/themeSlice";
+import { Button } from "antd";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import Container from "../Ui/Container";
+import ThemeToggleButton from "../Theme/ThemeToggleButton";
+import Container from "../Ui/Container"; // Import your ThemeToggleButton component
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -18,10 +19,6 @@ const Navbar = () => {
   const handleLogout = () => {
     console.log("logout successfully");
     dispatch(logOut());
-  };
-
-  const handleToggleTheme = () => {
-    dispatch(toggleTheme());
   };
 
   return (
@@ -67,12 +64,8 @@ const Navbar = () => {
 
           {/* থিম টগল বাটন */}
           <div className="hidden md:flex space-x-4 items-center">
-            <Button
-              onClick={handleToggleTheme}
-              className="bg-gray-200 text-gray-900 hover:bg-gray-300 transition-all duration-300"
-            >
-              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-            </Button>
+            {/* Replace the Button with ThemeToggleButton */}
+            <ThemeToggleButton />
 
             {/* Desktop Login/Registration */}
             {!user && (
@@ -105,7 +98,7 @@ const Navbar = () => {
           <div
             className={`${
               isMenuOpen ? "block" : "hidden"
-            } md:hidden absolute w-full top-16 left-0 bg-gray-200 py-4 px-6 shadow-lg z-50`}
+            } md:hidden absolute w-full top-16 left-0 bg-gray-600 py-4 px-6 shadow-lg z-50`}
           >
             <ul className="space-y-4">
               <li>

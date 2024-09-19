@@ -1,4 +1,5 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks"; // Import useAppSelector to get the theme
 import Container from "./Container";
 
@@ -73,7 +74,10 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="mt-8 border-t border-gray-700 pt-4 text-center">
           <p>
-            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
+            &copy; {new Date().getFullYear()}All rights reserved.
+            <Link to="/" className="text-primary">
+              www.quickride.com
+            </Link>
           </p>
         </div>
       </Container>

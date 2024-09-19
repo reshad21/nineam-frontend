@@ -1,7 +1,6 @@
+import { BulbOutlined, MoonOutlined } from "@ant-design/icons"; // Import icons
 import { toggleTheme } from "../../redux/features/Theme/themeSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-
-import { Button } from "antd";
 
 const ThemeToggleButton = () => {
   const dispatch = useAppDispatch();
@@ -12,9 +11,13 @@ const ThemeToggleButton = () => {
   };
 
   return (
-    <Button onClick={handleToggleTheme}>
-      {theme === "light" ? "Dark" : "Light"}
-    </Button>
+    <div onClick={handleToggleTheme} className="cursor-pointer">
+      {theme === "light" ? (
+        <MoonOutlined style={{ fontSize: "24px" }} />
+      ) : (
+        <BulbOutlined style={{ fontSize: "24px" }} />
+      )}
+    </div>
   );
 };
 
