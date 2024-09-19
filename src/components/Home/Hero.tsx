@@ -1,6 +1,6 @@
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 import heroBanner from "../../assets/hero-image.png";
-import SearchInput from "../Ui/SearchInput";
 const Hero = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-4">
@@ -18,10 +18,15 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex gap-2 items-center">
-          <Button className="bg-primary text-white font-semibold py-5 px-10 text-base">
+          {/* <Button className="bg-primary text-white font-semibold py-5 px-10 text-base">
             Book Ride
-          </Button>
-          <SearchInput />
+          </Button> */}
+          <Link to="/products">
+            <Button className="bg-primary text-white font-semibold py-5 px-10 text-base">
+              Book Ride
+            </Button>
+          </Link>
+          {/* <SearchInput /> */}
         </div>
       </div>
       <div className="">

@@ -1,6 +1,7 @@
 import { Select, Space, Spin } from "antd";
 import { useState } from "react";
 import { useGetAllProductsQuery } from "../../../redux/features/Bike/bikeApi";
+import { useAppSelector } from "../../../redux/hooks";
 import { TBikeDataProps } from "../BikeCard";
 
 const AntSelect = ({
@@ -8,6 +9,7 @@ const AntSelect = ({
 }: {
   handleFilterChange: (value: string, type: "brand" | "name" | "cc") => void;
 }) => {
+  const theme = useAppSelector((state) => state.theme.mode);
   const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
   const [selectedBrand, setSelectedBrand] = useState<string | undefined>(
     undefined
@@ -51,13 +53,16 @@ const AntSelect = ({
 
   return (
     <Space wrap>
+      <span
+        className={`${
+          theme === "dark" ? "text-gray-400 text-lg" : "text-gray-600 text-lg"
+        }`}
+      >
+        Brand:
+      </span>
       <Select
         value={selectedBrand}
-        style={{
-          width: 120,
-          border: "1px solid #e4e4e4",
-          color: "#333",
-        }}
+        style={{ width: 120 }}
         onChange={handleBrandChange}
         options={uniqueBrands.map((brand) => ({
           value: brand,
@@ -65,6 +70,13 @@ const AntSelect = ({
         }))}
         placeholder="Select Brand"
       />
+      <span
+        className={`${
+          theme === "dark" ? "text-gray-400 text-lg" : "text-gray-600 text-lg"
+        }`}
+      >
+        Name:
+      </span>
       <Select
         value={selectedName}
         style={{ width: 120 }}
@@ -75,6 +87,13 @@ const AntSelect = ({
         }))}
         placeholder="Select Name"
       />
+      <span
+        className={`${
+          theme === "dark" ? "text-gray-400 text-lg" : "text-gray-600 text-lg"
+        }`}
+      >
+        CC:
+      </span>
       <Select
         value={selectedCC}
         style={{ width: 120 }}

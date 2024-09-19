@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import { Alert, Spin } from "antd";
 import { useState } from "react";
 import AntSelect from "../components/Ui/antdesign/AntSelect";
 import BikeCard, { TBikeDataProps } from "../components/Ui/BikeCard";
@@ -36,6 +36,16 @@ const Productpage = () => {
       >
         Error loading bikes.
       </div>
+    );
+
+  if (!bikes?.data)
+    return (
+      <Alert
+        message="No Bike data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
     );
 
   const handleFilterChange = (value: string, type: "brand" | "name" | "cc") => {
@@ -84,7 +94,7 @@ const Productpage = () => {
           placeholder="Search by name..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className={`px-4 py-2 border-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out ${
+          className={`px-4 py-1 border-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out ${
             theme === "dark"
               ? "border-gray-700 bg-gray-800 text-gray-100"
               : "border-slate-300 bg-white text-gray-900"
@@ -95,9 +105,9 @@ const Productpage = () => {
 
         <button
           onClick={handleClearAll}
-          className={`ml-4 px-4 py-2 rounded-md transition duration-300 ${
+          className={`ml-4 px-4 py-1 rounded-md transition duration-300 ${
             theme === "dark"
-              ? "bg-emerald-600 text-gray-200 hover:bg-emerald-700"
+              ? "bg-slate-600 text-slate-100 hover:bg-emerald-200"
               : "bg-emerald-100 text-slate-600 hover:bg-emerald-200"
           }`}
         >
