@@ -1,23 +1,20 @@
+import { Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import logo from "../../assets/logo.png";
 import logo from "../../assets/quickRide.png";
 import { logOut } from "../../redux/features/auth/authSlice";
-
-import { Button } from "antd";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ThemeToggleButton from "../Theme/ThemeToggleButton";
-import Container from "../Ui/Container"; // Import your ThemeToggleButton component
+import Container from "../Ui/Container";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const theme = useAppSelector((state) => state.theme.mode); // থিম স্টেট
+  const theme = useAppSelector((state) => state.theme.mode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    console.log("logout successfully");
     dispatch(logOut());
   };
 
@@ -29,12 +26,20 @@ const Navbar = () => {
     >
       <Container>
         <div className="container mx-auto flex justify-between items-center py-4">
-          {/* Logo on the left */}
+          {/* Logo */}
           <div className="text-2xl font-bold">
             <Link to="/">
               <img src={logo} alt="Logo" className="h-10" />
             </Link>
           </div>
+
+          {/* Toggle Button for Mobile */}
+          <button
+            className="md:hidden text-2xl focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? "✖" : "☰"}
+          </button>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex flex-grow justify-center">
@@ -62,12 +67,10 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* থিম টগল বাটন */}
+          {/* Theme Toggle Button & Login/Signup (Desktop) */}
           <div className="hidden md:flex space-x-4 items-center">
-            {/* Replace the Button with ThemeToggleButton */}
             <ThemeToggleButton />
 
-            {/* Desktop Login/Registration */}
             {!user && (
               <>
                 <Link
@@ -98,7 +101,9 @@ const Navbar = () => {
           <div
             className={`${
               isMenuOpen ? "block" : "hidden"
-            } md:hidden absolute w-full top-16 left-0 bg-gray-600 py-4 px-6 shadow-lg z-50`}
+            } md:hidden absolute w-full top-16 left-0  py-4 px-6 shadow-lg z-50 ${
+              theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+            }`}
           >
             <ul className="space-y-4">
               <li>
@@ -137,12 +142,15 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
+
+              {/* Theme Toggle Button & Login/Signup (responsive) */}
+              <ThemeToggleButton />
               {!user && (
-                <>
+                <div className="flex items-center gap-3">
                   <li>
                     <Link
                       to="/signup"
-                      className="block px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
+                      className="block px-6 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Signup
@@ -151,14 +159,15 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/login"
-                      className="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
+                      className="block px-6 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Login
                     </Link>
                   </li>
-                </>
+                </div>
               )}
+
               {user && (
                 <>
                   <Button

@@ -42,7 +42,7 @@ const LoginPage = () => {
         <div
           className={`p-8 rounded-lg shadow-lg ${
             theme === "dark"
-              ? "bg-gray-800 text-white"
+              ? "bg-gray-400 text-white"
               : "bg-white text-gray-900"
           }`}
         >

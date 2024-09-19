@@ -6,6 +6,7 @@ import BrForm from "../components/Form/BrForm";
 import BrInput from "../components/Form/BrInput";
 import BrTextArea from "../components/Form/BrTextArea";
 import { useRegistrationMutation } from "../redux/features/auth/authApi";
+import { useAppSelector } from "../redux/hooks";
 import { userSchema } from "../schemas/userRegistrationSchema";
 import { TResponse } from "../types/global";
 import { TUser } from "../types/register.type";
@@ -14,6 +15,7 @@ const { Title } = Typography;
 
 const SignUpPage = () => {
   const [registration] = useRegistrationMutation();
+  const theme = useAppSelector((state) => state.theme.mode); // Get the current theme
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("User is creating...");
@@ -42,12 +44,11 @@ const SignUpPage = () => {
     >
       <Col xs={24} sm={18} md={14} lg={12} xl={10}>
         <div
-          style={{
-            backgroundColor: "white",
-            padding: "30px",
-            borderRadius: "10px",
-            boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-          }}
+          className={`p-8 rounded-lg shadow-lg ${
+            theme === "dark"
+              ? "bg-gray-400 text-white"
+              : "bg-white text-gray-900"
+          }`}
         >
           <Title
             level={3}
