@@ -68,20 +68,20 @@ const Navbar = () => {
           </div>
 
           {/* Theme Toggle Button & Login/Signup (Desktop) */}
-          <div className="hidden md:flex space-x-4 items-center">
+          <div className="hidden md:flex space-x-2 items-center">
             <ThemeToggleButton />
 
             {!user && (
               <>
                 <Link
                   to="/signup"
-                  className="px-4 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
+                  className="px-4 py-1 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
                 >
                   Signup
                 </Link>
                 <Link
                   to="/login"
-                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition-all duration-200"
+                  className="px-4 py-1 bg-primary text-white rounded-md hover:bg-blue-600 transition-all duration-200"
                 >
                   Login
                 </Link>
@@ -90,7 +90,13 @@ const Navbar = () => {
 
             {user && (
               <>
-                <Button className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200">
+                <Button
+                  className={`w-full ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-slate-50 font-semibold hover:bg-gray-800 border-gray-600"
+                      : "bg-primary text-slate-50 hover:bg-slate-300 border-gray-200"
+                  } border rounded-lg transition duration-300`}
+                >
                   <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
                 </Button>
               </>
@@ -150,7 +156,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/signup"
-                      className="block px-6 py-2 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
+                      className="block px-6 py-1 border border-slate-900 rounded-md hover:bg-primary hover:text-white hover:border-primary"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Signup
@@ -159,7 +165,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/login"
-                      className="block px-6 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
+                      className="block px-6 py-1 bg-primary text-white rounded-md hover:bg-blue-600"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Login
@@ -169,17 +175,27 @@ const Navbar = () => {
               )}
 
               {user && (
-                <>
+                <div className="flex items-center gap-3">
                   <Button
                     onClick={handleLogout}
-                    className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200"
+                    className={`w-full ${
+                      theme === "dark"
+                        ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
+                        : "bg-primary text-slate-100 hover:bg-slate-300 border-gray-200"
+                    } border rounded-lg transition duration-300`}
                   >
                     Logout
                   </Button>
-                  <Button className="px-4 py-5 bg-slate-100 text-slate-900 rounded-md hover:bg-primary hover:text-white transition-all duration-200">
+                  <Button
+                    className={`w-full ${
+                      theme === "dark"
+                        ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
+                        : "bg-primary text-slate-100 hover:bg-slate-300 border-gray-200"
+                    } border rounded-lg transition duration-300`}
+                  >
                     <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
                   </Button>
-                </>
+                </div>
               )}
             </ul>
           </div>

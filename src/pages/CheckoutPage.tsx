@@ -228,19 +228,18 @@ const CheckoutPage = () => {
                 }`}
                 placeholder="Enter promo code"
               />
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className={`w-full mt-4 ${
+                  theme === "dark"
+                    ? "bg-green-700 py-1 text-gray-200 hover:bg-gray-800 border-gray-600"
+                    : "bg-primary py-1 text-slate-100 hover:bg-slate-300 border-gray-200"
+                } border rounded-lg transition duration-300`}
+              >
+                Place Order
+              </button>
             </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className={`w-full py-3 rounded-lg font-semibold transition duration-300 ${
-                theme === "dark"
-                  ? "bg-blue-500 hover:bg-blue-600 text-white"
-                  : "bg-blue-600 hover:bg-blue-700 text-white"
-              }`}
-            >
-              Place Order
-            </button>
           </form>
         </div>
 
@@ -258,6 +257,13 @@ const CheckoutPage = () => {
               theme === "dark" ? "bg-gray-800" : "bg-white"
             }`}
           >
+            <div className="flex justify-between mb-2">
+              <img
+                src={rent?.data?.bikeId?.image}
+                className="rounded-md w-full"
+                alt="bike image"
+              />
+            </div>
             <div className="flex justify-between mb-2">
               <p
                 className={`font-medium ${
