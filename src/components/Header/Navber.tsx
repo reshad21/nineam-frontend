@@ -99,6 +99,16 @@ const Navbar = () => {
                 >
                   <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
                 </Button>
+                <Button
+                  onClick={handleLogout}
+                  className={`w-full ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-slate-50 font-semibold hover:bg-gray-800 border-gray-600"
+                      : "bg-outlet text-slate-700 hover:bg-slate-300 border-gray-200"
+                  } border rounded-lg transition duration-300`}
+                >
+                  Logout
+                </Button>
               </>
             )}
           </div>
