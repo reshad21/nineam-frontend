@@ -54,16 +54,6 @@ const Navbar = () => {
                   About Us
                 </Link>
               </li>
-              <li>
-                <Link to="/products" className="hover:text-primary">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-primary">
-                  Contact
-                </Link>
-              </li>
             </ul>
           </div>
 
