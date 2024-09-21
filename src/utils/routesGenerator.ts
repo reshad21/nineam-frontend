@@ -1,4 +1,4 @@
-import { TRoute, TUserPath } from "../types/sidebar.type";
+import { TRoute, TUserPath } from "../types";
 
 
 

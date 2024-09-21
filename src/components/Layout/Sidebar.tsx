@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
 import { usersPaths } from "../../routes/user.routes";
+import { TSidebarItem } from "../../types";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 
 const { Sider } = Layout;
@@ -15,8 +16,8 @@ const userRole = {
 
 const Sidebar = () => {
   const role = useAppSelector((state) => state.auth.user?.role);
-  // console.log(role);
-  let sidebarItems;
+
+  let sidebarItems: TSidebarItem[] = [];
 
   switch (role!) {
     case userRole.ADMIN:

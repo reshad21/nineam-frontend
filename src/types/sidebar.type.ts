@@ -8,7 +8,7 @@ export type TSidebarItem = {
     key: string;
     label: ReactNode;
     children?: TSidebarItem[];
-} | undefined;
+} | null;
 
 export type TUserPath = {
     name?: string;
