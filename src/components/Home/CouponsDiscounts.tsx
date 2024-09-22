@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../redux/hooks";
-import SpinWheel from "../Ui/SpeenWheel/SpinWheel";
+import SpinWheel from "../Ui/SpinWheel/SpinWheel";
 
 const promotions = [
   {
