@@ -1,10 +1,10 @@
 import { Alert, Spin } from "antd";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import AntSelect from "../components/Ui/antdesign/AntSelect";
 import BikeCard, { TBikeDataProps } from "../components/Ui/BikeCard";
 import { useGetAllProductsQuery } from "../redux/features/Bike/bikeApi";
 import { useAppSelector } from "../redux/hooks"; // Import your theme selector hook
-
 const Productpage = () => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -114,11 +114,16 @@ const Productpage = () => {
           Clear All
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-5"
+      >
         {filteredBikes?.map((product: TBikeDataProps) => (
           <BikeCard {...product} key={product._id} />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
