@@ -1,6 +1,15 @@
+import { useAppSelector } from "../redux/hooks";
+
 const TermsOfService = () => {
+  const theme = useAppSelector((state) => state.theme.mode);
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-6">
+    <div
+      className={`min-h-screen py-10 px-6 ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Terms of Service

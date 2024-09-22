@@ -1,3 +1,4 @@
+import NotFoundPage from "../components/Ui/NotFoundPage";
 import Aboutpage from "../pages/Aboutpage";
 import CheckoutPage from "../pages/CheckoutPage";
 import ContactUsPage from "../pages/Contactpage";
@@ -49,6 +50,10 @@ export const frontendPaths = [
   {
     path: "/checkout",
     element: <CheckoutPage />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
   // {
   //   path: "/products",
