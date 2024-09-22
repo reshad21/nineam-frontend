@@ -16,8 +16,8 @@ const LoginPage = () => {
   const theme = useAppSelector((state) => state.theme.mode); // Get the current theme
 
   const defaultValues = {
-    email: "john1@example.com",
-    password: "password123",
+    email: "",
+    password: "",
   };
 
   const onSubmit = async (data: FieldValues) => {
