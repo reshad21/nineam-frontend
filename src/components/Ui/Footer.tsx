@@ -29,19 +29,19 @@ const Footer = () => {
             <h2 className="text-xl font-bold mb-4">Quick Links</h2>
             <ul className="space-y-2">
               <li>
-                <a href="/privacy-policy" className="hover:text-primary">
+                <Link to="/privacy-policy" className="hover:text-primary">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/termsof-service" className="hover:text-primary">
+                <Link to="/termsof-service" className="hover:text-primary">
                   Terms Of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="hover:text-primary">
+                <Link to="/contact" className="hover:text-primary">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -50,18 +50,18 @@ const Footer = () => {
           <div>
             <h2 className="text-xl font-bold mb-4">Follow Us</h2>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="hover:text-primary">
+              <Link to="https://facebook.com" className="hover:text-primary">
                 <FaFacebook size={24} />
-              </a>
-              <a href="https://twitter.com" className="hover:text-primary">
+              </Link>
+              <Link to="https://twitter.com" className="hover:text-primary">
                 <FaTwitter size={24} />
-              </a>
-              <a href="https://instagram.com" className="hover:text-primary">
+              </Link>
+              <Link to="https://instagram.com" className="hover:text-primary">
                 <FaInstagram size={24} />
-              </a>
-              <a href="https://linkedin.com" className="hover:text-primary">
+              </Link>
+              <Link to="https://linkedin.com" className="hover:text-primary">
                 <FaLinkedin size={24} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

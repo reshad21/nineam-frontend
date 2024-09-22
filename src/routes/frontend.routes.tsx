@@ -22,14 +22,6 @@ export const frontendPaths = [
     path: "/products",
     element: <Productpage />,
   },
-  // {
-  //   path: "/products",
-  //   element: (
-  //     <ProtectedRoute>
-  //       <Productpage />
-  //     </ProtectedRoute>
-  //   ),
-  // },
   {
     path: "/singleBike/:bikeId",
     element: <ViewBike />,
@@ -58,4 +50,12 @@ export const frontendPaths = [
     path: "/checkout",
     element: <CheckoutPage />,
   },
+  // {
+  //   path: "/products",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <Productpage />
+  //     </ProtectedRoute>
+  //   ),
+  // },
 ];
