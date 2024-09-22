@@ -1,9 +1,15 @@
 import { Button } from "antd";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/hero-image.png";
 const Hero = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-4"
+    >
       <div className="">
         <div>
           <h6 className="my-2 font-semibold text-lg">Plan your trip now</h6>
@@ -32,7 +38,7 @@ const Hero = () => {
       <div className="">
         <img src={heroBanner} alt="" />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

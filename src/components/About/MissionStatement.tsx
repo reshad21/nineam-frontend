@@ -1,10 +1,13 @@
+import { motion } from "framer-motion";
 import { useAppSelector } from "../../redux/hooks";
-
 const MissionStatement = () => {
   const theme = useAppSelector((state) => state.theme.mode);
 
   return (
-    <section
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.3 }}
       className={`py-16 px-6 ${
         theme === "dark"
           ? "bg-gray-900 text-white"
@@ -32,7 +35,7 @@ const MissionStatement = () => {
           positively impacting both our community and the planet.
         </p>
       </div>
-    </section>
+    </motion.div>
   );
 };
 

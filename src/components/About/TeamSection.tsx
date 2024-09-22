@@ -25,14 +25,22 @@ const TeamSection = () => {
   ];
 
   return (
-    <section
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
       className={`py-16 px-6 ${
         theme === "dark"
           ? "bg-gray-800 text-white"
           : "bg-gray-100 text-gray-900"
       }`}
     >
-      <div className="container mx-auto text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="container mx-auto text-center"
+      >
         <h2
           className={`text-4xl font-bold mb-12 ${
             theme === "dark" ? "text-white" : "text-gray-800"
@@ -84,8 +92,8 @@ const TeamSection = () => {
             </div>
           ))}
         </motion.div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.div>
   );
 };
 
