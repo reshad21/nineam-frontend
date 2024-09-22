@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unsafe-optional-chaining */
+import { Alert, Spin } from "antd";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
@@ -43,9 +44,35 @@ const CheckoutPage = () => {
   });
 
   // Handle loading and error states
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading bike data.</div>;
-  if (!rent?.data) return <div>No Rent data available.</div>;
+  if (isLoading)
+    return (
+      <div
+        className={`h-screen flex items-center justify-center ${
+          theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+        }`}
+      >
+        <Spin />
+      </div>
+    );
+  if (error)
+    return (
+      <div
+        className={`h-screen flex items-center justify-center ${
+          theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+        }`}
+      >
+        Error loading bikes.
+      </div>
+    );
+  if (!rent?.data)
+    return (
+      <Alert
+        message="No Bike Rent data available"
+        type="error"
+        showIcon
+        className="max-w-lg mx-auto mt-8"
+      />
+    );
 
   const totalPrice = rent?.data?.totalCost || 0;
   const promoCode = watch("promoCode") ?? "";
