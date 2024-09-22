@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useCreateRentBikeMutation } from "../../redux/features/Rent/rentApi";
 import { useAppSelector } from "../../redux/hooks"; // Adjust path as needed
+import { TBikeBooking, TResponse } from "../../types";
 import BrForm from "../Form/BrForm";
 import BrInput from "../Form/BrInput";
 
@@ -180,11 +181,11 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
     const toastId = toast.loading("Booking...");
     try {
       const payload = { bikeId, startTime: data.startTime };
-      const res = await createRent(payload).unwrap();
+      const res = (await createRent(payload)) as TResponse<TBikeBooking>;
       setIsModalOpen(false);
 
       // Check if the response contains an error
-      if ("error" in res) {
+      if (res.error) {
         toast.error(res?.error?.data?.message || "Error occurred", {
           id: toastId,
         });
