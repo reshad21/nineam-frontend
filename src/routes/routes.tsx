@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import DashboardLayout from "../components/Layout/DashboardLayout";
+import NotFoundPage from "../components/Ui/NotFoundPage";
 import { routeGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import { frontendPaths } from "./frontend.routes";
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     path: "/user",
     element: <DashboardLayout />,
     children: routeGenerator(usersPaths),
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 
