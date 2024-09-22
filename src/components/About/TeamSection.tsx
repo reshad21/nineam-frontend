@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import { useAppSelector } from "../../redux/hooks";
-
 const TeamSection = () => {
   const theme = useAppSelector((state) => state.theme.mode);
 
@@ -40,7 +40,12 @@ const TeamSection = () => {
         >
           Meet Our Team
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {teamMembers.map((member, index) => (
             <div
               key={index}
@@ -78,7 +83,7 @@ const TeamSection = () => {
               </p>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

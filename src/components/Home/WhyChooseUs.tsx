@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import { useAppSelector } from "../../redux/hooks";
-
 const benefits = [
   {
     title: "Best Prices",
@@ -34,7 +34,12 @@ const WhyChooseUs = () => {
     >
       <div className="max-w-6xl mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold mb-8">Why Rent With Us</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {benefits.map((benefit, index) => (
             <div
               key={index}
@@ -53,7 +58,7 @@ const WhyChooseUs = () => {
               </p>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
