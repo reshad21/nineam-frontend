@@ -175,6 +175,9 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
     if (!user) {
       // If user is not logged in, redirect to login page
       navigate("/login");
+    } else if (user.role !== "user") {
+      // If user is not a regular user, prevent them from booking
+      toast.error("Only users can book a bike.");
     } else {
       setIsModalOpen(true);
     }
