@@ -36,6 +36,10 @@ const LoginPage = () => {
     }
   };
 
+  const navigateToRegister = () => {
+    navigate("/signup"); // Redirect to the registration page
+  };
+
   return (
     <Row justify="center" align="middle" className="min-h-screen">
       <Col xs={24} sm={18} md={12} lg={8} xl={6}>
@@ -47,7 +51,6 @@ const LoginPage = () => {
           }`}
         >
           <p
-            // level={3}
             className={`text-center mb-8 text-2xl font-semibold ${
               theme === "dark" ? "text-white" : "text-gray-800"
             }`}
@@ -70,6 +73,20 @@ const LoginPage = () => {
               Login
             </Button>
           </BrForm>
+          <div className="text-center mt-4">
+            <p
+              className={`${theme === "dark" ? "text-white" : "text-gray-800"}`}
+            >
+              Don't have an account?{" "}
+              <Button
+                type="link"
+                onClick={navigateToRegister}
+                className="font-bold"
+              >
+                Register here
+              </Button>
+            </p>
+          </div>
         </div>
       </Col>
     </Row>
