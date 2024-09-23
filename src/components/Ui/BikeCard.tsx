@@ -2,7 +2,7 @@ import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useCreateRentBikeMutation } from "../../redux/features/Rent/rentApi";
 import { useAppSelector } from "../../redux/hooks"; // Adjust path as needed
@@ -167,10 +167,17 @@ type BikeModalProps = {
 const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
   const [createRent] = useCreateRentBikeMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const theme = useAppSelector((state) => state.theme.mode); // Get current theme
+  const { user } = useAppSelector((state) => state.auth);
+  const theme = useAppSelector((state) => state.theme.mode);
+  const navigate = useNavigate();
 
   const showModal = () => {
-    setIsModalOpen(true);
+    if (!user) {
+      // If user is not logged in, redirect to login page
+      navigate("/login");
+    } else {
+      setIsModalOpen(true);
+    }
   };
 
   const handleCancel = () => {
