@@ -72,7 +72,7 @@ const BikeCard = ({
         <img
           src={image}
           alt={`${name} Image`}
-          className="w-full h-48 object-cover"
+          className="w-full h-32 object-cover"
         />
         <div
           className={`absolute top-2 right-2 ${
@@ -86,20 +86,20 @@ const BikeCard = ({
       </figure>
       <div className="p-4">
         <h2
-          className={`text-2xl font-semibold mb-2 ${
+          className={`text-md font-semibold mb-1 ${
             theme === "dark" ? "text-gray-100" : "text-gray-800"
           }`}
         >
           {name}
         </h2>
         <p
-          className={`mb-4 ${
-            theme === "dark" ? "text-gray-400" : "text-slate-400"
+          className={`mb-1 ${
+            theme === "dark" ? "text-gray-400" : "text-slate-500"
           }`}
         >
           {description || "No description available."}
         </p>
-        <div className="flex flex-col space-y-2 mb-4">
+        <div className="flex flex-col space-y-1 mb-2">
           <div
             className={`flex justify-between ${
               theme === "dark" ? "text-gray-300" : "text-gray-700"

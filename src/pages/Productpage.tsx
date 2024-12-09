@@ -11,11 +11,7 @@ const Productpage = () => {
 
   const theme = useAppSelector((state) => state.theme.mode); // Get current theme
 
-  const {
-    data: bikes,
-    isLoading,
-    isError,
-  } = useGetAllProductsQuery(undefined, { pollingInterval: 2000 });
+  const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
 
   if (isLoading)
     return (
