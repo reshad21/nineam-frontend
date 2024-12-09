@@ -40,40 +40,48 @@ const SignUpPage = () => {
     <Row
       justify="center"
       align="middle"
-      style={{ minHeight: "100vh", padding: "20px" }}
+      style={{
+        minHeight: "100vh",
+        padding: "30px",
+        backgroundColor: theme === "dark" ? "#333" : "#f4f4f4", // Changed background color to solid
+      }}
     >
-      <Col xs={24} sm={18} md={14} lg={12} xl={10}>
+      <Col xs={24} sm={22} md={20} lg={18} xl={16}>
+        {" "}
+        {/* Increased width for larger screens */}
         <div
-          className={`p-8 rounded-lg shadow-lg ${
+          className={`p-10 rounded-xl shadow-2xl ${
             theme === "dark"
-              ? "bg-gray-400 text-white"
+              ? "bg-gray-800 text-white"
               : "bg-white text-gray-900"
           }`}
         >
           <Title
-            level={3}
-            style={{ textAlign: "center", marginBottom: "30px" }}
+            level={2}
+            style={{
+              textAlign: "center",
+              marginBottom: "30px",
+              color: theme === "dark" ? "white" : "#f55d42",
+            }}
           >
-            Sign Up
+            Create Your Account
           </Title>
           <BrForm
             onSubmit={onSubmit}
             resolver={zodResolver(registrationSchema)}
           >
-            {" "}
-            {/* Zod resolver used here */}
             <Row gutter={16}>
-              <Col span={12}>
-                <BrInput type="text" name="name" label="Name:" />
+              <Col span={24}>
+                <BrInput type="text" name="name" label="Full Name:" />
               </Col>
-              <Col span={12}>
-                <BrInput type="email" name="email" label="Email:" />
+              <Col span={24}>
+                <BrInput type="email" name="email" label="Email Address:" />
               </Col>
-              <Col span={12}>
+              <Col span={24}>
                 <BrInput type="password" name="password" label="Password:" />
               </Col>
-              <Col span={12}>
-                <BrInput type="phone" name="phone" label="Phone:" />
+              <Col span={24}>
+                <BrInput type="phone" name="phone" label="Phone Number:" />
               </Col>
               <Col span={24}>
                 <BrTextArea name="address" label="Address:" rows={4} />
@@ -88,11 +96,29 @@ const SignUpPage = () => {
                 borderColor: "#ff4c30",
                 marginTop: "20px",
                 fontWeight: "bold",
+                transition: "all 0.3s ease-in-out",
               }}
+              className="hover:bg-red-600"
             >
               Sign Up
             </Button>
           </BrForm>
+          <div className="text-center mt-4">
+            <p
+              className={`${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              } text-sm`}
+            >
+              Already have an account?{" "}
+              <Button
+                type="link"
+                onClick={() => navigate("/login")}
+                className="font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+              >
+                Log in here
+              </Button>
+            </p>
+          </div>
         </div>
       </Col>
     </Row>

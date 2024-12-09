@@ -1,6 +1,6 @@
 import { Alert, Spin } from "antd";
 import { useParams } from "react-router-dom";
-import BikeCard from "../../../../components/Ui/BikeCard";
+import BikeViewCard from "../../../../components/Ui/BikeViewCard";
 import { useGetProductByIdQuery } from "../../../../redux/features/Bike/bikeApi";
 
 // Update the type definition to match the Bike data structure
@@ -46,7 +46,7 @@ const ViewBike = () => {
       />
     );
 
-  return <BikeCard {...bike.data} key={bike.data.id} />;
+  return <BikeViewCard {...bike.data} key={bike.data.id} />;
 };
 
 export default ViewBike;

@@ -54,6 +54,11 @@ const Navbar = () => {
                   About Us
                 </Link>
               </li>
+              <li>
+                <Link to="/contact" className="hover:text-primary">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
