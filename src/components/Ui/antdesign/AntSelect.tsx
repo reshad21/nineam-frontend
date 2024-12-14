@@ -1,4 +1,3 @@
-import { Select, Space, Spin } from "antd";
 import { useState } from "react";
 import { useGetAllProductsQuery } from "../../../redux/features/Bike/bikeApi";
 import { useAppSelector } from "../../../redux/hooks";
@@ -19,7 +18,7 @@ const AntSelect = ({
   );
   const [selectedCC, setSelectedCC] = useState<string | undefined>(undefined);
 
-  if (isLoading) return <Spin />;
+  if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading options.</div>;
 
   const getUniqueOptions = (key: keyof TBikeDataProps) => {
@@ -36,75 +35,92 @@ const AntSelect = ({
   const uniqueNames = getUniqueOptions("name");
   const uniqueCCs = getUniqueOptions("cc");
 
-  const handleBrandChange = (value: string) => {
+  const handleBrandChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
     setSelectedBrand(value);
     handleFilterChange(value, "brand");
   };
 
-  const handleNameChange = (value: string) => {
+  const handleNameChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
     setSelectedName(value);
     handleFilterChange(value, "name");
   };
 
-  const handleCCChange = (value: string) => {
+  const handleCCChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
     setSelectedCC(value);
     handleFilterChange(value, "cc");
   };
 
   return (
-    <Space wrap>
-      <span
-        className={`${
-          theme === "dark" ? "text-accent text-lg" : "text-primary text-lg"
-        }`}
-      >
-        Bike Brand:
-      </span>
-      <Select
-        value={selectedBrand}
-        style={{ width: 150 }}
-        onChange={handleBrandChange}
-        options={uniqueBrands.map((brand) => ({
-          value: brand,
-          label: brand,
-        }))}
-        placeholder="Select Brand"
-      />
-      <span
-        className={`${
-          theme === "dark" ? "text-accent text-lg" : "text-primary text-lg"
-        }`}
-      >
-        Bike Model:
-      </span>
-      <Select
-        value={selectedName}
-        style={{ width: 150 }}
-        onChange={handleNameChange}
-        options={uniqueNames.map((name) => ({
-          value: name,
-          label: name,
-        }))}
-        placeholder="Select Name"
-      />
-      <span
-        className={`${
-          theme === "dark" ? "text-accent text-lg" : "text-primary text-lg"
-        }`}
-      >
-        CC:
-      </span>
-      <Select
-        value={selectedCC}
-        style={{ width: 150 }}
-        onChange={handleCCChange}
-        options={uniqueCCs.map((cc) => ({
-          value: cc,
-          label: cc,
-        }))}
-        placeholder="Select CC"
-      />
-    </Space>
+    <div className="space-y-4">
+      <div>
+        <label
+          className={`${theme === "dark" ? "text-accent" : "text-primary"}`}
+        >
+          Bike Brand
+        </label>
+        <select
+          value={selectedBrand || ""}
+          onChange={handleBrandChange}
+          className="block w-full border border-primary rounded-md p-2 mt-1 text-secondary"
+        >
+          <option value="" disabled>
+            Select Brand
+          </option>
+          {uniqueBrands.map((brand) => (
+            <option key={brand} value={brand}>
+              {brand}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label
+          className={`${theme === "dark" ? "text-accent" : "text-primary"}`}
+        >
+          Bike Model
+        </label>
+        <select
+          value={selectedName || ""}
+          onChange={handleNameChange}
+          className="block w-full border border-primary rounded-md p-2 mt-1 text-secondary"
+        >
+          <option value="" disabled>
+            Select Model
+          </option>
+          {uniqueNames.map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label
+          className={`${theme === "dark" ? "text-accent" : "text-primary"}`}
+        >
+          CC
+        </label>
+        <select
+          value={selectedCC || ""}
+          onChange={handleCCChange}
+          className="block w-full border border-primary rounded-md p-2 mt-1 text-secondary"
+        >
+          <option value="" disabled>
+            Select CC
+          </option>
+          {uniqueCCs.map((cc) => (
+            <option key={cc} value={cc}>
+              {cc}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
   );
 };
 

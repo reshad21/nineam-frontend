@@ -82,18 +82,21 @@ const Productpage = () => {
         theme === "dark"
           ? "bg-gray-900 text-gray-100"
           : "bg-white text-gray-900"
-      } py-5`}
+      } py-5 flex flex-col md:flex-row gap-5`}
     >
-      <div className="my-5 flex flex-col md:flex-row justify-between items-center">
+      <div className="my-5">
+        <p className={`${theme === "dark" ? "text-accent" : "text-primary"}`}>
+          Search Bikes
+        </p>
         <input
           type="text"
           placeholder="Searching bikes..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className={`px-4 py-1 border-2 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none transition duration-300 ease-in-out ${
+          className={`px-4 mb-4 w-full py-1 border rounded-lg shadow-sm focus:ring-1 focus:ring-slate-400 focus:outline-none transition duration-300 ease-in-out ${
             theme === "dark"
-              ? "border-primary bg-primaray text-gray-100"
-              : "border-primary bg-white text-gray-900"
+              ? "border-primary text-secondary"
+              : "border-primary text-gray-900"
           }`}
         />
 
@@ -101,13 +104,13 @@ const Productpage = () => {
 
         <button
           onClick={handleClearAll}
-          className={`ml-4 px-4 py-1 rounded-md transition duration-300 ${
+          className={`w-full mt-5 px-4 py-1 rounded-md transition duration-300 ${
             theme === "dark"
               ? "bg-primary text-gray-300"
               : "bg-primary text-gray-300"
           }`}
         >
-          Clear All
+          Clear Filter
         </button>
       </div>
       <motion.div
