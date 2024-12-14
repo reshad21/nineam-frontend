@@ -5,12 +5,11 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useCreateRentBikeMutation } from "../../redux/features/Rent/rentApi";
-import { useAppSelector } from "../../redux/hooks"; // Adjust path as needed
+import { useAppSelector } from "../../redux/hooks";
 import { TBikeBooking, TResponse } from "../../types";
 import BrForm from "../Form/BrForm";
 import BrInput from "../Form/BrInput";
 
-// Update the type definition to match the Bike data structure
 export type TBikeDataProps = {
   _id: string;
   name: string;
@@ -27,17 +26,14 @@ export type TBikeDataProps = {
 const BikeCard = ({
   _id,
   name,
-  description,
   pricePerHour,
   cc,
   year,
-  model,
-  brand,
   image,
   isAvailable,
 }: TBikeDataProps) => {
   const params = useParams();
-  const theme = useAppSelector((state) => state.theme.mode); // Get current theme
+  const theme = useAppSelector((state) => state.theme.mode);
 
   return (
     <div
@@ -46,20 +42,16 @@ const BikeCard = ({
           ? "bg-gray-800 text-gray-100 border-gray-600"
           : "bg-white text-gray-800 border-gray-200"
       } rounded-lg shadow-lg overflow-hidden border w-full max-w-sm mx-auto relative`}
-      style={{ height: "auto", maxHeight: "450px" }} // Restrict height
+      style={{ height: "auto", maxHeight: "450px" }}
     >
-      {/* Availability Badge */}
       <div
-        className={`absolute z-40 top-2 left-2 px-2 py-1 rounded-full text-white text-sm ${
-          isAvailable ? "bg-green-500" : "bg-red-500"
+        className={`absolute z-40 top-2 left-2 p-1 rounded-full text-accent text-[13px] ${
+          isAvailable ? "bg-primary" : "bg-secondary"
         }`}
       >
         <span className="flex items-center">
           {isAvailable ? (
-            <>
-              <CheckCircleOutlined className="mr-1" />
-              Available
-            </>
+            <CheckCircleOutlined />
           ) : (
             <>
               <CloseCircleOutlined className="mr-1" />
@@ -73,85 +65,47 @@ const BikeCard = ({
         <img
           src={image}
           alt={`${name} Image`}
-          className="w-full h-24 object-cover" // Adjust height of image for smaller card
+          className="w-full h-44 object-cover"
         />
         <div
-          className={`absolute top-2 right-2 ${
-            theme === "dark"
-              ? "bg-gray-900 text-gray-100"
-              : "bg-white text-gray-800"
-          } px-2 py-1 rounded-full shadow-lg`}
+          className={`absolute top-0 right-2 ${
+            theme === "dark" ? "text-gray-800" : "text-gray-500"
+          }`}
         >
-          <span className="text-xs font-semibold">{year} Model</span>
+          <span className="text-xs font-semibold">{year}</span>
         </div>
       </figure>
 
       <div className="p-3">
-        {" "}
-        {/* Reduced padding */}
         <h2
           className={`text-sm font-semibold mb-1 ${
-            theme === "dark" ? "text-gray-100" : "text-gray-800"
+            theme === "dark" ? "text-gray-400" : "text-gray-400"
           }`}
         >
-          {name}
+          {name} (<span>{cc}cc</span>)
         </h2>
-        <p
-          className={`mb-2 text-sm ${
-            theme === "dark" ? "text-gray-400" : "text-slate-500"
+        <div
+          className={`flex justify-between my-4 text-[15px] ${
+            theme === "dark" ? "text-slate-50" : "text-gray-700"
           }`}
         >
-          {description || "No description available."}
-        </p>
-        <div className="flex flex-col space-y-1 mb-2">
-          <div
-            className={`flex justify-between ${
-              theme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            <span className="font-medium">Model:</span>
-            <span>{model}</span>
-          </div>
-          <div
-            className={`flex justify-between ${
-              theme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            <span className="font-medium">Brand:</span>
-            <span>{brand}</span>
-          </div>
-          <div
-            className={`flex justify-between ${
-              theme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            <span className="font-medium">CC:</span>
-            <span>{cc}</span>
-          </div>
-          <div
-            className={`flex justify-between ${
-              theme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            <span className="font-medium">Price Per Hour:</span>
-            <span className="ml-1">{pricePerHour} BDT</span>
-          </div>
+          <span className="text-sm font-semibold">Price Per Hour</span>
+          <span className="ml-1 font-semibold">{pricePerHour} BDT</span>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex justify-between gap-3">
           {!params.bikeId && (
-            <Link to={`/singleBike/${_id}`} className="w-full">
+            <Link to={`/singleBike/${_id}`} className="">
               <Button
-                className={`w-full ${
+                className={`${
                   theme === "dark"
-                    ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
-                    : "bg-slate-200 text-gray-800 hover:bg-slate-300 border-gray-200"
-                } border rounded-lg transition duration-300`}
+                    ? "bg-secondary text-accent hover:bg-gray-800"
+                    : "bg-secondary text-accent hover:bg-slate-300"
+                } border-secondary rounded-lg transition duration-300`}
               >
                 View Details
               </Button>
             </Link>
           )}
-          {/* Conditionally render Book Now button based on availability */}
           {isAvailable && <BikeModal bikeId={_id} isAvailable={isAvailable} />}
         </div>
       </div>
@@ -177,10 +131,8 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
 
   const showModal = () => {
     if (!user) {
-      // If user is not logged in, redirect to login page
       navigate("/login");
     } else if (user.role !== "user") {
-      // If user is not a regular user, prevent them from booking
       toast.error("Only users can book a bike.");
     } else {
       setIsModalOpen(true);
@@ -198,7 +150,6 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
       const res = (await createRent(payload)) as TResponse<TBikeBooking>;
       setIsModalOpen(false);
 
-      // Check if the response contains an error
       if (res.error) {
         toast.error(res?.error?.data?.message || "Error occurred", {
           id: toastId,
@@ -219,12 +170,10 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
         className={`${
           isAvailable
             ? theme === "dark"
-              ? "bg-gray-700 text-gray-200 hover:bg-gray-800 border-gray-600"
-              : "bg-slate-700 text-gray-200 hover:bg-blue-700 border-blue-600"
-            : theme === "dark"
-            ? "bg-gray-500 text-gray-400 cursor-not-allowed border-gray-500"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed border-gray-300"
-        } border rounded-lg transition duration-300`}
+              ? "text-accent bg-primary hover:bg-secondary"
+              : "text-accent bg-primary hover:bg-secondary"
+            : "cursor-not-allowed bg-gray-300"
+        } border rounded-lg transition duration-300 inline-block`}
         disabled={!isAvailable}
       >
         Book Now
@@ -257,7 +206,13 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
             >
               Cancel
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              className={`${
+                theme === "dark" ? "bg-primary text-accent" : "bg-secondary"
+              }`}
+              htmlType="submit"
+            >
               Confirm
             </Button>
           </div>

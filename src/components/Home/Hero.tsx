@@ -24,18 +24,14 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex gap-2 items-center">
-          {/* <Button className="bg-primary text-white font-semibold py-5 px-10 text-base">
-            Book Ride
-          </Button> */}
           <Link to="/products">
-            <Button className="bg-primary text-white font-semibold py-5 px-10 text-base">
+            <Button className="bg-primary border-primary text-accent font-semibold py-5 px-10 text-base">
               Book Ride
             </Button>
           </Link>
-          {/* <SearchInput /> */}
         </div>
       </div>
-      <div className="">
+      <div className="flex justify-center md:justify-end">
         <img src={heroBanner} alt="" />
       </div>
     </motion.div>

@@ -81,19 +81,19 @@ const Productpage = () => {
       className={`min-h-screen ${
         theme === "dark"
           ? "bg-gray-900 text-gray-100"
-          : "bg-gray-100 text-gray-900"
-      } p-5`}
+          : "bg-white text-gray-900"
+      } py-5`}
     >
       <div className="my-5 flex flex-col md:flex-row justify-between items-center">
         <input
           type="text"
-          placeholder="Search by name..."
+          placeholder="Searching bikes..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className={`px-4 py-1 border-2 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out ${
+          className={`px-4 py-1 border-2 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none transition duration-300 ease-in-out ${
             theme === "dark"
-              ? "border-gray-700 bg-gray-800 text-gray-100"
-              : "border-slate-300 bg-white text-gray-900"
+              ? "border-primary bg-primaray text-gray-100"
+              : "border-primary bg-white text-gray-900"
           }`}
         />
 
@@ -103,8 +103,8 @@ const Productpage = () => {
           onClick={handleClearAll}
           className={`ml-4 px-4 py-1 rounded-md transition duration-300 ${
             theme === "dark"
-              ? "bg-slate-600 text-slate-100 hover:bg-emerald-200"
-              : "bg-emerald-100 text-slate-600 hover:bg-emerald-200"
+              ? "bg-primary text-gray-300"
+              : "bg-primary text-gray-300"
           }`}
         >
           Clear All

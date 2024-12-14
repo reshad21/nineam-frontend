@@ -55,14 +55,14 @@ const AntSelect = ({
     <Space wrap>
       <span
         className={`${
-          theme === "dark" ? "text-gray-400 text-lg" : "text-gray-600 text-lg"
+          theme === "dark" ? "text-accent text-lg" : "text-primary text-lg"
         }`}
       >
-        Brand:
+        Bike Brand:
       </span>
       <Select
         value={selectedBrand}
-        style={{ width: 120 }}
+        style={{ width: 150 }}
         onChange={handleBrandChange}
         options={uniqueBrands.map((brand) => ({
           value: brand,
@@ -72,14 +72,14 @@ const AntSelect = ({
       />
       <span
         className={`${
-          theme === "dark" ? "text-gray-400 text-lg" : "text-gray-600 text-lg"
+          theme === "dark" ? "text-accent text-lg" : "text-primary text-lg"
         }`}
       >
-        Name:
+        Bike Model:
       </span>
       <Select
         value={selectedName}
-        style={{ width: 120 }}
+        style={{ width: 150 }}
         onChange={handleNameChange}
         options={uniqueNames.map((name) => ({
           value: name,
@@ -89,14 +89,14 @@ const AntSelect = ({
       />
       <span
         className={`${
-          theme === "dark" ? "text-gray-400 text-lg" : "text-gray-600 text-lg"
+          theme === "dark" ? "text-accent text-lg" : "text-primary text-lg"
         }`}
       >
         CC:
       </span>
       <Select
         value={selectedCC}
-        style={{ width: 120 }}
+        style={{ width: 150 }}
         onChange={handleCCChange}
         options={uniqueCCs.map((cc) => ({
           value: cc,

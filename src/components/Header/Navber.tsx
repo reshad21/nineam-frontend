@@ -43,19 +43,36 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex flex-grow justify-center">
-            <ul className="flex space-x-8 text-lg">
+            <ul className="flex space-x-4 text-md">
               <li>
-                <Link to="/" className="hover:text-primary">
+                <Link
+                  to="/"
+                  className="bg-primary text-gray-100 border-primary rounded-md px-3 py-2 hover:text-accent"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-primary">
+                <Link
+                  to="/products"
+                  className="bg-primary text-gray-100 border-primary rounded-md px-3 py-2 hover:text-accent"
+                >
+                  Product
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  className="bg-primary text-gray-100 border-primary rounded-md px-3 py-2 hover:text-accent"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-primary">
+                <Link
+                  to="/contact"
+                  className="bg-primary text-gray-100 border-primary rounded-md px-3 py-2 hover:text-accent"
+                >
                   Contact
                 </Link>
               </li>

@@ -9,7 +9,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#ff4c30', // Your custom primary color
+        // primary: '#ff4c30', // Your custom primary color
+        primary: '#116466',
+        secondary: '#0047AB', // Optional deep blue accent
+        accent: '#FFD700',    // Optional golden accent 
       },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'], // Default sans-serif font
