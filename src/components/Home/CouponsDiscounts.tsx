@@ -17,6 +17,12 @@ const promotions = [
     description: "Weekend special! Save 15% on rentals from Friday to Sunday.",
     expiration: "Expires on 30th September 2024",
   },
+  {
+    code: "FALLSALE25",
+    description:
+      "Celebrate the fall season with a 25% discount on all rentals.",
+    expiration: "Expires on 31st October 2024",
+  },
 ];
 
 const CouponsDiscounts = () => {
@@ -25,12 +31,10 @@ const CouponsDiscounts = () => {
   return (
     <section
       className={`py-10 ${
-        theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
+        theme === "dark" ? "bg-gray-900 text-white" : "text-gray-900"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="">
         <h2 className="text-4xl font-bold mb-8 text-center">
           Exclusive Coupons & Discounts
         </h2>
@@ -50,7 +54,13 @@ const CouponsDiscounts = () => {
               >
                 <div className="flex items-center mb-4">
                   <span className="text-3xl mr-3">
-                    {index === 0 ? "💛" : index === 1 ? "🌿" : "🌊"}
+                    {index === 0
+                      ? "💛"
+                      : index === 1
+                      ? "🌿"
+                      : index === 2
+                      ? "🌊"
+                      : "🍂"}
                   </span>
                   <h3 className="text-2xl font-semibold">{promo.code}</h3>
                 </div>
