@@ -43,7 +43,7 @@ const HistoryMilestones = () => {
       <div className="container mx-auto px-6">
         <h2
           className={`text-4xl font-bold text-center mb-12 ${
-            theme === "dark" ? "text-white" : "text-gray-900"
+            theme === "dark" ? "text-white" : "text-primary"
           }`}
         >
           Our History & Milestones

@@ -49,9 +49,22 @@ const PopularBikes = () => {
           : "bg-white text-gray-900"
       } mb-8`}
     >
-      <h2 className="text-3xl font-bold text-center mb-8">
-        Most Popular Bikes
-      </h2>
+      <div className="mb-5">
+        <h2
+          className={`${
+            theme === "dark" ? "text-slate-300" : "text-primary"
+          } text-3xl font-bold text-center`}
+        >
+          Most Popular Bikes
+        </h2>
+        <p
+          className={`${
+            theme === "dark" ? "text-slate-300" : "text-slate-600"
+          }text-md font-bold text-center`}
+        >
+          Top chioces our customers
+        </p>
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

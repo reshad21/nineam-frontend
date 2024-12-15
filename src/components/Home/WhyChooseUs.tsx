@@ -26,12 +26,12 @@ const WhyChooseUs = () => {
 
   return (
     <section
-      className={`${
-        theme === "dark" ? "bg-gray-900 text-white" : "text-gray-900"
-      } mb-8`}
+      className={`py-16 ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}
     >
-      <div className="text-center">
-        <h2 className="text-3xl font-bold mb-8">Why Rent With Us</h2>
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="text-3xl font-bold text-primary mb-8">
+          Why Rent With Us
+        </h2>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

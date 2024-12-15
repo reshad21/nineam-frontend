@@ -3,7 +3,6 @@ import Hero from "../components/Home/Hero";
 import PopularBikes from "../components/Home/PopularBikes";
 import Subscribe from "../components/Home/Subscribe";
 import Testimonials from "../components/Home/Testimonials";
-import WhyChooseUs from "../components/Home/WhyChooseUs";
 import Accordion from "../components/Ui/Accordion";
 
 const Homepage = () => {
@@ -13,7 +12,6 @@ const Homepage = () => {
       <PopularBikes />
       <Subscribe />
       <Testimonials />
-      <WhyChooseUs />
       <Accordion />
       <CouponsDiscounts />
     </>

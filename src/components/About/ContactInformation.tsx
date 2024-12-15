@@ -20,8 +20,8 @@ const ContactInformation = () => {
           <div
             className={`p-6 rounded-lg shadow-md ${
               theme === "dark"
-                ? "bg-gray-800 text-white"
-                : "bg-white text-gray-900"
+                ? "bg-gray-800 text-slate-200"
+                : "bg-white text-secondary"
             }`}
           >
             <h3 className="text-2xl font-semibold mb-4">Office Address</h3>
@@ -33,8 +33,8 @@ const ContactInformation = () => {
           <div
             className={`p-6 rounded-lg shadow-md ${
               theme === "dark"
-                ? "bg-gray-800 text-white"
-                : "bg-white text-gray-900"
+                ? "bg-gray-800 text-slate-200"
+                : "bg-white text-secondary"
             }`}
           >
             <h3 className="text-2xl font-semibold mb-4">Phone Number</h3>
@@ -45,8 +45,8 @@ const ContactInformation = () => {
           <div
             className={`p-6 rounded-lg shadow-md ${
               theme === "dark"
-                ? "bg-gray-800 text-white"
-                : "bg-white text-gray-900"
+                ? "bg-gray-800 text-slate-200"
+                : "bg-white text-secondary"
             }`}
           >
             <h3 className="text-2xl font-semibold mb-4">Email</h3>

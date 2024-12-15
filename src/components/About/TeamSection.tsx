@@ -43,7 +43,7 @@ const TeamSection = () => {
       >
         <h2
           className={`text-4xl font-bold mb-12 ${
-            theme === "dark" ? "text-white" : "text-gray-800"
+            theme === "dark" ? "text-white" : "text-primary"
           }`}
         >
           Meet Our Team

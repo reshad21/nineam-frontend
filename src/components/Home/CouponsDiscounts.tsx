@@ -35,10 +35,22 @@ const CouponsDiscounts = () => {
       }`}
     >
       <div className="">
-        <h2 className="text-4xl font-bold mb-8 text-center">
-          Exclusive Coupons & Discounts
-        </h2>
-
+        <div className="mb-5">
+          <h2
+            className={`${
+              theme === "dark" ? "text-slate-300" : "text-primary"
+            } text-3xl font-bold text-center`}
+          >
+            Exclusive Coupons & Discounts
+          </h2>
+          <p
+            className={`${
+              theme === "dark" ? "text-slate-300" : "text-slate-600"
+            }text-md font-bold text-center`}
+          >
+            Make this journey enjoyable
+          </p>
+        </div>
         {/* Two-Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Promotions Column */}

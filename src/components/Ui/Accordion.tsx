@@ -13,7 +13,22 @@ const Accordion = () => {
       transition={{ duration: 0.5, delay: 0.1 }}
     >
       <div data-theme={themeClass} className="mb-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Why Choose Us</h2>
+        <div className="mb-5">
+          <h2
+            className={`${
+              theme === "dark" ? "text-slate-300" : "text-primary"
+            } text-3xl font-bold text-center`}
+          >
+            Why Choose Us
+          </h2>
+          <p
+            className={`${
+              theme === "dark" ? "text-slate-300" : "text-slate-600"
+            }text-md font-bold text-center`}
+          >
+            We try to give our best
+          </p>
+        </div>
         <div className="">
           <div
             tabIndex={0}
