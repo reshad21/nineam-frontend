@@ -30,7 +30,7 @@ const CouponsDiscounts = () => {
 
   return (
     <section
-      className={`py-10 ${
+      className={`${
         theme === "dark" ? "bg-gray-900 text-white" : "text-gray-900"
       }`}
     >

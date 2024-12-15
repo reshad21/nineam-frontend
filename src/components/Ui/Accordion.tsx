@@ -12,9 +12,9 @@ const Accordion = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
     >
-      <div data-theme={themeClass} className="py-12">
+      <div data-theme={themeClass} className="mb-8">
         <h2 className="text-3xl font-bold mb-8 text-center">Why Choose Us</h2>
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="">
           <div
             tabIndex={0}
             className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mb-4"

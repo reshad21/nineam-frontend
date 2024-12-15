@@ -33,9 +33,9 @@ const Testimonials = () => {
 
   return (
     <section
-      className={`py-12 ${
+      className={`${
         theme === "dark" ? "bg-gray-900 text-white" : "text-gray-900"
-      }`}
+      } mb-8`}
     >
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-8">What Our Customers Say</h2>

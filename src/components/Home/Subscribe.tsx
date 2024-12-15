@@ -3,7 +3,7 @@ import subscribeBackground from "../../assets/subscribe-backgrond-bike.jpg";
 const Subscribe = () => {
   return (
     <section
-      className="relative bg-cover bg-center h-[400px] flex items-center justify-center my-5"
+      className="relative bg-cover bg-center h-[400px] flex items-center justify-center mb-8"
       style={{ backgroundImage: `url(${subscribeBackground})` }}
     >
       {/* Gradient Overlay */}

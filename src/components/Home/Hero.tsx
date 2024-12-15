@@ -5,7 +5,7 @@ import heroBanner from "../../assets/hero-image.png";
 const Hero = () => {
   return (
     <div
-      className="relative bg-cover bg-center h-[500px] md:h-[500px] flex items-center rounded-lg overflow-hidden"
+      className="relative bg-cover bg-center h-[500px] md:h-[500px] flex items-center rounded-lg overflow-hidden mb-8"
       style={{ backgroundImage: `url(${heroBanner})` }}
     >
       {/* Overlay */}

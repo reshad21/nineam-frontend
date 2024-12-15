@@ -1,4 +1,4 @@
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
@@ -23,7 +23,7 @@ export type TBikeDataProps = {
   isAvailable: boolean;
 };
 
-const BikeCard = ({
+const PopularBikeCard = ({
   _id,
   name,
   pricePerHour,
@@ -33,75 +33,50 @@ const BikeCard = ({
   isAvailable,
 }: TBikeDataProps) => {
   const params = useParams();
-  const theme = useAppSelector((state) => state.theme.mode);
 
   return (
     <div
-      className={`${
-        theme === "dark"
-          ? "bg-gray-800 text-gray-100 border-gray-600"
-          : "bg-slate-100 text-gray-800 border-gray-200"
-      } rounded-lg shadow-xl overflow-hidden border w-full max-w-sm mx-auto relative`}
-      style={{ height: "auto" }}
+      className="relative h-64 bg-cover bg-center rounded-lg shadow-xl overflow-hidden w-full max-w-sm mx-auto"
+      style={{ backgroundImage: `url(${image})` }}
     >
-      <div
-        className={`absolute z-40 top-2 left-2 p-1 rounded-full text-accent text-[13px] ${
-          isAvailable ? "bg-primary" : "bg-secondary"
-        }`}
-      >
-        <span className="flex items-center">
-          {isAvailable ? (
-            <CheckCircleOutlined />
-          ) : (
-            <>
-              <CloseCircleOutlined className="mr-1" />
-              Not Available
-            </>
-          )}
-        </span>
-      </div>
-
-      <figure className="relative">
-        <img
-          src={image}
-          alt={`${name} Image`}
-          className="w-full h-44 object-cover"
-        />
-        <div
-          className={`absolute top-0 right-2 ${
-            theme === "dark" ? "text-gray-800" : "text-gray-500"
-          }`}
-        >
-          <span className="text-xs font-semibold">{year}</span>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-55 flex flex-col justify-between p-4 text-white">
+        {/* Top Section */}
+        <div className="flex justify-between items-start">
+          {/* Availability Badge */}
+          <div
+            className={`px-2 py-1 rounded-full text-xs font-semibold ${
+              isAvailable ? "" : "bg-red-500"
+            }`}
+          >
+            {isAvailable ? (
+              <></>
+            ) : (
+              <span className="flex items-center gap-1">
+                <CloseCircleOutlined /> Not Available
+              </span>
+            )}
+          </div>
         </div>
-      </figure>
 
-      <div className="p-3">
-        <h2
-          className={`text-sm font-semibold mb-1 ${
-            theme === "dark" ? "text-gray-400" : "text-gray-400"
-          }`}
-        >
-          {name} (<span>{cc}cc</span>)
-        </h2>
-        <div
-          className={`flex justify-between my-4 text-[15px] ${
-            theme === "dark" ? "text-slate-50" : "text-gray-700"
-          }`}
-        >
-          <span className="text-sm font-semibold">Price Per Hour</span>
-          <span className="ml-1 font-semibold">{pricePerHour} BDT</span>
+        {/* Middle Section */}
+        <div>
+          <h3 className="text-lg font-semibold">
+            {name} <span className="text-sm">({cc}cc)</span>
+          </h3>
+
+          {/* Year */}
+          <p className="mt-1 text-sm">Launched: {year}</p>
+          <p className="mt-1 text-sm text-accent">
+            Price Per Hour: {pricePerHour} BDT
+          </p>
         </div>
-        <div className="flex justify-between gap-3">
+
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row gap-2">
           {!params.bikeId && (
-            <Link to={`/singleBike/${_id}`} className="">
-              <Button
-                className={`${
-                  theme === "dark"
-                    ? "bg-secondary text-accent hover:bg-gray-800"
-                    : "bg-secondary text-accent hover:bg-slate-300"
-                } border-secondary rounded-lg transition duration-300`}
-              >
+            <Link to={`/singleBike/${_id}`}>
+              <Button className="w-full bg-secondary hover:bg-blue-600 text-white rounded-md border-secondary shadow transition duration-300">
                 View Details
               </Button>
             </Link>
@@ -167,13 +142,11 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
       <Button
         type="primary"
         onClick={showModal}
-        className={`${
+        className={`w-full ${
           isAvailable
-            ? theme === "dark"
-              ? "text-accent bg-primary hover:bg-secondary"
-              : "text-accent bg-primary hover:bg-secondary"
+            ? "bg-primary hover:bg-green-600"
             : "cursor-not-allowed bg-gray-300"
-        } border rounded-lg transition duration-300 inline-block`}
+        } text-white rounded transition duration-300`}
         disabled={!isAvailable}
       >
         Book Now
@@ -222,4 +195,4 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
   );
 };
 
-export default BikeCard;
+export default PopularBikeCard;

@@ -26,9 +26,9 @@ const WhyChooseUs = () => {
 
   return (
     <section
-      className={`py-12 ${
+      className={`${
         theme === "dark" ? "bg-gray-900 text-white" : "text-gray-900"
-      }`}
+      } mb-8`}
     >
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-8">Why Rent With Us</h2>
