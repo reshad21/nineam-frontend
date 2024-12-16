@@ -12,13 +12,13 @@ import sliderFour from "../../assets/sliderThree-removebg-preview.png";
 const Hero = () => {
   return (
     <>
-      <div className="relative h-[500px] md:h-[500px] flex items-center rounded-lg overflow-hidden mb-8 bg-gradient-to-r from-primary/90 to-primary/60">
-        {/* Content */}
-        <div className="relative z-10 w-full md:w-3/5 text-left px-6 md:px-12">
+      <div className="relative h-[500px] md:h-[500px] flex items-center rounded-lg overflow-hidden mb-8 bg-gradient-to-r from-gray-900/90 to-gray-900/60">
+        {/* Overlay Content */}
+        <div className="absolute z-20 w-full md:w-3/5 text-left px-6 md:px-12 top-0 left-0 h-full flex flex-col justify-center">
           <h6 className="my-2 font-semibold text-lg text-gray-200">
             Plan your trip now
           </h6>
-          <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-slate-300">
+          <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-slate-50">
             Save <span className="text-accent">big</span> with our <br /> bike
             rental
           </h1>
@@ -36,8 +36,8 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Image */}
-        <div className="relative w-2/5 h-full flex justify-end items-center px-5">
+        {/* Slider */}
+        <div className="relative w-full h-full flex justify-end items-center px-5">
           <Swiper
             slidesPerView={1}
             loop={true} // Enables infinite looping
@@ -46,22 +46,35 @@ const Hero = () => {
               disableOnInteraction: false, // Keeps autoplay active even after interactions
             }}
             modules={[Autoplay]}
+            className="absolute top-0 left-0 w-full h-full z-10"
           >
             <SwiperSlide>
-              <img src={sliderOne} alt="Hero Banner" className="object-fill" />
+              <img
+                src={sliderOne}
+                alt="Hero Banner"
+                className="object-cover w-full h-full"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={sliderTwo} alt="Hero Banner" className="object-fill" />
+              <img
+                src={sliderTwo}
+                alt="Hero Banner"
+                className="object-cover w-full h-full"
+              />
             </SwiperSlide>
             <SwiperSlide>
               <img
                 src={sliderThree}
                 alt="Hero Banner"
-                className="object-fill"
+                className="object-cover w-full h-full"
               />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={sliderFour} alt="Hero Banner" className="object-fill" />
+              <img
+                src={sliderFour}
+                alt="Hero Banner"
+                className="object-cover w-full h-full"
+              />
             </SwiperSlide>
           </Swiper>
         </div>

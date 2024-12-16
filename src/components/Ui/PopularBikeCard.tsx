@@ -36,7 +36,7 @@ const PopularBikeCard = ({
 
   return (
     <div
-      className="relative h-64 bg-cover bg-center rounded-lg shadow-xl overflow-hidden w-full max-w-sm mx-auto"
+      className="relative h-64 bg-cover bg-center rounded-lg shadow-xl overflow-hidden w-full mx-auto"
       style={{ backgroundImage: `url(${image})` }}
     >
       {/* Overlay */}
@@ -60,15 +60,14 @@ const PopularBikeCard = ({
         </div>
 
         {/* Middle Section */}
-        <div>
+        <div className="pt-9">
           <h3 className="text-lg font-semibold">
-            {name} <span className="text-sm">({cc}cc)</span>
+            {name} <span className="text-sm text-accent">({cc}cc)</span>
           </h3>
-
-          {/* Year */}
           <p className="mt-1 text-sm">Launched: {year}</p>
-          <p className="mt-1 text-sm text-accent">
-            Price Per Hour: {pricePerHour} BDT
+          <p className="mt-1 text-sm ">
+            Price Per Hour:{" "}
+            <span className="text-accent">{pricePerHour} BDT</span>
           </p>
         </div>
 

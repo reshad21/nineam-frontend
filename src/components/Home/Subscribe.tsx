@@ -29,19 +29,21 @@ const Subscribe = () => {
           <label htmlFor="email" className="sr-only">
             Email Address
           </label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            className="py-3 px-4 rounded rounded-e-none w-full md:w-auto text-black focus:outline-none"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-primary rounded-s-none transition text-white font-bold py-3 px-6 rounded"
-          >
-            Subscribe
-          </button>
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-0 w-full">
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              className="py-3 px-4 rounded-md md:rounded-e-none w-full text-black focus:outline-none"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-primary w-full md:w-auto rounded-md md:rounded-s-none transition text-white font-bold py-3 px-6"
+            >
+              Subscribe
+            </button>
+          </div>
         </form>
       </div>
     </section>
