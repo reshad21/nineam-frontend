@@ -9,6 +9,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { TBikeBooking, TResponse } from "../../types";
 import BrForm from "../Form/BrForm";
 import BrInput from "../Form/BrInput";
+import ReviewSection from "./ReviewSection";
 
 export type TBikeDataProps = {
   _id: string;
@@ -39,89 +40,90 @@ const BikeViewCard = ({
   const theme = useAppSelector((state) => state.theme.mode);
 
   return (
-    <div
-      className={`${
-        theme === "dark"
-          ? "bg-gray-800 text-gray-100 border-gray-600"
-          : "bg-white text-gray-800 border-gray-200"
-      } rounded-lg shadow-lg overflow-hidden border w-full max-w-6xl mx-auto relative`}
-    >
-      {/* Availability Badge */}
+    <>
+      {/* bike details section */}
       <div
-        className={`absolute top-2 left-2 px-3 py-1 text-sm font-semibold rounded-full text-white ${
-          isAvailable ? "bg-green-500" : "bg-red-500"
-        }`}
+        className={`${
+          theme === "dark" ? "bg-gray-800 text-gray-100" : "text-gray-800"
+        } overflow-hidden w-full max-w-6xl mx-auto relative flex flex-col md:flex-row justify-between items-center`}
       >
-        {isAvailable ? (
-          <CheckCircleOutlined className="mr-1" />
-        ) : (
-          <CloseCircleOutlined className="mr-1" />
-        )}
-        {isAvailable ? "Available" : "Not Available"}
-      </div>
-
-      <figure className="relative">
-        <img
-          src={image}
-          alt={`${name} Image`}
-          className="w-full h-fit object-cover"
-        />
+        {/* Availability Badge */}
         <div
-          className={`absolute top-2 right-2 px-2 py-1 text-xs font-semibold rounded-full ${
-            theme === "dark"
-              ? "bg-gray-900 text-gray-100"
-              : "bg-white text-gray-800"
-          } shadow-md`}
+          className={`absolute top-2 left-2 px-3 py-1 text-sm font-semibold rounded-full text-white ${
+            isAvailable ? "bg-green-500" : "bg-red-500"
+          }`}
         >
-          {year} Model
-        </div>
-      </figure>
-
-      <div className="p-6">
-        <h2 className="text-2xl font-semibold mb-2">{name}</h2>
-        <p className="text-md text-gray-500 mb-4">
-          {description || "No description available."}
-        </p>
-        <div className="mb-4">
-          <div className="flex justify-between text-md">
-            <span className="font-medium">Model:</span>
-            <span>{model}</span>
-          </div>
-          <div className="flex justify-between text-md">
-            <span className="font-medium">Brand:</span>
-            <span>{brand}</span>
-          </div>
-          <div className="flex justify-between text-md">
-            <span className="font-medium">CC:</span>
-            <span>{cc}</span>
-          </div>
-          <div className="flex justify-between text-md">
-            <span className="font-medium">Price Per Hour:</span>
-            <span>{pricePerHour} BDT</span>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3">
-          {!params.bikeId && (
-            <Link to={`/singleBike/${_id}`} className="w-full">
-              <Button
-                className={`w-full ${
-                  theme === "dark"
-                    ? "bg-gray-700 text-gray-100 hover:bg-gray-800"
-                    : "bg-blue-500 text-white hover:bg-blue-600"
-                } py-2 rounded-lg`}
-              >
-                View Details
-              </Button>
-            </Link>
+          {isAvailable ? (
+            <CheckCircleOutlined className="mr-1" />
+          ) : (
+            <CloseCircleOutlined className="mr-1" />
           )}
-          {isAvailable && <BikeModal bikeId={_id} isAvailable={isAvailable} />}
+          {isAvailable ? "Available" : "Not Available"}
+        </div>
+
+        <figure className="relative">
+          <img
+            src={image}
+            alt={`${name} Image`}
+            className="w-full h-fit object-cover"
+          />
+        </figure>
+
+        <div className="p-6">
+          <h2 className="text-2xl font-semibold mb-2">{name}</h2>
+          <p className="text-md text-gray-500 mb-4">
+            {description || "No description available."}
+          </p>
+          <div className="mb-4 space-y-5">
+            <div className="flex justify-between text-md">
+              <span className="font-medium">Model:</span>
+              <span>{model}</span>
+            </div>
+            <div className="flex justify-between text-md">
+              <span className="font-medium">Brand:</span>
+              <span>{brand}</span>
+            </div>
+            <div className="flex justify-between text-md">
+              <span className="font-medium">CC:</span>
+              <span>{cc}</span>
+            </div>
+            <div className="flex justify-between text-md">
+              <span className="font-medium">Launched:</span>
+              <span>{year}</span>
+            </div>
+            <div className="flex justify-between text-md">
+              <span className="font-medium">Price Per Hour:</span>
+              <span>{pricePerHour} BDT</span>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            {!params.bikeId && (
+              <Link to={`/singleBike/${_id}`} className="w-full">
+                <Button
+                  className={`w-full ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-gray-100 hover:bg-gray-800"
+                      : "bg-blue-500 text-white hover:bg-blue-600"
+                  } py-2 rounded-lg`}
+                >
+                  View Details
+                </Button>
+              </Link>
+            )}
+            {isAvailable && (
+              <BikeModal bikeId={_id} isAvailable={isAvailable} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {/* review section */}
+      <ReviewSection />
+    </>
   );
 };
 
+//modal component
 const defaultValues = {
   startTime: new Date().toISOString(),
 };
@@ -178,11 +180,9 @@ const BikeModal = ({ bikeId, isAvailable }: BikeModalProps) => {
         onClick={showModal}
         className={`w-full ${
           isAvailable
-            ? theme === "dark"
-              ? "bg-gray-700 text-gray-100 hover:bg-gray-800"
-              : "bg-green-500 text-white hover:bg-green-600"
-            : "bg-gray-300 text-gray-400 cursor-not-allowed"
-        } py-2 rounded-lg`}
+            ? "bg-primary hover:bg-green-600"
+            : "cursor-not-allowed bg-gray-300"
+        } text-white rounded transition duration-300`}
         disabled={!isAvailable}
       >
         Book Now
