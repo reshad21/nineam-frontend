@@ -7,6 +7,7 @@ import {
   useGetSingleUserQuery,
 } from "../../redux/features/User/userApi";
 import { useAppSelector } from "../../redux/hooks";
+import RevenueTrends from "./RevenueTrends";
 
 const AdminDashboardOverview = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -121,8 +122,8 @@ const AdminDashboardOverview = () => {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="p-6 bg-white rounded-lg shadow-md">
           <h3 className="text-xl font-semibold mb-4">Revenue Trends</h3>
-          <div className="h-40 bg-gray-100 flex items-center justify-center">
-            <p className="text-gray-500">[Insert Chart Here]</p>
+          <div className="h-fit bg-gray-100">
+            <RevenueTrends bookings={bookings} />
           </div>
         </div>
         <div className="p-6 bg-white rounded-lg shadow-md">
@@ -138,17 +139,39 @@ const AdminDashboardOverview = () => {
         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
           Recent Activities
         </h3>
-        <ul className="bg-white rounded-lg shadow-md divide-y divide-gray-200">
+        <div className="bg-white rounded-lg shadow-md p-4 divide-y divide-gray-200">
           {activities.length > 0 ? (
             activities.map((activity, index) => (
-              <li key={index} className="p-4 text-gray-700">
-                {activity.message}
-              </li>
+              <div
+                key={index}
+                className="flex items-start space-x-4 p-4 hover:bg-gray-100 transition duration-200"
+              >
+                {/* Icon */}
+                <div className="flex-shrink-0">
+                  <div className="bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-full">
+                    {activity.message.includes("booked") ? (
+                      <i className="fas fa-bicycle"></i> // Bike Icon
+                    ) : (
+                      <i className="fas fa-plus"></i> // Add Icon
+                    )}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex-grow">
+                  <p className="text-gray-700">{activity.message}</p>
+                  <p className="text-sm text-gray-500">
+                    {activity.date.toLocaleString()}
+                  </p>
+                </div>
+              </div>
             ))
           ) : (
-            <li className="p-4 text-gray-700">No recent activities found.</li>
+            <div className="text-center py-4">
+              <p className="text-gray-500">No recent activities found.</p>
+            </div>
           )}
-        </ul>
+        </div>
       </section>
 
       {/* Manage Quick Links */}
