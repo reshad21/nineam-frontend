@@ -1,30 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Tooltip,
-} from "chart.js";
-import { useEffect, useRef } from "react";
-import { Line } from "react-chartjs-2";
-
-ChartJS.register(
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
-);
+import Chart from "react-apexcharts";
 
 const RevenueTrends = ({ bookings }: any) => {
-  const chartRef = useRef<any>(null);
-
   // Aggregate revenue by day
   const aggregatedData = bookings?.data?.reduce((acc: any, booking: any) => {
     const date = new Date(booking.createdAt).toLocaleDateString(); // Format as 'MM/DD/YYYY'
@@ -37,59 +14,76 @@ const RevenueTrends = ({ bookings }: any) => {
   );
   const data = labels.map((date) => aggregatedData[date]);
 
-  // Chart.js Data
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        label: "Revenue ($)",
-        data,
-        borderColor: "#4CAF50",
-        backgroundColor: "rgba(76, 175, 80, 0.2)",
-        fill: true,
-        tension: 0.4,
+  const chartOptions: ApexCharts.ApexOptions = {
+    chart: {
+      id: "revenue-trends",
+      toolbar: {
+        show: true,
       },
-    ],
-  };
-
-  // Chart.js Options
-  const options: ChartOptions<"line"> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
+      zoom: {
+        enabled: true,
       },
     },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "X Axis Label",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Y Axis Label",
+    xaxis: {
+      categories: labels,
+      title: {
+        text: "Dates",
+        style: {
+          fontSize: "14px",
+          fontWeight: "bold",
         },
       },
     },
+    yaxis: {
+      title: {
+        text: "Revenue ($)",
+        style: {
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      },
+    },
+    tooltip: {
+      enabled: true,
+      shared: true,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth" as const, // Ensure correct typing here
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "vertical",
+        gradientToColors: ["#87D4F9"],
+        stops: [0, 100],
+      },
+    },
+    markers: {
+      size: 5,
+    },
+    colors: ["#4CAF50"],
   };
 
-  useEffect(() => {
-    const chartInstance = chartRef.current;
-    return () => {
-      if (chartInstance) {
-        chartInstance.destroy();
-      }
-    };
-  }, [chartData]);
+  const chartSeries = [
+    {
+      name: "Revenue",
+      data,
+    },
+  ];
 
   return (
     <div>
       {labels.length > 0 ? (
-        <Line ref={chartRef} data={chartData} options={options} />
+        <Chart
+          options={chartOptions}
+          series={chartSeries}
+          type="line"
+          height={350}
+        />
       ) : (
         <p className="text-gray-500">
           No revenue data available for the selected period.

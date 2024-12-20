@@ -7,6 +7,7 @@ import {
   useGetSingleUserQuery,
 } from "../../redux/features/User/userApi";
 import { useAppSelector } from "../../redux/hooks";
+import BookingStatistics from "./BookingStatistics";
 import RevenueTrends from "./RevenueTrends";
 
 const AdminDashboardOverview = () => {
@@ -48,7 +49,7 @@ const AdminDashboardOverview = () => {
     })),
   ]
     .sort((a, b) => b.date - a.date) // Sort by date, newest first
-    .slice(0, 10); // Limit to 10 activities
+    .slice(0, 6); // Limit to 10 activities
 
   // Handle loading and error states
   if (isLoading)
@@ -128,8 +129,8 @@ const AdminDashboardOverview = () => {
         </div>
         <div className="p-6 bg-white rounded-lg shadow-md">
           <h3 className="text-xl font-semibold mb-4">Booking Statistics</h3>
-          <div className="h-40 bg-gray-100 flex items-center justify-center">
-            <p className="text-gray-500">[Insert Chart Here]</p>
+          <div className="h-fit bg-gray-100">
+            <BookingStatistics bookings={bookings} />
           </div>
         </div>
       </section>
