@@ -12,21 +12,29 @@ import RevenueTrends from "./RevenueTrends";
 
 const AdminDashboardOverview = () => {
   const { user } = useAppSelector((state) => state.auth);
+
+  //profile hook
   const {
     data: profile,
     error,
     isLoading: singleuserLoading,
   } = useGetSingleUserQuery(user?.id);
+
+  //all user hook
   const { data: users, isLoading: userLoading } =
     useGetAllUsersQuery(undefined);
+
+  //all get bike hook
   const { data: bikes, isLoading: bikesLoading } =
     useGetAllProductsQuery(undefined);
-  const { data: bookings, isLoading: bookingsLoading } =
-    useGetAllBookingQuery(undefined);
 
-  //   const { data: bookings } = useGetAllBookingQuery(undefined, {
-  //     pollingInterval: 2000,
-  //   });
+  //all booking hook
+  const { data: bookings, isLoading: bookingsLoading } = useGetAllBookingQuery(
+    undefined,
+    {
+      pollingInterval: 2000,
+    }
+  );
 
   const totalRevenue = bookings?.data.reduce(
     (sum: number, item: any) => sum + item.totalCost,
@@ -77,8 +85,8 @@ const AdminDashboardOverview = () => {
       />
     );
 
-  console.log(`Total Cost: ${totalRevenue}`);
-  console.log("Booking info==>", bookings?.data);
+  // console.log(`Total Cost: ${totalRevenue}`);
+  // console.log("Booking info==>", bookings?.data);
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Header Section */}
