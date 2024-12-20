@@ -9,7 +9,7 @@ import UpdateProfile from "../pages/Dashboard/UpdateProfile";
 
 export const adminPaths = [
   {
-    name: "Profile Management",
+    name: "Overview",
     path: "dashboard",
     element: <AdminDashboard />,
   },
