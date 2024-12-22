@@ -1,14 +1,32 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useGetSingleUserQuery } from "../../redux/features/User/userApi";
 import { useAppSelector } from "../../redux/hooks";
+
+type reviewData = {
+  name: string;
+  feedback: string;
+  rating: number;
+};
 
 const ReviewSection = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data: profile, isLoading, error } = useGetSingleUserQuery(user?.id);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data: reviewData) => {
+    console.log("Form Data:", data);
+    closeModal();
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading user profile.</p>;
@@ -45,33 +63,59 @@ const ReviewSection = () => {
       {isModalOpen && profile?.data ? (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-            <h4 className="text-xl font-semibold mb-4">Add a Review</h4>
-            <form className="">
-              <label htmlFor="" className="font-semibold">
-                Name:
-              </label>
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <label htmlFor="" className="font-semibold">
-                Rating:
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="5"
-                placeholder="Rating (1-5)"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <label htmlFor="" className="font-semibold">
-                Feedback:
-              </label>
-              <textarea
-                placeholder="Your Review"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+            <h4 className="text-xl font-semibold mb-4 text-center text-slate-800">
+              Add Your Feedback
+            </h4>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-4">
+                <label htmlFor="name" className="font-semibold text-slate-700">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  defaultValue={profile?.data.name}
+                  {...register("name", { required: "Name is required" })}
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {errors.name && (
+                  <p className="text-red-500">{errors.name.message}</p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="rating"
+                  className="font-semibold text-slate-700"
+                >
+                  Rating:
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  {...register("rating", { required: "Rating is required" })}
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {errors.rating && (
+                  <p className="text-red-500">{errors.rating.message}</p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="feedback"
+                  className="font-semibold text-slate-700"
+                >
+                  Feedback:
+                </label>
+                <textarea
+                  {...register("feedback", {
+                    required: "Feedback is required",
+                  })}
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {errors.feedback && (
+                  <p className="text-red-500">{errors.feedback.message}</p>
+                )}
+              </div>
               <div className="flex justify-end gap-4">
                 <button
                   type="button"
