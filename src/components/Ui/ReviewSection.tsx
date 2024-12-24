@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useGetProductByIdQuery } from "../../redux/features/Bike/bikeApi";
 import { useGetSingleUserQuery } from "../../redux/features/User/userApi";
 import { useAppSelector } from "../../redux/hooks";
 
@@ -9,27 +11,42 @@ type reviewData = {
   rating: number;
 };
 
-const ReviewSection = () => {
+const ReviewSection = ({ id }: { id: string }) => {
   const { user } = useAppSelector((state) => state.auth);
-  const { data: profile, isLoading, error } = useGetSingleUserQuery(user?.id);
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = useGetSingleUserQuery(user?.id, { skip: !user });
+  const { data: bikeInfo } = useGetProductByIdQuery(id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
+  const openModal = () => {
+    if (!user) {
+      alert("Please log in to add a review.");
+      return;
+    }
+    setIsModalOpen(true);
+  };
   const closeModal = () => setIsModalOpen(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<reviewData>(); // Specify the generic type here
 
   const onSubmit = (data: reviewData) => {
-    console.log("Form Data:", data);
+    console.log("Review Form Data:", {
+      ...data,
+      rating: parseInt(data.rating.toString(), 10),
+      bikeId: id,
+    });
     closeModal();
   };
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading user profile.</p>;
+  if (error && user) return <p>Error loading user profile.</p>;
 
   return (
     <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6 my-8">
@@ -40,27 +57,35 @@ const ReviewSection = () => {
         >
           Add Review
         </button>
-        <span className="text-2xl font-semibold">5 Reviews</span>
+        <span className="text-2xl font-semibold">
+          {bikeInfo?.data?.reviews.length} Reviews
+        </span>
       </div>
 
       {/* Display Reviews */}
       <div className="space-y-4">
-        {[1, 2, 3].map((_, index) => (
-          <div
-            key={index}
-            className="border border-gray-300 rounded-lg p-4 bg-gray-50"
-          >
-            <h4 className="font-bold text-lg">John Doe</h4>
-            <p className="text-yellow-500 mb-2">★★★★☆</p>
-            <p className="text-gray-700">
-              Great bike, had an amazing ride! Highly recommend.
-            </p>
-          </div>
-        ))}
+        {bikeInfo?.data?.reviews.length > 0 &&
+          bikeInfo?.data?.reviews.map((review: any) => {
+            const filledStars = "★".repeat(review.rating);
+            const emptyStars = "☆".repeat(5 - review.rating);
+            return (
+              <div
+                key={review._id}
+                className="border border-gray-300 rounded-lg p-4 bg-gray-50"
+              >
+                <h4 className="font-bold text-lg">{review.name}</h4>
+                <p className="text-yellow-500 mb-2">
+                  {filledStars}
+                  <span className="text-gray-300">{emptyStars}</span>
+                </p>
+                <p className="text-gray-700">{review.feedback}</p>
+              </div>
+            );
+          })}
       </div>
 
       {/* Add Review Modal */}
-      {isModalOpen && profile?.data ? (
+      {isModalOpen && profile?.data && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <h4 className="text-xl font-semibold mb-4 text-center text-slate-800">
@@ -134,10 +159,6 @@ const ReviewSection = () => {
             </form>
           </div>
         </div>
-      ) : (
-        <p className="text-red-500 text-center">
-          Please log in to add a review.
-        </p>
       )}
     </div>
   );

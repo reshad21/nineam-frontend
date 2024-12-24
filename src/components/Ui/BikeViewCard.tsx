@@ -45,7 +45,7 @@ const BikeViewCard = ({
       <div
         className={`${
           theme === "dark" ? "bg-gray-800 text-gray-100" : "text-gray-800"
-        } overflow-hidden w-full max-w-6xl mx-auto relative flex flex-col md:flex-row justify-between items-center`}
+        } overflow-hidden w-full relative flex flex-col md:flex-row justify-between items-center`}
       >
         {/* Availability Badge */}
         <div
@@ -118,7 +118,7 @@ const BikeViewCard = ({
         </div>
       </div>
       {/* review section */}
-      <ReviewSection />
+      <ReviewSection id={_id} />
     </>
   );
 };
