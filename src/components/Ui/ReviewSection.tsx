@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { useGetProductByIdQuery } from "../../redux/features/Bike/bikeApi";
+import { useAddReviewsMutation } from "../../redux/features/review/reviewApi";
 import { useGetSingleUserQuery } from "../../redux/features/User/userApi";
 import { useAppSelector } from "../../redux/hooks";
 
@@ -19,6 +21,8 @@ const ReviewSection = ({ id }: { id: string }) => {
     error,
   } = useGetSingleUserQuery(user?.id, { skip: !user });
   const { data: bikeInfo } = useGetProductByIdQuery(id);
+  //create review hook
+  const [createReview] = useAddReviewsMutation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
@@ -36,12 +40,29 @@ const ReviewSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<reviewData>(); // Specify the generic type here
 
-  const onSubmit = (data: reviewData) => {
-    console.log("Review Form Data:", {
-      ...data,
-      rating: parseInt(data.rating.toString(), 10),
-      bikeId: id,
-    });
+  const onSubmit = async (data: reviewData) => {
+    const toastId = toast.loading("Creating bike...");
+
+    try {
+      const result = {
+        userId: user?.id,
+        bikeId: id,
+        name: data.name,
+        feedback: data.feedback,
+        rating: parseInt(data.rating.toString(), 10),
+      };
+      console.log("review data==>", result);
+
+      const res = await createReview(result);
+      if (res.error) {
+        console.log(res.error);
+      } else {
+        toast.success("Review created successfully", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
+
     closeModal();
   };
 
