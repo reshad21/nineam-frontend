@@ -51,8 +51,7 @@ const ReviewSection = ({ id }: { id: string }) => {
         feedback: data.feedback,
         rating: parseInt(data.rating.toString(), 10),
       };
-      console.log("review data==>", result);
-
+      // console.log("review data==>", result);
       const res = await createReview(result);
       if (res.error) {
         console.log(res.error);

@@ -8,6 +8,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy ";
 import Productpage from "../pages/Productpage";
 import SignUpPage from "../pages/Signuppage";
 import TermsOfService from "../pages/TermsOfService";
+import TouristPlaces from "../pages/TouristPlaces";
 
 export const frontendPaths = [
   {
@@ -45,6 +46,10 @@ export const frontendPaths = [
   {
     path: "/termsof-service",
     element: <TermsOfService />,
+  },
+  {
+    path: "/tourist-places",
+    element: <TouristPlaces />,
   },
   {
     path: "/checkout",
