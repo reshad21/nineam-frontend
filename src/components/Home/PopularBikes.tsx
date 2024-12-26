@@ -1,9 +1,10 @@
-import { Alert, Spin } from "antd";
+import { Alert } from "antd";
 import { motion } from "framer-motion";
 import { useGetAllProductsQuery } from "../../redux/features/Bike/bikeApi";
 import { useAppSelector } from "../../redux/hooks";
 import { TBikeDataProps } from "../Ui/BikeCard";
 import PopularBikeCard from "../Ui/PopularBikeCard";
+import PopularBikeCardSkeleton from "../Ui/PopularBikeCardSkeleton";
 
 const PopularBikes = () => {
   const theme = useAppSelector((state) => state.theme.mode); // Get current theme
@@ -13,11 +14,14 @@ const PopularBikes = () => {
   if (isLoading)
     return (
       <div
-        className={`h-screen flex items-center justify-center ${
+        className={`flex flex-col md:flex-row gap-4 items-center justify-between mb-4 ${
           theme === "dark" ? "bg-gray-900" : "bg-gray-100"
         }`}
       >
-        <Spin />
+        <PopularBikeCardSkeleton />
+        <PopularBikeCardSkeleton />
+        <PopularBikeCardSkeleton />
+        <PopularBikeCardSkeleton />
       </div>
     );
   if (isError)

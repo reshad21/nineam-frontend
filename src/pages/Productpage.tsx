@@ -1,8 +1,8 @@
-import { Alert, Spin } from "antd";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import AntSelect from "../components/Ui/antdesign/AntSelect";
 import BikeCard, { TBikeDataProps } from "../components/Ui/BikeCard";
+import BikeCardSkeleton from "../components/Ui/BikeCardSkeleton";
 import { useGetAllProductsQuery } from "../redux/features/Bike/bikeApi";
 import { useAppSelector } from "../redux/hooks"; // Import your theme selector hook
 const Productpage = () => {
@@ -13,16 +13,6 @@ const Productpage = () => {
 
   const { data: bikes, isLoading, isError } = useGetAllProductsQuery(undefined);
 
-  if (isLoading)
-    return (
-      <div
-        className={`h-screen flex items-center justify-center ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-100"
-        }`}
-      >
-        <Spin />
-      </div>
-    );
   if (isError)
     return (
       <div
@@ -36,12 +26,12 @@ const Productpage = () => {
 
   if (!bikes?.data)
     return (
-      <Alert
-        message="No Bike data available"
-        type="error"
-        showIcon
-        className="max-w-lg mx-auto mt-8"
-      />
+      <div className="flex flex-col md:flex-row gap-5 items-center justify-between">
+        <BikeCardSkeleton />
+        <BikeCardSkeleton />
+        <BikeCardSkeleton />
+        <BikeCardSkeleton />
+      </div>
     );
 
   const handleFilterChange = (value: string, type: "brand" | "name" | "cc") => {
@@ -119,9 +109,14 @@ const Productpage = () => {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-5"
       >
-        {filteredBikes?.map((product: TBikeDataProps) => (
-          <BikeCard {...product} key={product._id} />
-        ))}
+        {isLoading
+          ? // Render Skeletons while loading
+            Array(4)
+              .fill(null)
+              .map((_, index) => <BikeCardSkeleton key={index} />)
+          : filteredBikes?.map((product: TBikeDataProps) => (
+              <BikeCard {...product} key={product._id} />
+            ))}
       </motion.div>
     </div>
   );

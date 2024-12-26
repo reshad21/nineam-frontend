@@ -41,8 +41,7 @@ const BikeCard = ({
         theme === "dark"
           ? "bg-gray-800 text-gray-100 border-gray-600"
           : "bg-slate-100 text-gray-800 border-gray-200"
-      } rounded-lg shadow-xl overflow-hidden border w-full max-w-sm mx-auto relative`}
-      style={{ height: "auto" }}
+      } rounded-lg shadow-xl overflow-hidden border w-full max-w-sm mx-auto relative h-fit`}
     >
       <div
         className={`absolute z-40 top-2 left-2 p-1 rounded-full text-accent text-[13px] ${
