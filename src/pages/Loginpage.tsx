@@ -1,4 +1,4 @@
-import { Button, Col, Input, Row } from "antd";
+import { Button, Input } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -49,28 +49,20 @@ const LoginPage = () => {
   };
 
   return (
-    <Row className="min-h-screen">
+    <div
+      className={`min-h-screen flex items-center justify-center ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
       {/* Left Side - Image */}
-      <Col xs={0} md={12} className="hidden md:block">
-        <div className="h-full flex justify-center items-center ">
-          <img src={loginImage} alt="Bike" className="w-3/4 h-auto" />
-        </div>
-      </Col>
+      <div className="flex-1 flex justify-center items-center">
+        <img src={loginImage} alt="Bike" className="w-3/4 h-auto" />
+      </div>
 
       {/* Right Side - Login Form */}
-      <Col xs={24} md={12} className="flex justify-center items-center">
-        <div
-          className={`w-full max-w-md p-10 rounded-2xl shadow-2xl ${
-            theme === "dark"
-              ? "bg-gray-800 text-white"
-              : "bg-white text-gray-900"
-          }`}
-        >
-          <p
-            className={`text-center mb-6 text-3xl font-semibold ${
-              theme === "dark" ? "text-white" : "text-primary"
-            }`}
-          >
+      <div className="flex-1 flex justify-center items-center">
+        <div className="w-full p-10">
+          <p className="text-center mb-6 text-3xl font-semibold">
             Welcome Back
           </p>
 
@@ -93,12 +85,7 @@ const LoginPage = () => {
 
           <form onSubmit={onSubmit}>
             <div className="mb-4">
-              <label
-                htmlFor="email"
-                className={`block text-sm font-medium ${
-                  theme === "dark" ? "text-white" : "text-gray-800"
-                }`}
-              >
+              <label htmlFor="email" className="block text-sm font-medium">
                 Email Address
               </label>
               <Input
@@ -111,12 +98,7 @@ const LoginPage = () => {
             </div>
 
             <div className="mb-4">
-              <label
-                htmlFor="password"
-                className={`block text-sm font-medium ${
-                  theme === "dark" ? "text-white" : "text-gray-800"
-                }`}
-              >
+              <label htmlFor="password" className="block text-sm font-medium">
                 Password
               </label>
               <Input
@@ -132,22 +114,14 @@ const LoginPage = () => {
               type="primary"
               htmlType="submit"
               block
-              className={`${
-                theme === "dark"
-                  ? "bg-indigo-600 border-indigo-600"
-                  : "bg-secondary border-secondary"
-              } mt-6 font-bold text-white hover:bg-red-600`}
+              className="mt-6 font-bold text-white"
             >
               Login
             </Button>
           </form>
 
           <div className="text-center mt-6">
-            <p
-              className={`text-sm ${
-                theme === "dark" ? "text-white" : "text-gray-800"
-              }`}
-            >
+            <p className="text-sm">
               Don't have an account?{" "}
               <Button
                 type="link"
@@ -159,8 +133,8 @@ const LoginPage = () => {
             </p>
           </div>
         </div>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 

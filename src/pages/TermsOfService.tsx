@@ -8,7 +8,7 @@ const TermsOfService = () => {
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
-      <div className="bg-white shadow-lg rounded-lg">
+      <div className="bg-white">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Terms of Service
         </h1>

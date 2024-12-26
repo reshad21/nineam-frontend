@@ -28,13 +28,13 @@ const Footer = () => {
                 href="mailto:contact@yourcompany.com"
                 className="hover:underline"
               >
-                contact@yourcompany.com
+                contact@bikerental.com
               </a>
             </p>
             <p>
               Phone:{" "}
-              <a href="tel:1234567890" className="hover:underline">
-                (123) 456-7890
+              <a href="tel:01787170612" className="hover:underline">
+                (+880)1787170612
               </a>
             </p>
           </div>
