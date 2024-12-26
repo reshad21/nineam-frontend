@@ -6,6 +6,7 @@ import { useLoginMutation } from "../redux/features/auth/authApi";
 import { setUser, TUser } from "../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { verifyToken } from "../utils/verifyToken";
+import loginImage from "./../assets/logo.png";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -28,49 +29,46 @@ const LoginPage = () => {
     } catch (error) {
       toast.error(
         "Login failed. Please check your credentials and try again.",
-        {
-          id: toastId,
-        }
+        { id: toastId }
       );
     }
   };
 
   const navigateToRegister = () => {
-    navigate("/signup"); // Redirect to the registration page
+    navigate("/signup");
   };
 
   const handlePresetLogin = (role: "admin" | "user") => {
-    const adminCredentials = {
-      email: "admin123@gmail.com",
-      password: "123456",
-    };
-    const userCredentials = {
-      email: "reshad@gmail.com",
-      password: "123456",
-    };
+    const credentials = {
+      admin: { email: "admin123@gmail.com", password: "123456" },
+      user: { email: "reshad@gmail.com", password: "123456" },
+    }[role];
 
-    const credentials = role === "admin" ? adminCredentials : userCredentials;
     setEmail(credentials.email);
     setPassword(credentials.password);
   };
 
   return (
-    <Row
-      justify="center"
-      align="middle"
-      className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-    >
-      <Col xs={24} sm={20} md={16} lg={14} xl={10}>
+    <Row className="min-h-screen">
+      {/* Left Side - Image */}
+      <Col xs={0} md={12} className="hidden md:block">
+        <div className="h-full flex justify-center items-center ">
+          <img src={loginImage} alt="Bike" className="w-3/4 h-auto" />
+        </div>
+      </Col>
+
+      {/* Right Side - Login Form */}
+      <Col xs={24} md={12} className="flex justify-center items-center">
         <div
-          className={`p-10 rounded-2xl shadow-2xl ${
+          className={`w-full max-w-md p-10 rounded-2xl shadow-2xl ${
             theme === "dark"
               ? "bg-gray-800 text-white"
               : "bg-white text-gray-900"
           }`}
         >
           <p
-            className={`text-center mb-6 text-3xl font-semibold tracking-wide ${
-              theme === "dark" ? "text-white" : "text-gray-800"
+            className={`text-center mb-6 text-3xl font-semibold ${
+              theme === "dark" ? "text-white" : "text-primary"
             }`}
           >
             Welcome Back
@@ -80,14 +78,12 @@ const LoginPage = () => {
             <Button
               onClick={() => handlePresetLogin("admin")}
               className="mr-4 bg-purple-900 text-white"
-              type="default"
               size="large"
             >
               Admin Login
             </Button>
             <Button
               onClick={() => handlePresetLogin("user")}
-              type="default"
               className="bg-purple-900 text-white"
               size="large"
             >
@@ -139,8 +135,8 @@ const LoginPage = () => {
               className={`${
                 theme === "dark"
                   ? "bg-indigo-600 border-indigo-600"
-                  : "bg-red-500 border-red-500"
-              } mt-6 font-bold text-white hover:bg-red-600 transition-all duration-300`}
+                  : "bg-secondary border-secondary"
+              } mt-6 font-bold text-white hover:bg-red-600`}
             >
               Login
             </Button>
@@ -148,15 +144,15 @@ const LoginPage = () => {
 
           <div className="text-center mt-6">
             <p
-              className={`${
+              className={`text-sm ${
                 theme === "dark" ? "text-white" : "text-gray-800"
-              } text-sm`}
+              }`}
             >
               Don't have an account?{" "}
               <Button
                 type="link"
                 onClick={navigateToRegister}
-                className="font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+                className="font-semibold text-indigo-600 hover:text-indigo-800"
               >
                 Register here
               </Button>

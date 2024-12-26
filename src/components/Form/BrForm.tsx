@@ -34,6 +34,7 @@ const BrForm = ({
   }
 
   const methods = useForm<TLoginuser>(formConfig);
+
   return (
     <FormProvider {...methods}>
       <Form layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>

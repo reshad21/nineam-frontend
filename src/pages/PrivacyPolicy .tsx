@@ -4,13 +4,11 @@ const PrivacyPolicy = () => {
   const theme = useAppSelector((state) => state.theme.mode);
   return (
     <div
-      className={`min-h-screen py-10 px-6 ${
-        theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
+      className={`min-h-screen py-10 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+      <div className="bg-white shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Privacy Policy
         </h1>

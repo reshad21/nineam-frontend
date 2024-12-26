@@ -73,7 +73,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/privacy-policy"
-                  className="text-primary transition duration-200 underline"
+                  className="text-primary transition duration-200 font-semibold"
                 >
                   Privacy Policy
                 </Link>
@@ -81,7 +81,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tourist-places"
-                  className="text-primary transition duration-200 underline"
+                  className="text-primary transition duration-200 font-semibold"
                 >
                   Tourism places
                 </Link>
@@ -89,7 +89,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-primary transition duration-200 underline"
+                  className="text-primary transition duration-200 font-semibold"
                 >
                   Contact
                 </Link>
@@ -109,7 +109,7 @@ const Footer = () => {
             </p>
             <div>
               <Link
-                to="/terms-of-service"
+                to="/termsof-service"
                 className="text-secondary transition duration-200 font-semibold"
               >
                 Terms And Conditions

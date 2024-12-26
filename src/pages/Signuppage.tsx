@@ -11,6 +11,7 @@ import { useAppSelector } from "../redux/hooks";
 import { registrationSchema } from "../schemas/registrationSchema";
 import { TResponse } from "../types/global";
 import { TUser } from "../types/register.type";
+import registerImage from "./../assets/logo.png";
 
 const { Title } = Typography;
 
@@ -37,20 +38,22 @@ const SignUpPage = () => {
   };
 
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        minHeight: "100vh",
-        padding: "30px",
-        backgroundColor: theme === "dark" ? "#333" : "#f4f4f4", // Changed background color to solid
-      }}
-    >
-      <Col xs={24} sm={22} md={20} lg={18} xl={16}>
-        {" "}
-        {/* Increased width for larger screens */}
+    <Row className="min-h-screen items-center">
+      {/* Left Side - Image */}
+      <Col xs={0} md={12} className="hidden md:block">
+        <div className="bg-gradient-to-r from-green-400 to-blue-500">
+          <img
+            src={registerImage}
+            alt="Bike"
+            className="w-3/4 h-auto rounded-lg shadow-lg"
+          />
+        </div>
+      </Col>
+
+      {/* Right Side - Signup Form */}
+      <Col xs={24} md={12} className="flex justify-center items-center">
         <div
-          className={`p-10 rounded-xl shadow-2xl ${
+          className={`w-full max-w-lg p-4 rounded-2xl shadow-2xl ${
             theme === "dark"
               ? "bg-gray-800 text-white"
               : "bg-white text-gray-900"
@@ -61,7 +64,7 @@ const SignUpPage = () => {
             style={{
               textAlign: "center",
               marginBottom: "30px",
-              color: theme === "dark" ? "white" : "#f55d42",
+              color: theme === "dark" ? "white" : "secondary",
             }}
           >
             Create Your Account
@@ -71,16 +74,16 @@ const SignUpPage = () => {
             resolver={zodResolver(registrationSchema)}
           >
             <Row gutter={16}>
-              <Col span={24}>
+              <Col xs={24} md={12}>
                 <BrInput type="text" name="name" label="Full Name:" />
               </Col>
-              <Col span={24}>
+              <Col xs={24} md={12}>
                 <BrInput type="email" name="email" label="Email Address:" />
               </Col>
-              <Col span={24}>
+              <Col xs={24} md={12}>
                 <BrInput type="password" name="password" label="Password:" />
               </Col>
-              <Col span={24}>
+              <Col xs={24} md={12}>
                 <BrInput type="phone" name="phone" label="Phone Number:" />
               </Col>
               <Col span={24}>
