@@ -50,26 +50,26 @@ const LoginPage = () => {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center ${
+      className={`min-h-screen flex items-center justify-center p-4 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
       {/* Left Side - Image */}
-      <div className="flex-1 flex justify-center items-center">
+      <div className="hidden lg:flex flex-1 justify-center items-center">
         <img src={loginImage} alt="Bike" className="w-3/4 h-auto" />
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="flex-1 flex justify-center items-center">
-        <div className="w-full p-10">
+      <div className="flex-1 flex justify-center items-center p-5 sm:p-10">
+        <div className="w-full max-w-md">
           <p className="text-center mb-6 text-3xl font-semibold">
             Welcome Back
           </p>
 
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-4 space-x-4">
             <Button
               onClick={() => handlePresetLogin("admin")}
-              className="mr-4 bg-purple-900 text-white"
+              className="bg-purple-900 text-white"
               size="large"
             >
               Admin Login

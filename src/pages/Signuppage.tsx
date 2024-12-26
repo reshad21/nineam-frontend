@@ -42,13 +42,13 @@ const SignUpPage = () => {
       }`}
     >
       {/* Left Side - Image */}
-      <div className="flex-1 flex justify-center items-center">
+      <div className="hidden sm:flex sm:flex-1 justify-center items-center">
         <img src={registerImage} alt="Bike" className="w-3/4 h-auto" />
       </div>
 
       {/* Right Side - Signup Form */}
-      <div className="flex-1 flex justify-center items-center">
-        <div className="w-full p-10">
+      <div className="flex-1 flex justify-center items-center p-5 sm:p-10">
+        <div className="w-full max-w-md">
           <Title
             level={2}
             className="text-center mb-6"
@@ -63,19 +63,19 @@ const SignUpPage = () => {
             onSubmit={onSubmit}
             resolver={zodResolver(registrationSchema)}
           >
-            <div className="mb-1">
+            <div className="mb-4">
               <BrInput type="text" name="name" label="Full Name:" />
             </div>
-            <div className="mb-1">
+            <div className="mb-4">
               <BrInput type="email" name="email" label="Email Address:" />
             </div>
-            <div className="mb-1">
+            <div className="mb-4">
               <BrInput type="password" name="password" label="Password:" />
             </div>
-            <div className="mb-1">
+            <div className="mb-4">
               <BrInput type="phone" name="phone" label="Phone Number:" />
             </div>
-            <div className="mb-1">
+            <div className="mb-4">
               <BrTextArea name="address" label="Address:" rows={4} />
             </div>
 
@@ -83,13 +83,13 @@ const SignUpPage = () => {
               type="primary"
               htmlType="submit"
               block
-              className="mt-2 font-bold bg-secondary text-white"
+              className="mt-4 font-bold bg-secondary text-white"
             >
               Sign Up
             </Button>
           </BrForm>
 
-          <div className="text-center mt-2">
+          <div className="text-center mt-4">
             <p className="text-sm">
               Already have an account?{" "}
               <Button
