@@ -4,6 +4,7 @@ import UpdateBike from "../pages/Dashboard/Admin/ProductManagement/UpdateBike";
 import ViewAllBikePage from "../pages/Dashboard/Admin/ProductManagement/ViewAllBikePage";
 import ViewBike from "../pages/Dashboard/Admin/ProductManagement/ViewBike";
 import BikeStatus from "../pages/Dashboard/Admin/RentManagement/BikeStatus";
+import Subscriptions from "../pages/Dashboard/Admin/Subscription/Subscriptions";
 import AllUsers from "../pages/Dashboard/Admin/UserManagement/AllUsers";
 import UpdateProfile from "../pages/Dashboard/UpdateProfile";
 
@@ -12,11 +13,6 @@ export const adminPaths = [
     name: "Overview",
     path: "dashboard",
     element: <AdminDashboard />,
-  },
-  {
-    name: "Update Profile",
-    path: "update-profile",
-    element: <UpdateProfile />,
   },
   {
     name: "Bike Management",
@@ -43,7 +39,6 @@ export const adminPaths = [
       },
     ],
   },
-
   {
     name: "Users Management",
     children: [
@@ -64,5 +59,17 @@ export const adminPaths = [
         element: <BikeStatus />,
       },
     ],
+  },
+
+  {
+    name: "Update Profile",
+    path: "update-profile",
+    element: <UpdateProfile />,
+  },
+
+  {
+    name: "Subscriptions",
+    path: "subscriptions",
+    element: <Subscriptions />,
   },
 ];
