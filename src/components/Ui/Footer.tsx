@@ -67,13 +67,19 @@ const Footer = () => {
           </div>
 
           {/* Navigation Links */}
-          <div>
+          <div
+            className={`${
+              theme === "dark"
+                ? "bg-gray-900 text-white"
+                : "bg-white text-slate-900"
+            }`}
+          >
             <h2 className="text-xl font-bold mb-2">Quick Links</h2>
             <ul className="space-y-1">
               <li>
                 <Link
                   to="/privacy-policy"
-                  className="text-primary transition duration-200 font-semibold"
+                  className="transition duration-200 font-semibold"
                 >
                   Privacy Policy
                 </Link>
@@ -81,7 +87,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tourist-places"
-                  className="text-primary transition duration-200 font-semibold"
+                  className="transition duration-200 font-semibold"
                 >
                   Tourism places
                 </Link>
@@ -89,7 +95,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-primary transition duration-200 font-semibold"
+                  className="transition duration-200 font-semibold"
                 >
                   Contact
                 </Link>
@@ -103,14 +109,16 @@ const Footer = () => {
           <div className="flex justify-between items-center">
             <p className="text-sm font-semibold">
               &copy; {new Date().getFullYear()} All rights reserved.{" "}
-              <Link to="/" className="text-primary hover:underline">
+              <Link to="/" className="text-secondary hover:underline">
                 www.quickride.com
               </Link>
             </p>
             <div>
               <Link
                 to="/termsof-service"
-                className="text-secondary transition duration-200 font-semibold"
+                className={`transition duration-200 font-semibold ${
+                  theme === "dark" ? "text-white" : "text-secondary"
+                }`}
               >
                 Terms And Conditions
               </Link>
@@ -118,14 +126,14 @@ const Footer = () => {
             <div>
               <div className="flex space-x-2">
                 <Link
-                  to="https://facebook.com"
+                  to="https://www.facebook.com/reshad.rashed.7"
                   className="text-secondary transition duration-200"
                 >
                   <FaFacebook size={20} />
                 </Link>
                 <Link
                   to="https://twitter.com"
-                  className="text-slate-800 transition duration-200"
+                  className="text-blue-600 transition duration-200"
                 >
                   <FaTwitter size={20} />
                 </Link>
@@ -136,7 +144,7 @@ const Footer = () => {
                   <FaInstagram size={20} />
                 </Link>
                 <Link
-                  to="https://linkedin.com"
+                  to="https://www.linkedin.com/in/web-developer-rashed-uzzaman-reshad/"
                   className="text-primary transition duration-200"
                 >
                   <FaLinkedin size={20} />
