@@ -1,20 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { RouterProvider } from "react-router-dom";
-import { PersistGate } from "redux-persist/integration/react";
-import { Toaster } from "sonner";
-import "./index.css";
-import { persistor, store } from "./redux/store.ts";
-import router from "./routes/routes.tsx";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import App from "./App.jsx"
+import "./index.css"
+import { Toaster } from "react-hot-toast"
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <RouterProvider router={router} />
-      </PersistGate>
-      <Toaster />
-    </Provider>
-  </React.StrictMode>
-);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <App />
+      <Toaster position="top-right" />
+    </React.StrictMode>,
+  );
+} else {
+  throw new Error('Root element with id "root" not found');
+}
